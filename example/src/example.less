@@ -1,0 +1,49 @@
+@main-color: #E9463F;
+
+body {
+  background: #fdfdfd;
+  padding-bottom: 100px;
+}
+
+a,
+a:active,
+a:visited,
+a:focus {
+  color: @main-color;
+}
+
+a:hover {
+  color: darken(@main-color, 20);
+}
+
+h2, h3, h4 {
+  margin-top: 50px;
+  color: @main-color;
+}
+
+.header {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+  background: #fff;
+  padding: 20px 0;
+}
+
+.content {
+  position: relative;
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 840px;
+}
+
+.buttons button {
+  margin-right: 5px;
+}
+
+.demo {
+  border: 2px solid #ddd;
+}
+
+.demo-content {
+  padding: 20px 20px 0;
+  background: #fff;
+}
