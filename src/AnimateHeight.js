@@ -57,7 +57,7 @@ const AnimateHeight = class extends React.Component {
         timeoutHeight = newHeight;
 
         newHeight = contentHeight;
-        timeoutDuration = 0;
+        timeoutDuration = 50;
       }
 
       this.setState({

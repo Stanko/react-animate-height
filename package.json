@@ -1,6 +1,6 @@
 {
   "name": "react-animate-height",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Lightweight, no dependency React component for animating height using CSS transitions.",
   "main": "lib/AnimateHeight.js",
   "author": "Stanko",
