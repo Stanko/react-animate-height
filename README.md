@@ -49,7 +49,7 @@ import AnimateHeight from 'react-animate-height';
   When changed, element height will be animated to that height.<br/>
   To slide up use <code>0</code>, for slide down use <code>'auto'</code>
 
-* **duration**: string, default: 250
+* **duration**: integer, default: 250
   Duration of the animation in milliseconds
 
 * **easing**: string, default: 'ease'
