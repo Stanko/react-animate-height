@@ -36,7 +36,7 @@ const AnimateHeight = class extends React.Component {
       let timeoutOverflow = 'hidden';
       let timeoutDuration = nextProps.duration;
 
-      clearTimeout(this.timeoutID);
+      cancelAnimationFrame(this.requestID);
 
       if (this.isNumber(nextProps.height)) {
         // If new height is a number
@@ -66,7 +66,7 @@ const AnimateHeight = class extends React.Component {
       });
 
       if (shouldSetTimeout) {
-        this.timeoutID = setTimeout(() => {
+        this.requestID = requestAnimationFrame(() => {
           this.setState({
             height: timeoutHeight,
             overflow: timeoutOverflow,
@@ -77,8 +77,8 @@ const AnimateHeight = class extends React.Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timeoutID);
-    this.timeoutID = null;
+    cancelAnimationFrame(this.requestID);
+    this.requestID = null;
   }
 
   isNumber(n) {
@@ -86,6 +86,7 @@ const AnimateHeight = class extends React.Component {
   }
 
   render() {
+    console.log('test');
     const {
       children,
       className,
