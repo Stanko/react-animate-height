@@ -86,7 +86,6 @@ const AnimateHeight = class extends React.Component {
   }
 
   render() {
-    console.log('test');
     const {
       children,
       className,
