@@ -89,6 +89,7 @@ const AnimateHeight = class extends React.Component {
     const {
       children,
       className,
+      contentClassName,
       duration,
       easing,
       style,
@@ -114,7 +115,9 @@ const AnimateHeight = class extends React.Component {
         className={ className }
         style={ componentStyle }
         >
-        <div ref={ el => this.contentElement = el }>
+        <div 
+          className={ contentClassName }
+          ref={ el => this.contentElement = el }>
           { children }
         </div>
       </div>
@@ -125,6 +128,7 @@ const AnimateHeight = class extends React.Component {
 AnimateHeight.propTypes = {
   children: React.PropTypes.any.isRequired,
   className: React.PropTypes.string,
+  contentClassName: React.PropTypes.string,
   duration: React.PropTypes.number.isRequired,
   easing: React.PropTypes.string.isRequired,
   height: React.PropTypes.oneOfType([
