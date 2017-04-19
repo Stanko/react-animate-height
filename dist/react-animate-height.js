@@ -49,189 +49,168 @@
 }());
 
 },{}],2:[function(require,module,exports){
-// shim for using process in browser
-var process = module.exports = {};
+"use strict";
 
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
 
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
+function makeEmptyFunction(arg) {
+  return function () {
+    return arg;
+  };
 }
 
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
+/**
+ * This function accepts and discards inputs; it has no side effects. This is
+ * primarily useful idiomatically for overridable function endpoints which
+ * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+ */
+var emptyFunction = function emptyFunction() {};
 
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
+emptyFunction.thatReturns = makeEmptyFunction;
+emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+emptyFunction.thatReturnsThis = function () {
+  return this;
+};
+emptyFunction.thatReturnsArgument = function (arg) {
+  return arg;
 };
 
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
+module.exports = emptyFunction;
 },{}],3:[function(require,module,exports){
-(function (process){
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var validateFormat = function validateFormat(format) {};
+
+if ("production" !== 'production') {
+  validateFormat = function validateFormat(format) {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  };
+}
+
+function invariant(condition, format, a, b, c, d, e, f) {
+  validateFormat(format);
+
+  if (!condition) {
+    var error;
+    if (format === undefined) {
+      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(format.replace(/%s/g, function () {
+        return args[argIndex++];
+      }));
+      error.name = 'Invariant Violation';
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+}
+
+module.exports = invariant;
+},{}],4:[function(require,module,exports){
+/**
+ * Copyright 2014-2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var emptyFunction = require('./emptyFunction');
+
+/**
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var warning = emptyFunction;
+
+if ("production" !== 'production') {
+  (function () {
+    var printWarning = function printWarning(format) {
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      var argIndex = 0;
+      var message = 'Warning: ' + format.replace(/%s/g, function () {
+        return args[argIndex++];
+      });
+      if (typeof console !== 'undefined') {
+        console.error(message);
+      }
+      try {
+        // --- Welcome to debugging React ---
+        // This error was thrown as a convenience so that you can use this stack
+        // to find the callsite that caused this warning to fire.
+        throw new Error(message);
+      } catch (x) {}
+    };
+
+    warning = function warning(condition, format) {
+      if (format === undefined) {
+        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+      }
+
+      if (format.indexOf('Failed Composite propType: ') === 0) {
+        return; // Ignore CompositeComponent proptype check.
+      }
+
+      if (!condition) {
+        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+          args[_key2 - 2] = arguments[_key2];
+        }
+
+        printWarning.apply(undefined, [format].concat(args));
+      }
+    };
+  })();
+}
+
+module.exports = warning;
+},{"./emptyFunction":2}],5:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -243,7 +222,7 @@ process.umask = function() { return 0; };
 
 'use strict';
 
-if (process.env.NODE_ENV !== 'production') {
+if ("production" !== 'production') {
   var invariant = require('fbjs/lib/invariant');
   var warning = require('fbjs/lib/warning');
   var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
@@ -262,7 +241,7 @@ if (process.env.NODE_ENV !== 'production') {
  * @private
  */
 function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-  if (process.env.NODE_ENV !== 'production') {
+  if ("production" !== 'production') {
     for (var typeSpecName in typeSpecs) {
       if (typeSpecs.hasOwnProperty(typeSpecName)) {
         var error;
@@ -294,8 +273,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 
 module.exports = checkPropTypes;
 
-}).call(this,require('_process'))
-},{"./lib/ReactPropTypesSecret":7,"_process":2,"fbjs/lib/invariant":9,"fbjs/lib/warning":10}],4:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":9,"fbjs/lib/invariant":3,"fbjs/lib/warning":4}],6:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -309,11 +287,14 @@ module.exports = checkPropTypes;
 
 var emptyFunction = require('fbjs/lib/emptyFunction');
 var invariant = require('fbjs/lib/invariant');
+var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
 
 module.exports = function() {
-  // Important!
-  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
-  function shim() {
+  function shim(props, propName, componentName, location, propFullName, secret) {
+    if (secret === ReactPropTypesSecret) {
+      // It is still safe when called from React.
+      return;
+    }
     invariant(
       false,
       'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
@@ -325,6 +306,8 @@ module.exports = function() {
   function getShim() {
     return shim;
   };
+  // Important!
+  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
   var ReactPropTypes = {
     array: shim,
     bool: shim,
@@ -351,8 +334,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-},{"fbjs/lib/emptyFunction":8,"fbjs/lib/invariant":9}],5:[function(require,module,exports){
-(function (process){
+},{"./lib/ReactPropTypesSecret":9,"fbjs/lib/emptyFunction":2,"fbjs/lib/invariant":3}],7:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -501,7 +483,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
   PropTypeError.prototype = Error.prototype;
 
   function createChainableTypeChecker(validate) {
-    if (process.env.NODE_ENV !== 'production') {
+    if ("production" !== 'production') {
       var manualPropTypeCallCache = {};
       var manualPropTypeWarningCount = 0;
     }
@@ -518,7 +500,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
             'Use `PropTypes.checkPropTypes()` to call them. ' +
             'Read more at http://fb.me/use-check-prop-types'
           );
-        } else if (process.env.NODE_ENV !== 'production' && typeof console !== 'undefined') {
+        } else if ("production" !== 'production' && typeof console !== 'undefined') {
           // Old behavior for people using React.PropTypes
           var cacheKey = componentName + ':' + propName;
           if (
@@ -628,7 +610,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
   function createEnumTypeChecker(expectedValues) {
     if (!Array.isArray(expectedValues)) {
-      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
+      "production" !== 'production' ? warning(false, 'Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
       return emptyFunction.thatReturnsNull;
     }
 
@@ -671,8 +653,22 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
   function createUnionTypeChecker(arrayOfTypeCheckers) {
     if (!Array.isArray(arrayOfTypeCheckers)) {
-      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
+      "production" !== 'production' ? warning(false, 'Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
       return emptyFunction.thatReturnsNull;
+    }
+
+    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+      var checker = arrayOfTypeCheckers[i];
+      if (typeof checker !== 'function') {
+        warning(
+          false,
+          'Invalid argument supplid to oneOfType. Expected an array of check functions, but ' +
+          'received %s at index %s.',
+          getPostfixForTypeWarning(checker),
+          i
+        );
+        return emptyFunction.thatReturnsNull;
+      }
     }
 
     function validate(props, propName, componentName, location, propFullName) {
@@ -807,6 +803,9 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
   // This handles more types than `getPropType`. Only used for error messages.
   // See `createPrimitiveTypeChecker`.
   function getPreciseType(propValue) {
+    if (typeof propValue === 'undefined' || propValue === null) {
+      return '' + propValue;
+    }
     var propType = getPropType(propValue);
     if (propType === 'object') {
       if (propValue instanceof Date) {
@@ -816,6 +815,23 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       }
     }
     return propType;
+  }
+
+  // Returns a string that is postfixed to a warning about an invalid type.
+  // For example, "undefined" or "of type array"
+  function getPostfixForTypeWarning(value) {
+    var type = getPreciseType(value);
+    switch (type) {
+      case 'array':
+      case 'object':
+        return 'an ' + type;
+      case 'boolean':
+      case 'date':
+      case 'regexp':
+        return 'a ' + type;
+      default:
+        return type;
+    }
   }
 
   // Returns class name of the object, if any.
@@ -832,9 +848,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
   return ReactPropTypes;
 };
 
-}).call(this,require('_process'))
-},{"./checkPropTypes":3,"./lib/ReactPropTypesSecret":7,"_process":2,"fbjs/lib/emptyFunction":8,"fbjs/lib/invariant":9,"fbjs/lib/warning":10}],6:[function(require,module,exports){
-(function (process){
+},{"./checkPropTypes":5,"./lib/ReactPropTypesSecret":9,"fbjs/lib/emptyFunction":2,"fbjs/lib/invariant":3,"fbjs/lib/warning":4}],8:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -844,7 +858,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-if (process.env.NODE_ENV !== 'production') {
+if ("production" !== 'production') {
   var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
     Symbol.for &&
     Symbol.for('react.element')) ||
@@ -866,8 +880,7 @@ if (process.env.NODE_ENV !== 'production') {
   module.exports = require('./factoryWithThrowingShims')();
 }
 
-}).call(this,require('_process'))
-},{"./factoryWithThrowingShims":4,"./factoryWithTypeCheckers":5,"_process":2}],7:[function(require,module,exports){
+},{"./factoryWithThrowingShims":6,"./factoryWithTypeCheckers":7}],9:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -883,169 +896,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],8:[function(require,module,exports){
-"use strict";
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- */
-
-function makeEmptyFunction(arg) {
-  return function () {
-    return arg;
-  };
-}
-
-/**
- * This function accepts and discards inputs; it has no side effects. This is
- * primarily useful idiomatically for overridable function endpoints which
- * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
- */
-var emptyFunction = function emptyFunction() {};
-
-emptyFunction.thatReturns = makeEmptyFunction;
-emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-emptyFunction.thatReturnsThis = function () {
-  return this;
-};
-emptyFunction.thatReturnsArgument = function (arg) {
-  return arg;
-};
-
-module.exports = emptyFunction;
-},{}],9:[function(require,module,exports){
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-'use strict';
-
-/**
- * Use invariant() to assert state which your program assumes to be true.
- *
- * Provide sprintf-style format (only %s is supported) and arguments
- * to provide information about what broke and what you were
- * expecting.
- *
- * The invariant message will be stripped in production, but the invariant
- * will remain to ensure logic does not differ in production.
- */
-
-var validateFormat = function validateFormat(format) {};
-
-if ("production" !== 'production') {
-  validateFormat = function validateFormat(format) {
-    if (format === undefined) {
-      throw new Error('invariant requires an error message argument');
-    }
-  };
-}
-
-function invariant(condition, format, a, b, c, d, e, f) {
-  validateFormat(format);
-
-  if (!condition) {
-    var error;
-    if (format === undefined) {
-      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(format.replace(/%s/g, function () {
-        return args[argIndex++];
-      }));
-      error.name = 'Invariant Violation';
-    }
-
-    error.framesToPop = 1; // we don't care about invariant's own frame
-    throw error;
-  }
-}
-
-module.exports = invariant;
 },{}],10:[function(require,module,exports){
-/**
- * Copyright 2014-2015, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-'use strict';
-
-var emptyFunction = require('./emptyFunction');
-
-/**
- * Similar to invariant but only logs a warning if the condition is not met.
- * This can be used to log issues in development environments in critical
- * paths. Removing the logging code for production environments will keep the
- * same logic and follow the same code paths.
- */
-
-var warning = emptyFunction;
-
-if ("production" !== 'production') {
-  (function () {
-    var printWarning = function printWarning(format) {
-      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
-
-      var argIndex = 0;
-      var message = 'Warning: ' + format.replace(/%s/g, function () {
-        return args[argIndex++];
-      });
-      if (typeof console !== 'undefined') {
-        console.error(message);
-      }
-      try {
-        // --- Welcome to debugging React ---
-        // This error was thrown as a convenience so that you can use this stack
-        // to find the callsite that caused this warning to fire.
-        throw new Error(message);
-      } catch (x) {}
-    };
-
-    warning = function warning(condition, format) {
-      if (format === undefined) {
-        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-      }
-
-      if (format.indexOf('Failed Composite propType: ') === 0) {
-        return; // Ignore CompositeComponent proptype check.
-      }
-
-      if (!condition) {
-        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-          args[_key2 - 2] = arguments[_key2];
-        }
-
-        printWarning.apply(undefined, [format].concat(args));
-      }
-    };
-  })();
-}
-
-module.exports = warning;
-},{"./emptyFunction":8}],11:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -1082,12 +933,29 @@ var ANIMATION_STATE_CLASSES = {
   staticHeightSpecific: 'rah-static--height-specific'
 };
 
+function omit(obj) {
+  for (var _len = arguments.length, keys = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    keys[_key - 1] = arguments[_key];
+  }
+
+  if (!keys.length) {
+    return obj;
+  }
+
+  var res = {};
+  for (var key in obj) {
+    if (keys.indexOf(key) === -1) {
+      res[key] = obj[key];
+    }
+  }
+
+  return res;
+}
+
 var AnimateHeight = (function (_React$Component) {
   _inherits(AnimateHeight, _React$Component);
 
   function AnimateHeight(props) {
-    var _cx;
-
     _classCallCheck(this, AnimateHeight);
 
     _get(Object.getPrototypeOf(AnimateHeight.prototype), 'constructor', this).call(this, props);
@@ -1102,12 +970,13 @@ var AnimateHeight = (function (_React$Component) {
 
     this.animationStateClasses = _extends(ANIMATION_STATE_CLASSES, props.animationStateClasses);
 
-    var animationStateClasses = cx((_cx = {}, _defineProperty(_cx, this.animationStateClasses['static'], true), _defineProperty(_cx, this.animationStateClasses.staticHeightZero, height === 0), _defineProperty(_cx, this.animationStateClasses.staticHeightSpecific, height > 0), _defineProperty(_cx, this.animationStateClasses.staticHeightAuto, height === 'auto'), _cx));
+    var animationStateClasses = this.getStaticStateClasses(height);
 
     this.state = {
       animationStateClasses: animationStateClasses,
       height: height,
-      overflow: overflow
+      overflow: overflow,
+      shouldUseTransitions: false
     };
   }
 
@@ -1120,18 +989,20 @@ var AnimateHeight = (function (_React$Component) {
 
       // Check if 'height' prop has changed
       if (this.contentElement && nextProps.height !== height) {
-        var _cx2;
+        var _cx;
 
         (function () {
           // Cache content height
           _this.contentElement.style.overflow = 'hidden';
           var contentHeight = _this.contentElement.offsetHeight;
-          _this.contentElement.style.overflow = null;
+          _this.contentElement.style.overflow = '';
 
           var newHeight = null;
-          var timeoutHeight = null;
-          var timeoutOverflow = 'hidden';
-          var timeoutDuration = nextProps.duration;
+          var timeoutState = {
+            height: null, // it will be always set to either 'auto' or specific number
+            overflow: 'hidden'
+          };
+          var isCurrentHeightAuto = _this.state.height === 'auto';
           var FROM_AUTO_TIMEOUT_DURATION = 50;
 
           clearTimeout(_this.timeoutID);
@@ -1139,55 +1010,81 @@ var AnimateHeight = (function (_React$Component) {
           if (_this.isNumber(nextProps.height)) {
             // If new height is a number
             newHeight = nextProps.height < 0 ? 0 : nextProps.height;
-            timeoutHeight = newHeight;
+            timeoutState.height = newHeight;
           } else {
             // If not, animate to content height
             // and then reset to auto
             newHeight = contentHeight;
-            timeoutHeight = 'auto';
-            timeoutOverflow = null;
+            timeoutState.height = 'auto';
+            timeoutState.overflow = null;
           }
 
-          if (_this.state.height === 'auto') {
+          if (isCurrentHeightAuto) {
+            // This is the height to be animated to
+            timeoutState.height = newHeight;
+
             // If previous height was 'auto'
-            // set it explicitly to be able to use transition
-            timeoutHeight = newHeight;
-
+            // set starting height explicitly to be able to use transition
             newHeight = contentHeight;
-            timeoutDuration = FROM_AUTO_TIMEOUT_DURATION;
           }
 
-          var animationStateClasses = cx((_cx2 = {}, _defineProperty(_cx2, _this.animationStateClasses.animating, true), _defineProperty(_cx2, _this.animationStateClasses.animatingUp, height === 'auto' || nextProps.height < height), _defineProperty(_cx2, _this.animationStateClasses.animatingDown, nextProps.height === 'auto' || nextProps.height > height), _defineProperty(_cx2, _this.animationStateClasses.animatingToHeightZero, timeoutHeight === 0), _defineProperty(_cx2, _this.animationStateClasses.animatingToHeightAuto, timeoutHeight === 'auto'), _defineProperty(_cx2, _this.animationStateClasses.animatingToHeightSpecific, timeoutHeight > 0), _cx2));
+          // Animation classes
+          var animationStateClasses = cx((_cx = {}, _defineProperty(_cx, _this.animationStateClasses.animating, true), _defineProperty(_cx, _this.animationStateClasses.animatingUp, height === 'auto' || nextProps.height < height), _defineProperty(_cx, _this.animationStateClasses.animatingDown, nextProps.height === 'auto' || nextProps.height > height), _defineProperty(_cx, _this.animationStateClasses.animatingToHeightZero, timeoutState.height === 0), _defineProperty(_cx, _this.animationStateClasses.animatingToHeightAuto, timeoutState.height === 'auto'), _defineProperty(_cx, _this.animationStateClasses.animatingToHeightSpecific, timeoutState.height > 0), _cx));
+
+          // Animation classes to be put after animation is complete
+          var timeoutAnimationStateClasses = _this.getStaticStateClasses(timeoutState.height);
 
           // Set starting height and animating classes
           _this.setState({
             animationStateClasses: animationStateClasses,
             height: newHeight,
-            overflow: 'hidden'
+            overflow: 'hidden',
+            // When animating from 'auto' we first need to set fixed height
+            // that change should be animated
+            shouldUseTransitions: !isCurrentHeightAuto
           });
 
+          // Clear timeouts
           clearTimeout(_this.timeoutID);
           clearTimeout(_this.animationClassesTimeoutID);
 
-          // Set new height
-          // Using shorter duration if animation is from "auto"
-          _this.timeoutID = setTimeout(function () {
-            _this.setState({
-              height: timeoutHeight,
-              overflow: timeoutOverflow
-            });
-          }, timeoutDuration);
+          if (isCurrentHeightAuto) {
+            // When animating from 'auto' we use a short timeout to start animation
+            // after setting fixed height above
+            timeoutState.shouldUseTransitions = true;
 
-          // Set static classes
-          _this.animationClassesTimeoutID = setTimeout(function () {
-            var _cx3;
+            _this.timeoutID = setTimeout(function () {
+              _this.setState(timeoutState);
 
-            var animationStateClasses = cx((_cx3 = {}, _defineProperty(_cx3, _this.animationStateClasses['static'], true), _defineProperty(_cx3, _this.animationStateClasses.staticHeightZero, timeoutHeight === 0), _defineProperty(_cx3, _this.animationStateClasses.staticHeightSpecific, timeoutHeight > 0), _defineProperty(_cx3, _this.animationStateClasses.staticHeightAuto, timeoutHeight === 'auto'), _cx3));
+              // ANIMATION STARTS, run a callback if it exists
+              _this.runCallback(nextProps.onAnimationStart);
+            }, FROM_AUTO_TIMEOUT_DURATION);
 
-            _this.setState({
-              animationStateClasses: animationStateClasses
-            });
-          }, nextProps.duration);
+            // Set static classes and remove transitions when animation ends
+            _this.animationClassesTimeoutID = setTimeout(function () {
+              _this.setState({
+                animationStateClasses: timeoutAnimationStateClasses,
+                shouldUseTransitions: false
+              });
+
+              // ANIMATION ENDS, run a callback if it exists
+              _this.runCallback(nextProps.onAnimationEnd);
+            }, nextProps.duration);
+          } else {
+            // ANIMATION STARTS, run a callback if it exists
+            _this.runCallback(nextProps.onAnimationStart);
+
+            // Set end height, classes and remove transitions when animation is complete
+            _this.timeoutID = setTimeout(function () {
+              timeoutState.animationStateClasses = timeoutAnimationStateClasses;
+              timeoutState.shouldUseTransitions = false;
+
+              _this.setState(timeoutState);
+
+              // ANIMATION ENDS, run a callback if it exists
+              _this.runCallback(nextProps.onAnimationEnd);
+            }, nextProps.duration);
+          }
         })();
       }
     }
@@ -1206,9 +1103,23 @@ var AnimateHeight = (function (_React$Component) {
       return !isNaN(parseFloat(n)) && isFinite(n);
     }
   }, {
+    key: 'runCallback',
+    value: function runCallback(callback) {
+      if (callback && typeof callback === 'function') {
+        callback();
+      }
+    }
+  }, {
+    key: 'getStaticStateClasses',
+    value: function getStaticStateClasses(height) {
+      var _cx2;
+
+      return cx((_cx2 = {}, _defineProperty(_cx2, this.animationStateClasses['static'], true), _defineProperty(_cx2, this.animationStateClasses.staticHeightZero, height === 0), _defineProperty(_cx2, this.animationStateClasses.staticHeightSpecific, height > 0), _defineProperty(_cx2, this.animationStateClasses.staticHeightAuto, height === 'auto'), _cx2));
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _cx4,
+      var _cx3,
           _this2 = this;
 
       var _props = this.props;
@@ -1222,28 +1133,32 @@ var AnimateHeight = (function (_React$Component) {
       var height = _state.height;
       var overflow = _state.overflow;
       var animationStateClasses = _state.animationStateClasses;
+      var shouldUseTransitions = _state.shouldUseTransitions;
 
       // Include transition passed through styles
       var userTransition = style.transition ? style.transition + ',' : '';
 
       var componentStyle = _extends({}, style, {
         height: height,
-        overflow: overflow ? overflow : style.overflow,
-        WebkitTransition: userTransition + ' height ' + duration + 'ms ' + easing + ' ',
-        MozTransition: userTransition + ' height ' + duration + 'ms ' + easing + ' ',
-        OTransition: userTransition + ' height ' + duration + 'ms ' + easing + ' ',
-        msTransition: userTransition + ' height ' + duration + 'ms ' + easing + ' ',
-        transition: userTransition + ' height ' + duration + 'ms ' + easing + ' '
+        overflow: overflow ? overflow : style.overflow
       });
 
-      var componentClasses = cx((_cx4 = {}, _defineProperty(_cx4, animationStateClasses, true), _defineProperty(_cx4, className, className), _cx4));
+      if (shouldUseTransitions) {
+        componentStyle.WebkitTransition = userTransition + ' height ' + duration + 'ms ' + easing + ' ';
+        componentStyle.MozTransition = userTransition + ' height ' + duration + 'ms ' + easing + ' ';
+        componentStyle.OTransition = userTransition + ' height ' + duration + 'ms ' + easing + ' ';
+        componentStyle.msTransition = userTransition + ' height ' + duration + 'ms ' + easing + ' ';
+        componentStyle.transition = userTransition + ' height ' + duration + 'ms ' + easing + ' ';
+      }
+
+      var componentClasses = cx((_cx3 = {}, _defineProperty(_cx3, animationStateClasses, true), _defineProperty(_cx3, className, className), _cx3));
 
       return React.createElement(
         'div',
-        {
+        _extends({}, omit(this.props, 'height', 'duration', 'easing', 'contentClassName', 'animationStateClasses'), {
           className: componentClasses,
           style: componentStyle
-        },
+        }),
         React.createElement(
           'div',
           {
@@ -1268,6 +1183,8 @@ AnimateHeight.propTypes = {
   duration: PropTypes.number.isRequired,
   easing: PropTypes.string.isRequired,
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onAnimationEnd: PropTypes.func,
+  onAnimationStart: PropTypes.func,
   style: PropTypes.object
 };
 
@@ -1282,5 +1199,5 @@ exports['default'] = AnimateHeight;
 module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"classnames":1,"prop-types":6}]},{},[11])(11)
+},{"classnames":1,"prop-types":8}]},{},[10])(10)
 });
