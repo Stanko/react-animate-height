@@ -30,8 +30,6 @@ npm install --save react-animate-height
 
 ## Usage
 
-__EXPLAIN USAGE HERE__
-
 ```
 import AnimateHeight from 'react-animate-height';
 
@@ -46,21 +44,29 @@ import AnimateHeight from 'react-animate-height';
 ### Properties
 
 * **height**: numeric or 'auto', required
+
   When changed, element height will be animated to that height.<br/>
   To slide up use <code>0</code>, for slide down use <code>'auto'</code>
 
 * **duration**: integer, default: 250
+
   Duration of the animation in milliseconds
 
 * **easing**: string, default: 'ease'
+
   CSS easing function to be applied to the animation
-</p>
 
 * **className**: string
+
   CSS class to be applied to the element
 
 * **style**: object
+
   CSS style object, it will be merged with inline styles of the component
+
+* **contentClassName**: string
+
+  CSS class to be applied to content wrapper element
 
 
 ## Development (`src`, `lib` and the build process)
