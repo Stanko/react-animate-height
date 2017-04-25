@@ -30,8 +30,6 @@ npm install --save react-animate-height
 
 ## Usage
 
-__EXPLAIN USAGE HERE__
-
 ```
 import AnimateHeight from 'react-animate-height';
 
@@ -61,6 +59,9 @@ import AnimateHeight from 'react-animate-height';
 
 * **style**: object
   CSS style object, it will be merged with inline styles of the component
+
+* **contentClassName**: string
+  CSS class to be applied to content wrapper element
 
 
 ## Development (`src`, `lib` and the build process)

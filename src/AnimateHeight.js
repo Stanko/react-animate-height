@@ -1,4 +1,5 @@
 var React = require('react');
+var PropTypes = require('prop-types');
 
 const AnimateHeight = class extends React.Component {
   constructor(props) {
@@ -115,7 +116,7 @@ const AnimateHeight = class extends React.Component {
         className={ className }
         style={ componentStyle }
         >
-        <div 
+        <div
           className={ contentClassName }
           ref={ el => this.contentElement = el }>
           { children }
@@ -126,16 +127,16 @@ const AnimateHeight = class extends React.Component {
 };
 
 AnimateHeight.propTypes = {
-  children: React.PropTypes.any.isRequired,
-  className: React.PropTypes.string,
-  contentClassName: React.PropTypes.string,
-  duration: React.PropTypes.number.isRequired,
-  easing: React.PropTypes.string.isRequired,
-  height: React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.number,
+  children: PropTypes.any.isRequired,
+  className: PropTypes.string,
+  contentClassName: PropTypes.string,
+  duration: PropTypes.number.isRequired,
+  easing: PropTypes.string.isRequired,
+  height: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
   ]),
-  style: React.PropTypes.object,
+  style: PropTypes.object,
 };
 
 AnimateHeight.defaultProps = {
