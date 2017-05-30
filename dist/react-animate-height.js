@@ -1,4 +1,54 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.AnimateHeight = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/*!
+  Copyright (c) 2016 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				classes.push(classNames.apply(null, arg));
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (typeof module !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	} else if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+		// register as 'classnames', consistent with npm package name
+		define('classnames', [], function () {
+			return classNames;
+		});
+	} else {
+		window.classNames = classNames;
+	}
+}());
+
+},{}],2:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -180,7 +230,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -245,7 +295,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
-},{"./lib/ReactPropTypesSecret":6,"_process":1,"fbjs/lib/invariant":8,"fbjs/lib/warning":9}],3:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":7,"_process":2,"fbjs/lib/invariant":9,"fbjs/lib/warning":10}],4:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -301,7 +351,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-},{"fbjs/lib/emptyFunction":7,"fbjs/lib/invariant":8}],4:[function(require,module,exports){
+},{"fbjs/lib/emptyFunction":8,"fbjs/lib/invariant":9}],5:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -783,7 +833,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 };
 
 }).call(this,require('_process'))
-},{"./checkPropTypes":2,"./lib/ReactPropTypesSecret":6,"_process":1,"fbjs/lib/emptyFunction":7,"fbjs/lib/invariant":8,"fbjs/lib/warning":9}],5:[function(require,module,exports){
+},{"./checkPropTypes":3,"./lib/ReactPropTypesSecret":7,"_process":2,"fbjs/lib/emptyFunction":8,"fbjs/lib/invariant":9,"fbjs/lib/warning":10}],6:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -817,7 +867,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./factoryWithThrowingShims":3,"./factoryWithTypeCheckers":4,"_process":1}],6:[function(require,module,exports){
+},{"./factoryWithThrowingShims":4,"./factoryWithTypeCheckers":5,"_process":2}],7:[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -833,7 +883,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 /**
@@ -872,7 +922,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -928,7 +978,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 }
 
 module.exports = invariant;
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -995,7 +1045,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = warning;
-},{"./emptyFunction":7}],10:[function(require,module,exports){
+},{"./emptyFunction":8}],11:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -1003,11 +1053,13 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
@@ -1015,14 +1067,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 
 var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 var PropTypes = require('prop-types');
+var cx = require('classnames');
+
+var ANIMATION_STATE_CLASSES = {
+  animating: 'rah-animating',
+  animatingUp: 'rah-animating--up',
+  animatingDown: 'rah-animating--down',
+  animatingToHeightZero: 'rah-animating--to-height-zero',
+  animatingToHeightAuto: 'rah-animating--to-height-auto',
+  animatingToHeightSpecific: 'rah-animating--to-height-specific',
+  'static': 'rah-static',
+  staticHeightZero: 'rah-static--height-zero',
+  staticHeightAuto: 'rah-static--height-auto',
+  staticHeightSpecific: 'rah-static--height-specific'
+};
 
 var AnimateHeight = (function (_React$Component) {
   _inherits(AnimateHeight, _React$Component);
 
   function AnimateHeight(props) {
+    var _cx;
+
     _classCallCheck(this, AnimateHeight);
 
-    _get(Object.getPrototypeOf(AnimateHeight.prototype), 'constructor', this).call(this);
+    _get(Object.getPrototypeOf(AnimateHeight.prototype), 'constructor', this).call(this, props);
 
     var height = 'auto';
     var overflow = 'visible';
@@ -1032,7 +1100,12 @@ var AnimateHeight = (function (_React$Component) {
       overflow = 'hidden';
     }
 
+    this.animationStateClasses = _extends(ANIMATION_STATE_CLASSES, props.animationStateClasses);
+
+    var animationStateClasses = cx((_cx = {}, _defineProperty(_cx, this.animationStateClasses['static'], true), _defineProperty(_cx, this.animationStateClasses.staticHeightZero, height === 0), _defineProperty(_cx, this.animationStateClasses.staticHeightSpecific, height > 0), _defineProperty(_cx, this.animationStateClasses.staticHeightAuto, height === 'auto'), _cx));
+
     this.state = {
+      animationStateClasses: animationStateClasses,
       height: height,
       overflow: overflow
     };
@@ -1047,6 +1120,8 @@ var AnimateHeight = (function (_React$Component) {
 
       // Check if 'height' prop has changed
       if (this.contentElement && nextProps.height !== height) {
+        var _cx2;
+
         (function () {
           // Cache content height
           _this.contentElement.style.overflow = 'hidden';
@@ -1054,48 +1129,65 @@ var AnimateHeight = (function (_React$Component) {
           _this.contentElement.style.overflow = null;
 
           var newHeight = null;
-          var shouldSetTimeout = false;
           var timeoutHeight = null;
           var timeoutOverflow = 'hidden';
           var timeoutDuration = nextProps.duration;
+          var FROM_AUTO_TIMEOUT_DURATION = 50;
 
           clearTimeout(_this.timeoutID);
 
           if (_this.isNumber(nextProps.height)) {
             // If new height is a number
             newHeight = nextProps.height < 0 ? 0 : nextProps.height;
+            timeoutHeight = newHeight;
           } else {
             // If not, animate to content height
             // and then reset to auto
             newHeight = contentHeight;
-            shouldSetTimeout = true;
             timeoutHeight = 'auto';
-            timeoutOverflow = 'visible';
+            timeoutOverflow = null;
           }
 
           if (_this.state.height === 'auto') {
             // If previous height was 'auto'
             // set it explicitly to be able to use transition
-            shouldSetTimeout = true;
             timeoutHeight = newHeight;
 
             newHeight = contentHeight;
-            timeoutDuration = 50;
+            timeoutDuration = FROM_AUTO_TIMEOUT_DURATION;
           }
 
+          var animationStateClasses = cx((_cx2 = {}, _defineProperty(_cx2, _this.animationStateClasses.animating, true), _defineProperty(_cx2, _this.animationStateClasses.animatingUp, height === 'auto' || nextProps.height < height), _defineProperty(_cx2, _this.animationStateClasses.animatingDown, nextProps.height === 'auto' || nextProps.height > height), _defineProperty(_cx2, _this.animationStateClasses.animatingToHeightZero, timeoutHeight === 0), _defineProperty(_cx2, _this.animationStateClasses.animatingToHeightAuto, timeoutHeight === 'auto'), _defineProperty(_cx2, _this.animationStateClasses.animatingToHeightSpecific, timeoutHeight > 0), _cx2));
+
+          // Set starting height and animating classes
           _this.setState({
+            animationStateClasses: animationStateClasses,
             height: newHeight,
             overflow: 'hidden'
           });
 
-          if (shouldSetTimeout) {
-            _this.timeoutID = setTimeout(function () {
-              _this.setState({
-                height: timeoutHeight,
-                overflow: timeoutOverflow
-              });
-            }, timeoutDuration);
-          }
+          clearTimeout(_this.timeoutID);
+          clearTimeout(_this.animationClassesTimeoutID);
+
+          // Set new height
+          // Using shorter duration if animation is from "auto"
+          _this.timeoutID = setTimeout(function () {
+            _this.setState({
+              height: timeoutHeight,
+              overflow: timeoutOverflow
+            });
+          }, timeoutDuration);
+
+          // Set static classes
+          _this.animationClassesTimeoutID = setTimeout(function () {
+            var _cx3;
+
+            var animationStateClasses = cx((_cx3 = {}, _defineProperty(_cx3, _this.animationStateClasses['static'], true), _defineProperty(_cx3, _this.animationStateClasses.staticHeightZero, timeoutHeight === 0), _defineProperty(_cx3, _this.animationStateClasses.staticHeightSpecific, timeoutHeight > 0), _defineProperty(_cx3, _this.animationStateClasses.staticHeightAuto, timeoutHeight === 'auto'), _cx3));
+
+            _this.setState({
+              animationStateClasses: animationStateClasses
+            });
+          }, nextProps.duration);
         })();
       }
     }
@@ -1103,7 +1195,10 @@ var AnimateHeight = (function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       clearTimeout(this.timeoutID);
+      clearTimeout(this.animationClassesTimeoutID);
       this.timeoutID = null;
+      this.animationClassesTimeoutID = null;
+      this.animationStateClasses = null;
     }
   }, {
     key: 'isNumber',
@@ -1113,7 +1208,8 @@ var AnimateHeight = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _cx4,
+          _this2 = this;
 
       var _props = this.props;
       var children = _props.children;
@@ -1125,21 +1221,27 @@ var AnimateHeight = (function (_React$Component) {
       var _state = this.state;
       var height = _state.height;
       var overflow = _state.overflow;
+      var animationStateClasses = _state.animationStateClasses;
+
+      // Include transition passed through styles
+      var userTransition = style.transition ? style.transition + ',' : '';
 
       var componentStyle = _extends({}, style, {
         height: height,
-        overflow: overflow,
-        WebkitTransition: 'height ' + duration + 'ms ' + easing + ' ',
-        MozTransition: 'height ' + duration + 'ms ' + easing + ' ',
-        OTransition: 'height ' + duration + 'ms ' + easing + ' ',
-        msTransition: 'height ' + duration + 'ms ' + easing + ' ',
-        transition: 'height ' + duration + 'ms ' + easing + ' '
+        overflow: overflow ? overflow : style.overflow,
+        WebkitTransition: userTransition + ' height ' + duration + 'ms ' + easing + ' ',
+        MozTransition: userTransition + ' height ' + duration + 'ms ' + easing + ' ',
+        OTransition: userTransition + ' height ' + duration + 'ms ' + easing + ' ',
+        msTransition: userTransition + ' height ' + duration + 'ms ' + easing + ' ',
+        transition: userTransition + ' height ' + duration + 'ms ' + easing + ' '
       });
+
+      var componentClasses = cx((_cx4 = {}, _defineProperty(_cx4, animationStateClasses, true), _defineProperty(_cx4, className, className), _cx4));
 
       return React.createElement(
         'div',
         {
-          className: className,
+          className: componentClasses,
           style: componentStyle
         },
         React.createElement(
@@ -1159,6 +1261,7 @@ var AnimateHeight = (function (_React$Component) {
 })(React.Component);
 
 AnimateHeight.propTypes = {
+  animationStateClasses: PropTypes.object,
   children: PropTypes.any.isRequired,
   className: PropTypes.string,
   contentClassName: PropTypes.string,
@@ -1171,12 +1274,13 @@ AnimateHeight.propTypes = {
 AnimateHeight.defaultProps = {
   duration: 250,
   easing: 'ease',
-  style: {}
+  style: {},
+  animationStateClasses: ANIMATION_STATE_CLASSES
 };
 
 exports['default'] = AnimateHeight;
 module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"prop-types":5}]},{},[10])(10)
+},{"classnames":1,"prop-types":6}]},{},[11])(11)
 });

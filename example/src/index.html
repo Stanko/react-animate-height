@@ -26,6 +26,7 @@
         Slide up/down the element, and to any specific height.
         Check the <a href="#demo">demo</a> on this page.
       </p>
+      <p>CSS classes are applied in specific animation states, check <code>animationStateClasses</code> prop.</p>
       <p>
         Detailed documentation is on <a href='https://github.com/Stanko/react-animate-height'>GitHub</a>.
       </p>
@@ -68,6 +69,35 @@ import AnimateHeight from 'react-animate-height';
       <b>style</b>: object
       <p>
         CSS style object, it will be merged with inline styles of the component
+      </p>
+
+      <b>contentClassName</b>: string
+      <p class="padding-left-20">
+        CSS class to be applied to content wrapper element
+      </p>
+
+      <b>animationStateClasses</b>: object
+      <p class="padding-left-20">
+        Object containing CSS class names for animation states, default:
+      </p>
+<pre class="margin-left-20">
+{
+  animating:                  'rah-animating',
+  animatingUp:                'rah-animating--up',
+  animatingDown:              'rah-animating--down',
+  static:                     'rah-static',
+  animatingToHeightZero:      'rah-animating--to-height-zero',
+  animatingToHeightAuto:      'rah-animating--to-height-auto',
+  animatingToHeightSpecific:  'rah-animating--to-height-specific',
+  staticHeightZero:           'rah-static--height-zero',
+  staticHeightAuto:           'rah-static--height-auto',
+  staticHeightSpecific:       'rah-static--height-specific',
+}
+</pre>
+
+      <p class="padding-left-20">
+        Please note that this one will be merged with the default object and cached when component is created,
+        so changing it afterwards will have no effect.
       </p>
     </div>
 
