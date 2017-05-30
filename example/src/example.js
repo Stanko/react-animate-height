@@ -150,7 +150,7 @@ var Example = class extends React.Component {
       </div>
     );
   }
-}
+};
 
 
 ReactDOM.render(<Example />, document.getElementById('demo'));

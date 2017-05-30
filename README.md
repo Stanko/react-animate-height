@@ -3,6 +3,8 @@
 Lightweight, no dependency React component for animating height using CSS transitions.
 Slide up/down the element, and to any specific height.
 
+CSS classes are applied in specific animation states, check `animationStateClasses` prop.
+
 ## Demo & Examples
 
 Live demo: [stanko.github.io/react-animate-height](https://stanko.github.io/react-animate-height/)
@@ -67,6 +69,28 @@ import AnimateHeight from 'react-animate-height';
 * **contentClassName**: string
 
   CSS class to be applied to content wrapper element
+
+* **animationStateClasses**: object
+
+  Object containing CSS class names for animation states, default:
+
+  ```
+  {
+    animating:                  'rah-animating',
+    animatingUp:                'rah-animating--up',
+    animatingDown:              'rah-animating--down',
+    static:                     'rah-static',
+    animatingToHeightZero:      'rah-animating--to-height-zero',
+    animatingToHeightAuto:      'rah-animating--to-height-auto',
+    animatingToHeightSpecific:  'rah-animating--to-height-specific',
+    staticHeightZero:           'rah-static--height-zero',
+    staticHeightAuto:           'rah-static--height-auto',
+    staticHeightSpecific:       'rah-static--height-specific',
+  }
+  ```
+
+  Please note that this one will be merged with the default object and cached when component is created,
+  so changing it afterwards will have no effect.
 
 
 ## Development (`src`, `lib` and the build process)
