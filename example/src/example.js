@@ -85,6 +85,7 @@ var Example = class extends React.Component {
         </AnimateHeight>
 
         <h3>Demo, starting height = auto</h3>
+        <p>For this example, duration is set to 500ms, and check console for callbacks.</p>
         <p>
           Current Height: <b>{ height !== null ? height2 : 'null' }</b>
         </p>
@@ -108,6 +109,9 @@ var Example = class extends React.Component {
         </div>
         <AnimateHeight
           height={ height2 }
+          duration={ 500 }
+          onAnimationEnd={ () => { console.log('React Animate Height - animation ended'); } }
+          onAnimationStart={ () => { console.log('React Animate Height - animation started'); } }
           className='demo demo-2'
         >
           <div className='demo-content'>

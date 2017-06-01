@@ -92,6 +92,14 @@ import AnimateHeight from 'react-animate-height';
   Please note that this one will be merged with the default object and cached when component is created,
   so changing it afterwards will have no effect.
 
+* **onAnimationStart**: function
+
+  Callback which will be called when animation starts
+
+* **onAnimationEnd**: function
+
+  Callback which will be called when animation ends
+
 
 ## Development (`src`, `lib` and the build process)
 
