@@ -15,14 +15,15 @@ const ANIMATION_STATE_CLASSES = {
   staticHeightSpecific:       'rah-static--height-specific',
 };
 
-function omit(obj, ...keys) {
-  if(!keys.length) {
+function omit (obj, ...keys) {
+  if (!keys.length) {
     return obj;
   }
 
-  let res = {};
+  const res = {};
+
   for (let key in obj) {
-    if(keys.indexOf(key) === -1) {
+    if (keys.indexOf(key) === -1) {
       res[key] = obj[key];
     }
   }
@@ -211,6 +212,7 @@ const AnimateHeight = class extends React.Component {
 
     // Include transition passed through styles
     const userTransition = style.transition ? `${ style.transition },` : '';
+    const transitionString = `${ userTransition } height ${ duration }ms ${ easing } `;
 
     const componentStyle = {
       ...style,
@@ -219,11 +221,11 @@ const AnimateHeight = class extends React.Component {
     };
 
     if (shouldUseTransitions) {
-      componentStyle.WebkitTransition = `${ userTransition } height ${ duration }ms ${ easing } `;
-      componentStyle.MozTransition = `${ userTransition } height ${ duration }ms ${ easing } `;
-      componentStyle.OTransition = `${ userTransition } height ${ duration }ms ${ easing } `;
-      componentStyle.msTransition = `${ userTransition } height ${ duration }ms ${ easing } `;
-      componentStyle.transition = `${ userTransition } height ${ duration }ms ${ easing } `;
+      componentStyle.WebkitTransition = transitionString;
+      componentStyle.MozTransition = transitionString;
+      componentStyle.OTransition = transitionString;
+      componentStyle.msTransition = transitionString;
+      componentStyle.transition = transitionString;
     }
 
 
@@ -232,12 +234,15 @@ const AnimateHeight = class extends React.Component {
       [className]: className,
     });
 
+    const propsToOmit = ['height', 'duration', 'easing', 'contentClassName', 'animationStateClasses'];
+
     return (
       <div
-        {...omit(this.props, 'height', 'duration', 'easing', 'contentClassName', 'animationStateClasses')}
+        { ...omit(this.props, ...propsToOmit) }
+        aria-hidden={ height === 0 }
         className={ componentClasses }
         style={ componentStyle }
-        >
+      >
         <div
           className={ contentClassName }
           ref={ el => this.contentElement = el }>
