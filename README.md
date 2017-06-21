@@ -100,6 +100,8 @@ import AnimateHeight from 'react-animate-height';
 
   Callback which will be called when animation ends
 
+Additional props will be passed to the wrapper div, to make adding attrs like `aria-*` easier.
+
 
 ## Development (`src`, `lib` and the build process)
 

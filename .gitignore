@@ -2,6 +2,10 @@
 logs
 *.log
 
+# Build artifacts
+dist
+lib
+
 # Runtime data
 pids
 *.pid
