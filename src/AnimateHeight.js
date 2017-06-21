@@ -15,6 +15,21 @@ const ANIMATION_STATE_CLASSES = {
   staticHeightSpecific:       'rah-static--height-specific',
 };
 
+function omit(obj, ...keys) {
+  if(!keys.length) {
+    return obj;
+  }
+
+  let res = {};
+  for (let key in obj) {
+    if(keys.indexOf(key) === -1) {
+      res[key] = obj[key];
+    }
+  }
+
+  return res;
+}
+
 const AnimateHeight = class extends React.Component {
   constructor(props) {
     super(props);
@@ -219,6 +234,7 @@ const AnimateHeight = class extends React.Component {
 
     return (
       <div
+        {...omit(this.props, 'height', 'duration', 'easing', 'contentClassName', 'animationStateClasses')}
         className={ componentClasses }
         style={ componentStyle }
         >
