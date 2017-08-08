@@ -57,7 +57,9 @@ var Example = class extends React.Component {
               cholera, when you might eat dinner with a well man in the evening, and
               the next morning, if you got up early enough, you would see him being
               hauled by your window in the death-cart. But this new plague was quicker
-              than that&mdash;much quicker.</p>
+              than that&mdash;much quicker.
+            </p>
+            <input className='form-control' type='text' placeholder='Test for focus' />
             <p>
               From the moment of the first signs of it, a man would be dead in an
               hour. Some lasted for several hours. Many died within ten or fifteen
@@ -125,7 +127,9 @@ var Example = class extends React.Component {
               cholera, when you might eat dinner with a well man in the evening, and
               the next morning, if you got up early enough, you would see him being
               hauled by your window in the death-cart. But this new plague was quicker
-              than that&mdash;much quicker.</p>
+              than that&mdash;much quicker.
+            </p>
+            <input className='form-control' type='text' placeholder='Test for focus' />
             <p>
               From the moment of the first signs of it, a man would be dead in an
               hour. Some lasted for several hours. Many died within ten or fifteen

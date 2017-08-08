@@ -31,6 +31,15 @@ function omit (obj, ...keys) {
   return res;
 }
 
+// Start animation helper using nested requestAnimationFrames
+function startAnimationHelper(callback) {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      callback();
+    });
+  });
+}
+
 const AnimateHeight = class extends React.Component {
   constructor(props) {
     super(props);
@@ -55,6 +64,13 @@ const AnimateHeight = class extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const { height } = this.state;
+
+    // Hide content if height is 0 (to prevent tabbing into it)
+    this.hideContent(height);
+  }
+
   componentWillReceiveProps(nextProps) {
     const {
       height,
@@ -62,6 +78,10 @@ const AnimateHeight = class extends React.Component {
 
     // Check if 'height' prop has changed
     if (this.contentElement && nextProps.height !== height) {
+      // Remove display: none from the content div
+      // if it was hidden to prevent tabbing into it
+      this.showContent();
+
       // Cache content height
       this.contentElement.style.overflow = 'hidden';
       const contentHeight = this.contentElement.offsetHeight;
@@ -73,9 +93,6 @@ const AnimateHeight = class extends React.Component {
         overflow: 'hidden',
       };
       const isCurrentHeightAuto = this.state.height === 'auto';
-      const FROM_AUTO_TIMEOUT_DURATION = 50;
-
-      clearTimeout(this.timeoutID);
 
       if (this.isNumber(nextProps.height)) {
         // If new height is a number
@@ -130,13 +147,12 @@ const AnimateHeight = class extends React.Component {
         // after setting fixed height above
         timeoutState.shouldUseTransitions = true;
 
-        this.timeoutID = setTimeout(() => {
+        startAnimationHelper(() => {
           this.setState(timeoutState);
 
           // ANIMATION STARTS, run a callback if it exists
           this.runCallback(nextProps.onAnimationStart);
-
-        }, FROM_AUTO_TIMEOUT_DURATION);
+        });
 
         // Set static classes and remove transitions when animation ends
         this.animationClassesTimeoutID = setTimeout(() => {
@@ -145,8 +161,11 @@ const AnimateHeight = class extends React.Component {
             shouldUseTransitions: false,
           });
 
-          // ANIMATION ENDS, run a callback if it exists
+          // ANIMATION ENDS
+          // Run a callback if it exists
           this.runCallback(nextProps.onAnimationEnd);
+          // Hide content if height is 0 (to prevent tabbing into it)
+          this.hideContent(timeoutState.height);
         }, nextProps.duration);
       } else {
         // ANIMATION STARTS, run a callback if it exists
@@ -159,8 +178,11 @@ const AnimateHeight = class extends React.Component {
 
           this.setState(timeoutState);
 
-          // ANIMATION ENDS, run a callback if it exists
+          // ANIMATION ENDS
+          // Run a callback if it exists
           this.runCallback(nextProps.onAnimationEnd);
+          // Hide content if height is 0 (to prevent tabbing into it)
+          this.hideContent(newHeight);
         }, nextProps.duration);
       }
     }
@@ -181,6 +203,18 @@ const AnimateHeight = class extends React.Component {
   runCallback(callback) {
     if (callback && typeof(callback) === 'function') {
       callback();
+    }
+  }
+
+  showContent() {
+    if (this.state.height === 0) {
+      this.contentElement.style.display = '';
+    }
+  }
+
+  hideContent(newHeight) {
+    if (newHeight === 0) {
+      this.contentElement.style.display = 'none';
     }
   }
 
