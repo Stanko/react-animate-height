@@ -68,7 +68,11 @@ const AnimateHeight = class extends React.Component {
     const { height } = this.state;
 
     // Hide content if height is 0 (to prevent tabbing into it)
-    this.hideContent(height);
+    // Check for contentElement is added cause this would fail in tests (react-test-renderer)
+    // Read more here: https://github.com/Stanko/react-animate-height/issues/17
+    if (this.contentElement && this.contentElement.style) {
+      this.hideContent(height);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
