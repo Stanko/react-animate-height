@@ -5,7 +5,7 @@ Slide up/down the element, and to any specific height.
 
 CSS classes are applied in specific animation states, check `animationStateClasses` prop.
 
-## Demo & Examples
+## Demo
 
 Live demo: [stanko.github.io/react-animate-height](https://stanko.github.io/react-animate-height/)
 
@@ -16,34 +16,39 @@ npm install
 npm start
 ```
 
-Then open [`localhost:8000`](http://localhost:8000) in a browser.
+Then open [`localhost:3000`](http://localhost:3000) in your browser of choice browser.
 
 
-## Installation
+## Quick start
 
-The easiest way to use react-animate-height is to install it from NPM and include it in your own React build process (using [Webpack](http://webpack.github.io/)).
-
-You can also use the standalone build by including `dist/react-animate-height.js` in your page. If you use this, make sure you have already included React, and it is available as a global variable.
+Get it from npm
 
 ```
-npm install --save react-animate-height
+$ npm install --save react-animate-height
 ```
 
+Import and use it in your React app.
 
-## Usage
-
-```
+```javascript
+import React, { Component } from 'react';
 import AnimateHeight from 'react-animate-height';
 
-<AnimateHeight
-  duration={ 500 }
-  height={ 'auto' }>
-  <h1>Your content goes here</h1>
-  <p>Put as many React or HTML components here.</p>
-</AnimateHeight>
+class Example extends Component {
+  render() {
+    return (
+      <AnimateHeight
+        duration={ 500 }
+        height={ 'auto' } // see props documentation bellow
+      >
+        <h1>Your content goes here</h1>
+        <p>Put as many React or HTML components here.</p>
+      </AnimateHeight>
+    );
+  }
+}
 ```
 
-### Properties
+### Props
 
 * **height**: numeric or 'auto', required
 
@@ -102,12 +107,6 @@ import AnimateHeight from 'react-animate-height';
 
 Additional props will be passed to the wrapper div, to make adding attrs like `aria-*` easier.
 
-
-## Development (`src`, `lib` and the build process)
-
-**NOTE:** The source code for the component is in `src`. A transpiled CommonJS version (generated with Babel) is available in `lib` for use with node.js, browserify and webpack. A UMD bundle is also built to `dist`, which can be included without the need for any build system.
-
-To build, watch and serve the examples (which will also watch the component source), run `npm start`. If you just want to watch changes to `src` and rebuild `lib`, run `npm run watch` (this is useful if you are working with `npm link`).
 
 ## License
 
