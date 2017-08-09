@@ -1,4 +1,4 @@
-@main-color: #E9463F;
+$main-color: #E9463F;
 
 body {
   background: #fdfdfd;
@@ -9,16 +9,16 @@ a,
 a:active,
 a:visited,
 a:focus {
-  color: @main-color;
+  color: $main-color;
 }
 
 a:hover {
-  color: darken(@main-color, 20);
+  color: darken($main-color, 20);
 }
 
 h2, h3, h4 {
   margin-top: 50px;
-  color: @main-color;
+  color: $main-color;
 }
 
 .header {
@@ -37,6 +37,17 @@ h2, h3, h4 {
 
 .buttons button {
   margin-right: 5px;
+  transition: all 0.1s;
+  background: #111;
+
+  &:hover {
+    background: darken($main-color, 20);
+  }
+
+  &:focus {
+    background: $main-color;
+    outline: none;
+  }
 }
 
 .demo {

@@ -1,8 +1,10 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var AnimateHeight = require('react-animate-height');
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-var Example = class extends React.Component {
+import AnimateHeight from '../source/index';
+import './docs.scss';
+
+const Example = class extends React.Component {
   constructor() {
     super();
 
@@ -26,19 +28,19 @@ var Example = class extends React.Component {
         </p>
         <p className=''>Set height to:</p>
         <div className='buttons'>
-          <button className='btn btn-sm btn-dark' onClick={ () => this.setState({ height: 0 }) }>
+          <button className='btn btn-sm' onClick={ () => this.setState({ height: 0 }) }>
             0
           </button>
-          <button className='btn btn-sm btn-dark' onClick={ () => this.setState({ height: 100 }) }>
+          <button className='btn btn-sm' onClick={ () => this.setState({ height: 100 }) }>
             100
           </button>
-          <button className='btn btn-sm btn-dark' onClick={ () => this.setState({ height: 200 }) }>
+          <button className='btn btn-sm' onClick={ () => this.setState({ height: 200 }) }>
             200
           </button>
-          <button className='btn btn-sm btn-dark' onClick={ () => this.setState({ height: 300 }) }>
+          <button className='btn btn-sm' onClick={ () => this.setState({ height: 300 }) }>
             300
           </button>
-          <button className='btn btn-sm btn-dark' onClick={ () => this.setState({ height: 'auto' }) }>
+          <button className='btn btn-sm' onClick={ () => this.setState({ height: 'auto' }) }>
             auto
           </button>
         </div>
@@ -93,19 +95,19 @@ var Example = class extends React.Component {
         </p>
         <p className=''>Set height to:</p>
         <div className='buttons'>
-          <button className='btn btn-sm btn-dark' onClick={ () => this.setState({ height2: 0 }) }>
+          <button className='btn btn-sm' onClick={ () => this.setState({ height2: 0 }) }>
             0
           </button>
-          <button className='btn btn-sm btn-dark' onClick={ () => this.setState({ height2: 100 }) }>
+          <button className='btn btn-sm' onClick={ () => this.setState({ height2: 100 }) }>
             100
           </button>
-          <button className='btn btn-sm btn-dark' onClick={ () => this.setState({ height2: 200 }) }>
+          <button className='btn btn-sm' onClick={ () => this.setState({ height2: 200 }) }>
             200
           </button>
-          <button className='btn btn-sm btn-dark' onClick={ () => this.setState({ height2: 300 }) }>
+          <button className='btn btn-sm' onClick={ () => this.setState({ height2: 300 }) }>
             300
           </button>
-          <button className='btn btn-sm btn-dark' onClick={ () => this.setState({ height2: 'auto' }) }>
+          <button className='btn btn-sm' onClick={ () => this.setState({ height2: 'auto' }) }>
             auto
           </button>
         </div>

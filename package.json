@@ -1,10 +1,10 @@
 {
   "name": "react-animate-height",
-  "version": "0.9.11",
+  "version": "0.9.12",
   "description": "Lightweight, no dependency React component for animating height using CSS transitions.",
   "main": "lib/AnimateHeight.js",
   "author": "Stanko",
-  "homepage": "https://github.com/Stanko/react-animate-height",
+  "homepage": "h1ttps://github.com/Stanko/react-animate-height",
   "repository": {
     "type": "git",
     "url": "https://github.com/Stanko/react-animate-height.git"
@@ -12,38 +12,60 @@
   "bugs": {
     "url": "https://github.com/Stanko/react-animate-height/issues"
   },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server",
+    "build": "rm -rf ./lib && NODE_ENV=\"production\" babel ./source --out-dir ./lib",
+    "build-docs": "rm -rf ./dist-docs && EXAMPLE=\"true\" NODE_ENV=\"production\" webpack",
+    "publish-to-npm": "npm run build && npm publish",
+    "publish-docs": "sh publish-docs.sh",
+    "publish-all": "npm run publish-to-npm && npm run publish-docs",
+    "lint-break-on-errors": "eslint ./source ./webpack.config.js -f table --ext .js --ext .jsx",
+    "lint": "eslint ./source ./webpack.config.js -f table --ext .js --ext .jsx || true",
+    "preview": "rm -rf ./dist && NODE_ENV=\"production\" webpack-dev-server",
+    "hook-add": "prepush install",
+    "hook-remove": "prepush remove"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.7.2",
+    "babel-eslint": "^7.1.0",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.6.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-runtime": "^6.6.1",
+    "css-loader": "^0.28.4",
+    "eslint": "^3.10.1",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.7.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "html-webpack-plugin": "^2.24.1",
+    "node-sass": "^4.5.3",
+    "postcss-loader": "^1.1.1",
+    "prepush": "^3.1.11",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "sass-loader": "^6.0.5",
+    "style-loader": "^0.18.2",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.2.1"
+  },
   "dependencies": {
     "classnames": "^2.2.5",
     "prop-types": "^15.5.8"
   },
-  "devDependencies": {
-    "babel-eslint": "^4.1.3",
-    "classnames": "^2.1.2",
-    "eslint": "^1.6.0",
-    "eslint-plugin-react": "^3.5.1",
-    "gulp": "^3.9.0",
+  "peerDependencies": {
     "react": "^15.5.4",
-    "prop-types": "^15.5.8",
-    "react-component-gulp-tasks": "^0.7.6",
     "react-dom": "^15.5.4"
   },
-  "peerDependencies": {
-    "react": "15.x",
-    "react-dom": "15.x"
-  },
-  "browserify-shim": {
-    "react": "global:React"
-  },
-  "scripts": {
-    "build": "gulp clean && NODE_ENV=production gulp build",
-    "examples": "gulp dev:server",
-    "lint": "eslint ./; true",
-    "publish:site": "NODE_ENV=production gulp publish:examples",
-    "release": "NODE_ENV=production gulp release",
-    "start": "gulp dev",
-    "test": "echo \"no tests yet\" && exit 0",
-    "watch": "gulp watch:lib",
-    "prepublish": "npm run build"
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Stanko/react-plx.git"
   },
   "keywords": [
     "react",
@@ -52,6 +74,10 @@
     "slide up",
     "slide down",
     "animate height"
+  ],
+  "author": "Stanko",
+  "prepush": [
+    "npm run lint-break-on-errors --silent"
   ],
   "license": "MIT"
 }

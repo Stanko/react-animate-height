@@ -1,28 +1,31 @@
-var React = require('react');
-var PropTypes = require('prop-types');
-var cx = require('classnames');
+import React from 'react';
+import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 const ANIMATION_STATE_CLASSES = {
-  animating:                  'rah-animating',
-  animatingUp:                'rah-animating--up',
-  animatingDown:              'rah-animating--down',
-  animatingToHeightZero:      'rah-animating--to-height-zero',
-  animatingToHeightAuto:      'rah-animating--to-height-auto',
-  animatingToHeightSpecific:  'rah-animating--to-height-specific',
-  static:                     'rah-static',
-  staticHeightZero:           'rah-static--height-zero',
-  staticHeightAuto:           'rah-static--height-auto',
-  staticHeightSpecific:       'rah-static--height-specific',
+  animating: 'rah-animating',
+  animatingUp: 'rah-animating--up',
+  animatingDown: 'rah-animating--down',
+  animatingToHeightZero: 'rah-animating--to-height-zero',
+  animatingToHeightAuto: 'rah-animating--to-height-auto',
+  animatingToHeightSpecific: 'rah-animating--to-height-specific',
+  static: 'rah-static',
+  staticHeightZero: 'rah-static--height-zero',
+  staticHeightAuto: 'rah-static--height-auto',
+  staticHeightSpecific: 'rah-static--height-specific',
 };
 
-function omit (obj, ...keys) {
+function omit(obj, ...keys) {
   if (!keys.length) {
     return obj;
   }
 
   const res = {};
+  const objectKeys = Object.keys(obj);
 
-  for (let key in obj) {
+  for (let i = 0; i < objectKeys.length; i++) {
+    const key = objectKeys[i];
+
     if (keys.indexOf(key) === -1) {
       res[key] = obj[key];
     }
@@ -205,7 +208,7 @@ const AnimateHeight = class extends React.Component {
   }
 
   runCallback(callback) {
-    if (callback && typeof(callback) === 'function') {
+    if (callback && typeof callback === 'function') {
       callback();
     }
   }
@@ -255,7 +258,7 @@ const AnimateHeight = class extends React.Component {
     const componentStyle = {
       ...style,
       height,
-      overflow: overflow ? overflow : style.overflow,
+      overflow: overflow || style.overflow,
     };
 
     if (shouldUseTransitions) {
@@ -283,7 +286,8 @@ const AnimateHeight = class extends React.Component {
       >
         <div
           className={ contentClassName }
-          ref={ el => this.contentElement = el }>
+          ref={ el => this.contentElement = el }
+        >
           { children }
         </div>
       </div>
@@ -302,8 +306,8 @@ AnimateHeight.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
-  onAnimationEnd: PropTypes.func,
-  onAnimationStart: PropTypes.func,
+  onAnimationEnd: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
+  onAnimationStart: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   style: PropTypes.object,
 };
 
