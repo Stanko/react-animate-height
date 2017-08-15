@@ -101,9 +101,18 @@ const AnimateHeight = class extends React.Component {
       };
       const isCurrentHeightAuto = this.state.height === 'auto';
 
+
       if (this.isNumber(nextProps.height)) {
         // If new height is a number
         newHeight = nextProps.height < 0 ? 0 : nextProps.height;
+        timeoutState.height = newHeight;
+      } else if (
+        // Percentage height
+        typeof nextProps.height === 'string' &&
+        nextProps.height.search('%') === nextProps.height.length - 1 &&
+        this.isNumber(nextProps.height.substr(0, nextProps.height.length - 1))
+      ) {
+        newHeight = nextProps.height;
         timeoutState.height = newHeight;
       } else {
         // If not, animate to content height
