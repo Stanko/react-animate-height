@@ -63,10 +63,6 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/Stanko/react-plx.git"
-  },
   "keywords": [
     "react",
     "react-component",
