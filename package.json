@@ -1,6 +1,6 @@
 {
   "name": "react-animate-height",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "description": "Lightweight, no dependency React component for animating height using CSS transitions.",
   "main": "lib/AnimateHeight.js",
   "author": "Stanko",
@@ -48,8 +48,8 @@
     "node-sass": "^4.5.3",
     "postcss-loader": "^1.1.1",
     "prepush": "^3.1.11",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "sass-loader": "^6.0.5",
     "style-loader": "^0.18.2",
     "webpack": "^2.6.1",
@@ -60,8 +60,8 @@
     "prop-types": "^15.5.8"
   },
   "peerDependencies": {
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   },
   "keywords": [
     "react",
@@ -71,7 +71,6 @@
     "slide down",
     "animate height"
   ],
-  "author": "Stanko",
   "prepush": [
     "npm run lint-break-on-errors --silent"
   ],
