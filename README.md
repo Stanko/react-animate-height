@@ -67,13 +67,19 @@ class Example extends Component {
 
   CSS class to be applied to the element
 
+  **Please note that you shouldn't apply properties that are messing with the layout (like `display`, `height`...), as these might break height calculations**
+
 * **style**: object
 
   CSS style object, it will be merged with inline styles of the component
 
+  **Please note that you shouldn't apply properties that are messing with the layout (like `display`, `height`...), as these might break height calculations**
+
 * **contentClassName**: string
 
   CSS class to be applied to content wrapper element
+
+  **Please note that you shouldn't apply properties that are messing with the layout (like `display`, `height`...), as these might break height calculations**
 
 * **animationStateClasses**: object
 
