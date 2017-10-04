@@ -1,5 +1,8 @@
 # Animate Height
 
+[![npm version](https://img.shields.io/npm/v/react-animate-height.svg?style=flat-square)](https://www.npmjs.com/package/react-animate-height)
+[![npm downloads](https://img.shields.io/npm/dm/react-animate-height.svg?style=flat-square)](https://www.npmjs.com/package/react-animate-height)
+
 Lightweight, no dependency React component for animating height using CSS transitions.
 Slide up/down the element, and to any specific height.
 
