@@ -53,6 +53,13 @@ const AnimateHeight = class extends React.Component {
     if (this.isNumber(props.height)) {
       height = props.height < 0 ? 0 : props.height;
       overflow = 'hidden';
+    } else if (
+      typeof props.height === 'string' &&
+      props.height.search('%') === props.height.length - 1 &&
+      this.isNumber(props.height.substr(0, props.height.length - 1))
+    ) {
+      height = props.height;
+      overflow = 'hidden';
     }
 
     this.animationStateClasses = Object.assign(ANIMATION_STATE_CLASSES, props.animationStateClasses);
