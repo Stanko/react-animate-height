@@ -54,6 +54,7 @@ const AnimateHeight = class extends React.Component {
       height = props.height < 0 ? 0 : props.height;
       overflow = 'hidden';
     } else if (
+      // Percentage height
       typeof props.height === 'string' &&
       props.height.search('%') === props.height.length - 1 &&
       this.isNumber(props.height.substr(0, props.height.length - 1))
