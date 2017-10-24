@@ -258,7 +258,7 @@ const AnimateHeight = class extends React.Component {
       contentClassName,
       duration,
       easing,
-      onlyClasses,
+      inline,
       style,
     } = this.props;
     const {
@@ -279,7 +279,7 @@ const AnimateHeight = class extends React.Component {
       overflow: overflow || style.overflow,
     };
 
-    if (shouldUseTransitions && !onlyClasses) {
+    if (shouldUseTransitions && inline) {
       componentStyle.WebkitTransition = transitionString;
       componentStyle.MozTransition = transitionString;
       componentStyle.OTransition = transitionString;
@@ -292,7 +292,7 @@ const AnimateHeight = class extends React.Component {
       [className]: className,
     });
 
-    const propsToOmit = ['height', 'duration', 'easing', 'contentClassName', 'animationStateClasses', 'onlyClasses'];
+    const propsToOmit = ['height', 'duration', 'easing', 'contentClassName', 'animationStateClasses', 'inline'];
 
     return (
       <div
@@ -323,9 +323,9 @@ AnimateHeight.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
+  inline: PropTypes.bool,
   onAnimationEnd: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   onAnimationStart: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
-  onlyClasses: PropTypes.bool,
   style: PropTypes.object,
 };
 
@@ -334,7 +334,7 @@ AnimateHeight.defaultProps = {
   easing: 'ease',
   style: {},
   animationStateClasses: ANIMATION_STATE_CLASSES,
-  onlyClasses: false
+  inline: true
 };
 
 export default AnimateHeight;

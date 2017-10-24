@@ -20,9 +20,9 @@ export interface AnimateHeightProps {
   duration?: number;
   easing?: string;
   height?: string | number;
+  inline?: boolean;
   onAnimationEnd?(): void;
   onAnimationStart?(): void;
-  onlyClasses?: boolean;
   style?: CSSProperties;
 }
 

@@ -114,9 +114,9 @@ class Example extends Component {
 
   Callback which will be called when animation ends
   
-* **onlyClasses**: boolean, default: `false`
+* **inline**: boolean, default: `true`
 
-  If this flag is set to `true` only CSS classes will be applied to the lement and inline 
+  If this flag is set to `false` only CSS classes will be applied to the element and inline 
   transition styles will not be present.
 
 Additional props will be passed to the wrapper div, to make adding attrs like `aria-*` easier.
