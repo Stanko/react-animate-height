@@ -53,16 +53,16 @@ class Example extends Component {
 
 ### Props
 
-* **height**: numeric or 'auto', required
+* **height**: numeric or percentage value (ie. `'50%'`) or `'auto'`, required
 
   When changed, element height will be animated to that height.<br/>
   To slide up use <code>0</code>, for slide down use <code>'auto'</code>
 
-* **duration**: integer, default: 250
+* **duration**: integer, default: `250`
 
   Duration of the animation in milliseconds
 
-* **easing**: string, default: 'ease'
+* **easing**: string, default: `'ease'`
 
   CSS easing function to be applied to the animation
 
@@ -113,6 +113,11 @@ class Example extends Component {
 * **onAnimationEnd**: function
 
   Callback which will be called when animation ends
+  
+* **onlyClasses**: boolean, default: `false`
+
+  If this flag is set to `true` only CSS classes will be applied to the lement and inline 
+  transition styles will not be present.
 
 Additional props will be passed to the wrapper div, to make adding attrs like `aria-*` easier.
 
