@@ -3,6 +3,7 @@
   "version": "0.10.5",
   "description": "Lightweight, no dependency React component for animating height using CSS transitions.",
   "main": "lib/AnimateHeight.js",
+  "types": "lib/index.d.ts",
   "author": "Stanko",
   "homepage": "https://github.com/Stanko/react-animate-height",
   "repository": {
@@ -15,7 +16,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server",
-    "build": "rm -rf ./lib && NODE_ENV=\"production\" babel ./source --out-dir ./lib",
+    "build": "rm -rf ./lib && NODE_ENV=\"production\" babel ./source --out-dir ./lib && cp source/index.d.ts ./lib",
     "build-docs": "rm -rf ./dist-docs && EXAMPLE=\"true\" NODE_ENV=\"production\" webpack",
     "publish-to-npm": "npm run build && npm publish",
     "publish-docs": "sh publish-docs.sh",
@@ -27,6 +28,7 @@
     "hook-remove": "prepush remove"
   },
   "devDependencies": {
+    "@types/react": "^16.0.18",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.7.2",
     "babel-eslint": "^7.1.0",
@@ -58,6 +60,9 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "prop-types": "^15.5.8"
+  },
+  "optionalDependencies": {
+    "@types/react": ">=15"
   },
   "peerDependencies": {
     "react": ">=15.6.2",

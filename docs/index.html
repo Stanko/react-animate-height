@@ -54,18 +54,18 @@ import AnimateHeight from 'react-animate-height';
 </pre>
 
       <h3>Props</h3>
-      <b>height</b>: numeric or 'auto', required
+      <b>height</b>: numeric or percentage value (ie. <code>'50%'</code>) or <code>'auto'</code>, required
       <p class="padding-left-20">
         When changed, element height will be animated to that height.<br/>
         To slide up use <code>0</code>, for slide down use <code>'auto'</code>
       </p>
 
-      <b>duration</b>: integer, default: 250
+      <b>duration</b>: integer, default: <code>250</code>
       <p class="padding-left-20">
         Duration of the animation in milliseconds
       </p>
 
-      <b>easing</b>: string, default: 'ease'
+      <b>easing</b>: string, default: <code>'ease'</code>
       <p class="padding-left-20">
         CSS easing function to be applied to the animation
       </p>
@@ -118,6 +118,12 @@ import AnimateHeight from 'react-animate-height';
       <b>onAnimationEnd</b>: function
       <p class="padding-left-20">
         Callback which will be called when animation ends
+      </p>
+
+      <b>applyInlineTransitions</b>: boolean, default: <code>true</code>
+      <p class="padding-left-20">
+        If this flag is set to <code>false</code> only CSS classes will be applied to the element and inline
+        transition styles will not be present.
       </p>
 
       <p>Additional props will be passed to the wrapper div, to make adding attrs like <code>aria-*</code> easier.</p>

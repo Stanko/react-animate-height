@@ -3,7 +3,12 @@ node_modules
 dist
 dist-docs
 docs
+source
 publish-docs.sh
+webpack.config.js
+.babelrc
+.editorconfig
+.eslintrc
 .module-cache
 *.log*
 _nogit
