@@ -114,7 +114,7 @@ class Example extends Component {
 
   Callback which will be called when animation ends
   
-* **inline**: boolean, default: `true`
+* **applyInlineTransitions**: boolean, default: `true`
 
   If this flag is set to `false` only CSS classes will be applied to the element and inline 
   transition styles will not be present.

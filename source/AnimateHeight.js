@@ -253,12 +253,12 @@ const AnimateHeight = class extends React.Component {
 
   render() {
     const {
+      applyInlineTransitions,
       children,
       className,
       contentClassName,
       duration,
       easing,
-      inline,
       style,
     } = this.props;
     const {
@@ -279,7 +279,7 @@ const AnimateHeight = class extends React.Component {
       overflow: overflow || style.overflow,
     };
 
-    if (shouldUseTransitions && inline) {
+    if (shouldUseTransitions && applyInlineTransitions) {
       componentStyle.WebkitTransition = transitionString;
       componentStyle.MozTransition = transitionString;
       componentStyle.OTransition = transitionString;
@@ -292,7 +292,7 @@ const AnimateHeight = class extends React.Component {
       [className]: className,
     });
 
-    const propsToOmit = ['height', 'duration', 'easing', 'contentClassName', 'animationStateClasses', 'inline'];
+    const propsToOmit = ['height', 'duration', 'easing', 'contentClassName', 'animationStateClasses', 'applyInlineTransitions'];
 
     return (
       <div
@@ -314,6 +314,7 @@ const AnimateHeight = class extends React.Component {
 
 AnimateHeight.propTypes = {
   animationStateClasses: PropTypes.object,
+  applyInlineTransitions: PropTypes.boolean,
   children: PropTypes.any.isRequired,
   className: PropTypes.string,
   contentClassName: PropTypes.string,
@@ -323,7 +324,6 @@ AnimateHeight.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
-  inline: PropTypes.bool,
   onAnimationEnd: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   onAnimationStart: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   style: PropTypes.object,
@@ -334,7 +334,7 @@ AnimateHeight.defaultProps = {
   easing: 'ease',
   style: {},
   animationStateClasses: ANIMATION_STATE_CLASSES,
-  inline: true
+  applyInlineTransitions: true
 };
 
 export default AnimateHeight;

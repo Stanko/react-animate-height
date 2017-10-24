@@ -15,12 +15,12 @@ export interface AnimationStateClasses {
 
 export interface AnimateHeightProps {
   animationStateClasses?: AnimationStateClasses;
+  applyInlineTransitions?: boolean;
   className?: string;
   contentClassName?: string;
   duration?: number;
   easing?: string;
   height?: string | number;
-  inline?: boolean;
   onAnimationEnd?(): void;
   onAnimationStart?(): void;
   style?: CSSProperties;
