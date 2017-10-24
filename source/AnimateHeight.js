@@ -292,7 +292,14 @@ const AnimateHeight = class extends React.Component {
       [className]: className,
     });
 
-    const propsToOmit = ['height', 'duration', 'easing', 'contentClassName', 'animationStateClasses', 'applyInlineTransitions'];
+    const propsToOmit = [
+      'height',
+      'duration',
+      'easing',
+      'contentClassName',
+      'animationStateClasses',
+      'applyInlineTransitions',
+    ];
 
     return (
       <div
@@ -334,7 +341,7 @@ AnimateHeight.defaultProps = {
   easing: 'ease',
   style: {},
   animationStateClasses: ANIMATION_STATE_CLASSES,
-  applyInlineTransitions: true
+  applyInlineTransitions: true,
 };
 
 export default AnimateHeight;
