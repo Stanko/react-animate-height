@@ -321,7 +321,7 @@ const AnimateHeight = class extends React.Component {
 
 AnimateHeight.propTypes = {
   animationStateClasses: PropTypes.object,
-  applyInlineTransitions: PropTypes.boolean,
+  applyInlineTransitions: PropTypes.bool,
   children: PropTypes.any.isRequired,
   className: PropTypes.string,
   contentClassName: PropTypes.string,
