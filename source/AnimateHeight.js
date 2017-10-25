@@ -186,10 +186,10 @@ const AnimateHeight = class extends React.Component {
           });
 
           // ANIMATION ENDS
-          // Run a callback if it exists
-          this.runCallback(nextProps.onAnimationEnd);
           // Hide content if height is 0 (to prevent tabbing into it)
           this.hideContent(timeoutState.height);
+          // Run a callback if it exists
+          this.runCallback(nextProps.onAnimationEnd);
         }, nextProps.duration);
       } else {
         // ANIMATION STARTS, run a callback if it exists
@@ -203,10 +203,10 @@ const AnimateHeight = class extends React.Component {
           this.setState(timeoutState);
 
           // ANIMATION ENDS
-          // Run a callback if it exists
-          this.runCallback(nextProps.onAnimationEnd);
           // Hide content if height is 0 (to prevent tabbing into it)
           this.hideContent(newHeight);
+          // Run a callback if it exists
+          this.runCallback(nextProps.onAnimationEnd);
         }, nextProps.duration);
       }
     }
