@@ -63,7 +63,7 @@ const AnimateHeight = class extends React.Component {
       overflow = 'hidden';
     }
 
-    this.animationStateClasses = Object.assign(ANIMATION_STATE_CLASSES, props.animationStateClasses);
+    this.animationStateClasses = { ...ANIMATION_STATE_CLASSES, ...props.animationStateClasses };
 
     const animationStateClasses = this.getStaticStateClasses(height);
 
