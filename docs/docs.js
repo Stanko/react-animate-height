@@ -61,7 +61,12 @@ const Example = class extends React.Component {
               hauled by your window in the death-cart. But this new plague was quicker
               than that&mdash;much quicker.
             </p>
-            <input className='form-control' type='text' placeholder='Test for focus' />
+            <input
+              className='form-control'
+              type='text'
+              placeholder='Test for focus'
+              onFocus={ () => console.log('Input 1 focused') }
+            />
             <p>
               From the moment of the first signs of it, a man would be dead in an
               hour. Some lasted for several hours. Many died within ten or fifteen
@@ -139,7 +144,12 @@ const Example = class extends React.Component {
                 hauled by your window in the death-cart. But this new plague was quicker
                 than that&mdash;much quicker.
               </p>
-              <input className='form-control' type='text' placeholder='Test for focus' />
+              <input
+                className='form-control'
+                type='text'
+                placeholder='Test for focus'
+                onFocus={ () => console.log('Input 2 focused') }
+              />
               <p>
                 From the moment of the first signs of it, a man would be dead in an
                 hour. Some lasted for several hours. Many died within ten or fifteen
