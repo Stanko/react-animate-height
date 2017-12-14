@@ -36,7 +36,7 @@ Import and use it in your React app.
 import React, { Component } from 'react';
 import AnimateHeight from 'react-animate-height';
 
-class Example extends Component {
+export default class Example extends Component {
   state = {
     height: 0,
   };
