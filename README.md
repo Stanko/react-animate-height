@@ -3,8 +3,8 @@
 [![npm version](https://img.shields.io/npm/v/react-animate-height.svg?style=flat-square)](https://www.npmjs.com/package/react-animate-height)
 [![npm downloads](https://img.shields.io/npm/dm/react-animate-height.svg?style=flat-square)](https://www.npmjs.com/package/react-animate-height)
 
-Lightweight, no dependency React component for animating height using CSS transitions.
-Slide up/down the element, and to any specific height.
+Lightweight React component for animating height using CSS transitions.
+Slide up/down the element, and animate it to any specific height.
 
 CSS classes are applied in specific animation states, check `animationStateClasses` prop.
 
@@ -43,7 +43,7 @@ export default class Example extends Component {
 
   toggle = () => {
     const { height } = this.state;
-    
+
     this.setState({
       height: height === 0 ? 'auto' : 0,
     });
@@ -51,7 +51,7 @@ export default class Example extends Component {
 
   render() {
     const { height } = this.state;
-    
+
     return (
       <div>
         <button onClick={ this.toggle }>
@@ -134,10 +134,10 @@ export default class Example extends Component {
 * **onAnimationEnd**: function
 
   Callback which will be called when animation ends
-  
+
 * **applyInlineTransitions**: boolean, default: `true`
 
-  If this flag is set to `false` only CSS classes will be applied to the element and inline 
+  If this flag is set to `false` only CSS classes will be applied to the element and inline
   transition styles will not be present.
 
 Additional props will be passed to the wrapper div, to make adding attrs like `aria-*` easier.
