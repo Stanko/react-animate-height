@@ -65,8 +65,8 @@
     "@types/react": ">=15"
   },
   "peerDependencies": {
-    "react": ">=15.6.2",
-    "react-dom": ">=15.6.2"
+    "react": ">=15.6.2 || ^16.0.0",
+    "react-dom": ">=15.6.2  || ^16.0.0"
   },
   "keywords": [
     "react",
