@@ -1,6 +1,6 @@
 {
   "name": "react-animate-height",
-  "version": "0.10.10",
+  "version": "1.0.0",
   "description": "Lightweight React component for animating height using CSS transitions.",
   "main": "lib/AnimateHeight.js",
   "types": "lib/index.d.ts",
@@ -23,9 +23,7 @@
     "publish-all": "npm run publish-to-npm && npm run publish-docs",
     "lint-break-on-errors": "eslint ./source ./webpack.config.js -f table --ext .js --ext .jsx",
     "lint": "eslint ./source ./webpack.config.js -f table --ext .js --ext .jsx || true",
-    "preview": "rm -rf ./dist && NODE_ENV=\"production\" webpack-dev-server",
-    "hook-add": "prepush install",
-    "hook-remove": "prepush remove"
+    "preview": "rm -rf ./dist && NODE_ENV=\"production\" webpack-dev-server"
   },
   "devDependencies": {
     "@types/react": "^16.0.18",
@@ -49,7 +47,6 @@
     "html-webpack-plugin": "^2.24.1",
     "node-sass": "^4.5.3",
     "postcss-loader": "^1.1.1",
-    "prepush": "^3.1.11",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "sass-loader": "^6.0.5",
@@ -75,9 +72,6 @@
     "slide up",
     "slide down",
     "animate height"
-  ],
-  "prepush": [
-    "npm run lint-break-on-errors --silent"
   ],
   "license": "MIT"
 }

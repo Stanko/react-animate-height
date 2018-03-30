@@ -253,6 +253,7 @@ const AnimateHeight = class extends React.Component {
 
   render() {
     const {
+      animateOpacity,
       applyInlineTransitions,
       children,
       className,
@@ -269,10 +270,6 @@ const AnimateHeight = class extends React.Component {
     } = this.state;
 
 
-    // Include transition passed through styles
-    const userTransition = style.transition ? `${ style.transition },` : '';
-    const transitionString = `${ userTransition } height ${ duration }ms ${ easing } `;
-
     const componentStyle = {
       ...style,
       height,
@@ -280,11 +277,27 @@ const AnimateHeight = class extends React.Component {
     };
 
     if (shouldUseTransitions && applyInlineTransitions) {
-      componentStyle.WebkitTransition = transitionString;
-      componentStyle.MozTransition = transitionString;
-      componentStyle.OTransition = transitionString;
-      componentStyle.msTransition = transitionString;
-      componentStyle.transition = transitionString;
+      componentStyle.transition = `height ${ duration }ms ${ easing }`;
+
+      // Include transition passed through styles
+      if (style.transition) {
+        componentStyle.transition = `${ style.transition }, ${ componentStyle.transition }`;
+      }
+
+      // Add webkit vendor prefix still used by opera, blackberry...
+      componentStyle.WebkitTransition = componentStyle.transition;
+    }
+
+    const contentStyle = {};
+
+    if (animateOpacity) {
+      contentStyle.transition = `opacity ${ duration }ms ${ easing } `;
+      // Add webkit vendor prefix still used by opera, blackberry...
+      contentStyle.WebkitTransition = contentStyle.transition;
+
+      if (height === 0) {
+        contentStyle.opacity = 0;
+      }
     }
 
     const componentClasses = cx({
@@ -310,6 +323,7 @@ const AnimateHeight = class extends React.Component {
       >
         <div
           className={ contentClassName }
+          style={ contentStyle }
           ref={ el => this.contentElement = el }
         >
           { children }
@@ -320,6 +334,7 @@ const AnimateHeight = class extends React.Component {
 };
 
 AnimateHeight.propTypes = {
+  animateOpacity: PropTypes.bool,
   animationStateClasses: PropTypes.object,
   applyInlineTransitions: PropTypes.bool,
   children: PropTypes.any.isRequired,
@@ -337,11 +352,12 @@ AnimateHeight.propTypes = {
 };
 
 AnimateHeight.defaultProps = {
+  animateOpacity: false,
+  animationStateClasses: ANIMATION_STATE_CLASSES,
+  applyInlineTransitions: true,
   duration: 250,
   easing: 'ease',
   style: {},
-  animationStateClasses: ANIMATION_STATE_CLASSES,
-  applyInlineTransitions: true,
 };
 
 export default AnimateHeight;

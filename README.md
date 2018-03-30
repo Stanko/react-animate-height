@@ -5,6 +5,7 @@
 
 Lightweight React component for animating height using CSS transitions.
 Slide up/down the element, and animate it to any specific height.
+Content's opacity can be optionally animated as well (check `animateOpacity` prop bellow).
 
 CSS classes are applied in specific animation states, check `animationStateClasses` prop.
 
@@ -139,6 +140,10 @@ export default class Example extends Component {
 
   If this flag is set to `false` only CSS classes will be applied to the element and inline
   transition styles will not be present.
+
+* **animateOpacity**: boolean, default: `false`
+
+  If set to `true` content will fade-in (and fade-out) while height is animated.
 
 Additional props will be passed to the wrapper div, to make adding attrs like `aria-*` easier.
 
