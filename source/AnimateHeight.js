@@ -306,12 +306,13 @@ const AnimateHeight = class extends React.Component {
     });
 
     const propsToOmit = [
-      'height',
-      'duration',
-      'easing',
-      'contentClassName',
+      'animateOpacity',
       'animationStateClasses',
       'applyInlineTransitions',
+      'contentClassName',
+      'duration',
+      'easing',
+      'height',
     ];
 
     return (
