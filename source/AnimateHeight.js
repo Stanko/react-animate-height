@@ -102,6 +102,9 @@ const AnimateHeight = class extends React.Component {
       const contentHeight = this.contentElement.offsetHeight;
       this.contentElement.style.overflow = '';
 
+      // set total animation time
+      const totalDuration = nextProps.duration + nextProps.delay;
+
       let newHeight = null;
       const timeoutState = {
         height: null, // it will be always set to either 'auto' or specific number
@@ -190,7 +193,7 @@ const AnimateHeight = class extends React.Component {
           this.hideContent(timeoutState.height);
           // Run a callback if it exists
           this.runCallback(nextProps.onAnimationEnd);
-        }, nextProps.duration);
+        }, totalDuration);
       } else {
         // ANIMATION STARTS, run a callback if it exists
         this.runCallback(nextProps.onAnimationStart);
@@ -207,7 +210,7 @@ const AnimateHeight = class extends React.Component {
           this.hideContent(newHeight);
           // Run a callback if it exists
           this.runCallback(nextProps.onAnimationEnd);
-        }, nextProps.duration);
+        }, totalDuration);
       }
     }
   }
@@ -260,6 +263,7 @@ const AnimateHeight = class extends React.Component {
       contentClassName,
       duration,
       easing,
+      delay,
       style,
     } = this.props;
     const {
@@ -277,7 +281,7 @@ const AnimateHeight = class extends React.Component {
     };
 
     if (shouldUseTransitions && applyInlineTransitions) {
-      componentStyle.transition = `height ${ duration }ms ${ easing }`;
+      componentStyle.transition = `height ${ duration }ms ${ easing } ${ delay }ms`;
 
       // Include transition passed through styles
       if (style.transition) {
@@ -291,7 +295,7 @@ const AnimateHeight = class extends React.Component {
     const contentStyle = {};
 
     if (animateOpacity) {
-      contentStyle.transition = `opacity ${ duration }ms ${ easing } `;
+      contentStyle.transition = `opacity ${ duration }ms ${ easing } ${ delay }ms`;
       // Add webkit vendor prefix still used by opera, blackberry...
       contentStyle.WebkitTransition = contentStyle.transition;
 
@@ -313,6 +317,7 @@ const AnimateHeight = class extends React.Component {
       'duration',
       'easing',
       'height',
+      'delay',
     ];
 
     return (
@@ -342,6 +347,7 @@ AnimateHeight.propTypes = {
   className: PropTypes.string,
   contentClassName: PropTypes.string,
   duration: PropTypes.number.isRequired,
+  delay: PropTypes.number.isRequired,
   easing: PropTypes.string.isRequired,
   height: PropTypes.oneOfType([
     PropTypes.string,
@@ -357,6 +363,7 @@ AnimateHeight.defaultProps = {
   animationStateClasses: ANIMATION_STATE_CLASSES,
   applyInlineTransitions: true,
   duration: 250,
+  delay: 0,
   easing: 'ease',
   style: {},
 };

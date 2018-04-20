@@ -18,6 +18,7 @@ export interface AnimateHeightProps {
   applyInlineTransitions?: boolean;
   className?: string;
   contentClassName?: string;
+  delay?: number;
   duration?: number;
   easing?: string;
   height?: string | number;
