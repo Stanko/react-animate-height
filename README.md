@@ -9,6 +9,8 @@ Content's opacity can be optionally animated as well (check `animateOpacity` pro
 
 CSS classes are applied in specific animation states, check `animationStateClasses` prop.
 
+[Changelog](CHANGELOG.md)
+
 ## Demo
 
 Live demo: [stanko.github.io/react-animate-height](https://stanko.github.io/react-animate-height/)
@@ -83,6 +85,10 @@ export default class Example extends Component {
 * **duration**: integer, default: `250`
 
   Duration of the animation in milliseconds
+
+* **delay**: integer, default: `0`
+
+  Animation delat in milliseconds
 
 * **easing**: string, default: `'ease'`
 

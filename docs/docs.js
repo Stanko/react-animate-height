@@ -12,6 +12,7 @@ const Example = class extends React.Component {
       height: 0,
       height2: 'auto',
       height3: 0,
+      delay: 0,
     };
   }
 
@@ -188,13 +189,13 @@ const Example = class extends React.Component {
 
         <h3>Demo, with transition delay</h3>
         <p>
-          Current Height: <b>{ height3 }</b><br/>
+          Current Height: <b>{ height3 }</b><br />
           Current Delay: <b>{ delay }</b>
         </p>
         <p>Set delay to:</p>
         <div className='buttons'>
           <button className='btn btn-sm' onClick={ () => this.setState({ delay: 0 }) }>
-            0
+            0 (default)
           </button>
           <button className='btn btn-sm' onClick={ () => this.setState({ delay: 300 }) }>
             300
@@ -226,10 +227,8 @@ const Example = class extends React.Component {
         </div>
         <AnimateHeight
           height={ height3 }
-          delay={delay}
+          delay={ delay }
           duration={ 500 }
-          onAnimationEnd={ () => { console.log('React Animate Height - animation ended'); } }
-          onAnimationStart={ () => { console.log('React Animate Height - animation started'); } }
           className='demo demo-3'
           animateOpacity
         >
