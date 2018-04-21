@@ -33,11 +33,12 @@
       <p>
         Lightweight, no dependency React component for animating height using CSS transitions.
         Slide up/down the element, and to any specific height.
-        Check the <a href="#demo">demo</a> on this page.
+        Check the <a href="#demo">demo</a> lower on this page.
       </p>
       <p>CSS classes are applied in specific animation states, check <code>animationStateClasses</code> prop.</p>
       <p>
-        Detailed documentation is on <a href='https://github.com/Stanko/react-animate-height'>GitHub</a>.
+        Detailed documentation is available on
+        <a href='https://github.com/Stanko/react-animate-height' class='padding-right-20'>GitHub</a>
       </p>
 
       <h3>Usage</h3>
@@ -47,88 +48,14 @@ import AnimateHeight from 'react-animate-height';
 
 &lt;AnimateHeight
   duration={ 500 }
-  height={ 'auto' }>
+  height={ 'auto' }
+&gt;
   &lt;h1&gt;Your content goes here&lt;/h1&gt;
   &lt;p&gt;Put as many React or HTML components here.&lt;/p&gt;
 &lt;/AnimateHeight&gt;
 </pre>
 
-      <h3>Props</h3>
-      <b>height</b>: numeric or percentage value (ie. <code>'50%'</code>) or <code>'auto'</code>, required
-      <p class="padding-left-20">
-        When changed, element height will be animated to that height.<br/>
-        To slide up use <code>0</code>, for slide down use <code>'auto'</code>
-      </p>
-
-      <b>duration</b>: integer, default: <code>250</code>
-      <p class="padding-left-20">
-        Duration of the animation in milliseconds
-      </p>
-
-      <b>easing</b>: string, default: <code>'ease'</code>
-      <p class="padding-left-20">
-        CSS easing function to be applied to the animation
-      </p>
-
-      <b>className</b>: string
-      <p class="padding-left-20">
-        CSS class to be applied to the element
-      </p>
-
-      <b>style</b>: object
-      <p>
-        CSS style object, it will be merged with inline styles of the component
-      </p>
-
-      <b>contentClassName</b>: string
-      <p class="padding-left-20">
-        CSS class to be applied to content wrapper element
-      </p>
-
-      <b>animationStateClasses</b>: object
-      <p class="padding-left-20">
-        Object containing CSS class names for animation states, default:
-      </p>
-
-<pre class="margin-left-20">
-{
-  animating:                  'rah-animating',
-  animatingUp:                'rah-animating--up',
-  animatingDown:              'rah-animating--down',
-  static:                     'rah-static',
-  animatingToHeightZero:      'rah-animating--to-height-zero',
-  animatingToHeightAuto:      'rah-animating--to-height-auto',
-  animatingToHeightSpecific:  'rah-animating--to-height-specific',
-  staticHeightZero:           'rah-static--height-zero',
-  staticHeightAuto:           'rah-static--height-auto',
-  staticHeightSpecific:       'rah-static--height-specific',
-}
-</pre>
-
-      <p class="padding-left-20">
-        Please note that this one will be merged with the default object and cached when component is created,
-        so changing it afterwards will have no effect.
-      </p>
-
-      <b>onAnimationStart</b>: function
-      <p class="padding-left-20">
-        Callback which will be called when animation starts
-      </p>
-
-      <b>onAnimationEnd</b>: function
-      <p class="padding-left-20">
-        Callback which will be called when animation ends
-      </p>
-
-      <b>applyInlineTransitions</b>: boolean, default: <code>true</code>
-      <p class="padding-left-20">
-        If this flag is set to <code>false</code> only CSS classes will be applied to the element and inline
-        transition styles will not be present.
-      </p>
-
-      <p>Additional props will be passed to the wrapper div, to make adding attrs like <code>aria-*</code> easier.</p>
     </div>
-
     <div id="demo" class="content"></div>
   </body>
 </html>
