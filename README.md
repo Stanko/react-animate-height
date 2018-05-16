@@ -88,7 +88,7 @@ export default class Example extends Component {
 
 * **delay**: integer, default: `0`
 
-  Animation delat in milliseconds
+  Animation delay in milliseconds
 
 * **easing**: string, default: `'ease'`
 
