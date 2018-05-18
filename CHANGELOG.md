@@ -1,5 +1,14 @@
 # Changelog
 
+### v1.0.3
+
+20.05.2018.
+
+**Changed**
+
+* Moved helpers outside of component to make component lighter
+* Updated few dependencies
+
 
 ### v1.0.2
 

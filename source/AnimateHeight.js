@@ -43,6 +43,16 @@ function startAnimationHelper(callback) {
   });
 }
 
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function runCallback(callback) {
+  if (callback && typeof callback === 'function') {
+    callback();
+  }
+}
+
 const AnimateHeight = class extends React.Component {
   constructor(props) {
     super(props);
@@ -50,14 +60,14 @@ const AnimateHeight = class extends React.Component {
     let height = 'auto';
     let overflow = 'visible';
 
-    if (this.isNumber(props.height)) {
+    if (isNumber(props.height)) {
       height = props.height < 0 ? 0 : props.height;
       overflow = 'hidden';
     } else if (
       // Percentage height
       typeof props.height === 'string' &&
       props.height.search('%') === props.height.length - 1 &&
-      this.isNumber(props.height.substr(0, props.height.length - 1))
+      isNumber(props.height.substr(0, props.height.length - 1))
     ) {
       height = props.height;
       overflow = 'hidden';
@@ -113,7 +123,7 @@ const AnimateHeight = class extends React.Component {
       const isCurrentHeightAuto = this.state.height === 'auto';
 
 
-      if (this.isNumber(nextProps.height)) {
+      if (isNumber(nextProps.height)) {
         // If new height is a number
         newHeight = nextProps.height < 0 ? 0 : nextProps.height;
         timeoutState.height = newHeight;
@@ -121,7 +131,7 @@ const AnimateHeight = class extends React.Component {
         // Percentage height
         typeof nextProps.height === 'string' &&
         nextProps.height.search('%') === nextProps.height.length - 1 &&
-        this.isNumber(nextProps.height.substr(0, nextProps.height.length - 1))
+        isNumber(nextProps.height.substr(0, nextProps.height.length - 1))
       ) {
         newHeight = nextProps.height;
         timeoutState.height = newHeight;
@@ -178,7 +188,7 @@ const AnimateHeight = class extends React.Component {
           this.setState(timeoutState);
 
           // ANIMATION STARTS, run a callback if it exists
-          this.runCallback(nextProps.onAnimationStart);
+          runCallback(nextProps.onAnimationStart);
         });
 
         // Set static classes and remove transitions when animation ends
@@ -192,11 +202,11 @@ const AnimateHeight = class extends React.Component {
           // Hide content if height is 0 (to prevent tabbing into it)
           this.hideContent(timeoutState.height);
           // Run a callback if it exists
-          this.runCallback(nextProps.onAnimationEnd);
+          runCallback(nextProps.onAnimationEnd);
         }, totalDuration);
       } else {
         // ANIMATION STARTS, run a callback if it exists
-        this.runCallback(nextProps.onAnimationStart);
+        runCallback(nextProps.onAnimationStart);
 
         // Set end height, classes and remove transitions when animation is complete
         this.timeoutID = setTimeout(() => {
@@ -209,7 +219,7 @@ const AnimateHeight = class extends React.Component {
           // Hide content if height is 0 (to prevent tabbing into it)
           this.hideContent(newHeight);
           // Run a callback if it exists
-          this.runCallback(nextProps.onAnimationEnd);
+          runCallback(nextProps.onAnimationEnd);
         }, totalDuration);
       }
     }
@@ -221,16 +231,6 @@ const AnimateHeight = class extends React.Component {
     this.timeoutID = null;
     this.animationClassesTimeoutID = null;
     this.animationStateClasses = null;
-  }
-
-  isNumber(n) {
-    return !isNaN(parseFloat(n)) && isFinite(n);
-  }
-
-  runCallback(callback) {
-    if (callback && typeof callback === 'function') {
-      callback();
-    }
   }
 
   showContent() {
