@@ -1,5 +1,13 @@
 # Changelog
 
+### v2.0.0
+
+**Changed**
+
+* Replaced `componentWillReceiveProps` by `componentDidUpdate` to address changes introduces with React v16.3
+
+-----
+
 ### v1.0.4
 
 20.05.2018.

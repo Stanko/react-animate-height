@@ -102,6 +102,7 @@ if (isProduction) {
   // Development plugins
   plugins.push(
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(docsPath, 'index.html'),
       path: outputDistPath,

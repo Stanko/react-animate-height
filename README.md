@@ -11,6 +11,12 @@ CSS classes are applied in specific animation states, check `animationStateClass
 
 [Changelog](CHANGELOG.md)
 
+### Note about versions
+
+For React >=16.3.0 (17 included) make sure you are using v2.x.
+
+Read more about [React lifecycle changes](https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html) introduced with React 16.3.
+
 ## Demo
 
 Live demo: [stanko.github.io/react-animate-height](https://stanko.github.io/react-animate-height/)
