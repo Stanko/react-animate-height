@@ -1,5 +1,15 @@
 # Changelog
 
+### v1.0.4
+
+20.05.2018.
+
+**Changed**
+
+* Enabled react v16.3+ in peer dependencies until react-animate-height v2 is out
+
+-----
+
 ### v1.0.3
 
 20.05.2018.
@@ -9,6 +19,7 @@
 * Moved helpers outside of component to make component lighter
 * Updated few dependencies
 
+-----
 
 ### v1.0.2
 
