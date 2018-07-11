@@ -352,9 +352,9 @@ AnimateHeight.propTypes = {
   children: PropTypes.any.isRequired,
   className: PropTypes.string,
   contentClassName: PropTypes.string,
-  duration: PropTypes.number.isRequired,
-  delay: PropTypes.number.isRequired,
-  easing: PropTypes.string.isRequired,
+  duration: PropTypes.number,
+  delay: PropTypes.number,
+  easing: PropTypes.string,
   height: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,

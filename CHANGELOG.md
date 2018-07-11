@@ -1,7 +1,15 @@
 # Changelog
 
-### v2.0.0
-### v2.0.1
+
+### v2.0.2
+
+11.07.2018.
+
+**Fixed**
+
+* Fixed type script definitions file
+
+### v2.0.0 and v2.0.1
 
 20.05.2018.
 
