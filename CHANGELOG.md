@@ -1,5 +1,13 @@
 # Changelog
 
+### v2.0.3
+
+12.07.2018.
+
+**Fixed**
+
+* Fixed small bug introduced with 2.0.0 - In `componentDidMount`, `this.state` was used instead of `prevState`
+* Content is not being hidden if set height is `auto`
 
 ### v2.0.2
 

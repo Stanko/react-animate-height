@@ -15,6 +15,17 @@ const ANIMATION_STATE_CLASSES = {
   staticHeightSpecific: 'rah-static--height-specific',
 };
 
+const PROPS_TO_OMIT = [
+  'animateOpacity',
+  'animationStateClasses',
+  'applyInlineTransitions',
+  'contentClassName',
+  'duration',
+  'easing',
+  'height',
+  'delay',
+];
+
 function omit(obj, ...keys) {
   if (!keys.length) {
     return obj;
@@ -96,7 +107,7 @@ const AnimateHeight = class extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const {
       delay,
       duration,
@@ -109,7 +120,7 @@ const AnimateHeight = class extends React.Component {
     if (this.contentElement && height !== prevProps.height) {
       // Remove display: none from the content div
       // if it was hidden to prevent tabbing into it
-      this.showContent();
+      this.showContent(prevState.height);
 
       // Cache content height
       this.contentElement.style.overflow = 'hidden';
@@ -124,7 +135,7 @@ const AnimateHeight = class extends React.Component {
         height: null, // it will be always set to either 'auto' or specific number
         overflow: 'hidden',
       };
-      const isCurrentHeightAuto = this.state.height === 'auto';
+      const isCurrentHeightAuto = prevState.height === 'auto';
 
 
       if (isNumber(height)) {
@@ -142,7 +153,7 @@ const AnimateHeight = class extends React.Component {
       } else {
         // If not, animate to content height
         // and then reset to auto
-        newHeight = contentHeight;
+        newHeight = contentHeight; // TODO solve contentHeight = 0
         timeoutState.height = 'auto';
         timeoutState.overflow = null;
       }
@@ -222,8 +233,12 @@ const AnimateHeight = class extends React.Component {
           this.setState(timeoutState);
 
           // ANIMATION ENDS
-          // Hide content if height is 0 (to prevent tabbing into it)
-          this.hideContent(newHeight);
+          // If height is auto, don't hide the content
+          // (case when element is empty, therefore height is 0)
+          if (height !== 'auto') {
+            // Hide content if height is 0 (to prevent tabbing into it)
+            this.hideContent(newHeight); // TODO solve newHeight = 0
+          }
           // Run a callback if it exists
           runCallback(onAnimationEnd);
         }, totalDuration);
@@ -239,8 +254,8 @@ const AnimateHeight = class extends React.Component {
     this.animationStateClasses = null;
   }
 
-  showContent() {
-    if (this.state.height === 0) {
+  showContent(height) {
+    if (height === 0) {
       this.contentElement.style.display = '';
     }
   }
@@ -315,20 +330,9 @@ const AnimateHeight = class extends React.Component {
       [className]: className,
     });
 
-    const propsToOmit = [
-      'animateOpacity',
-      'animationStateClasses',
-      'applyInlineTransitions',
-      'contentClassName',
-      'duration',
-      'easing',
-      'height',
-      'delay',
-    ];
-
     return (
       <div
-        { ...omit(this.props, ...propsToOmit) }
+        { ...omit(this.props, ...PROPS_TO_OMIT) }
         aria-hidden={ height === 0 }
         className={ componentClasses }
         style={ componentStyle }
