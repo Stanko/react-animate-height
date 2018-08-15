@@ -1,5 +1,15 @@
 # Changelog
 
+### v2.0.4
+
+15.08.2018.
+
+**Refactored**
+
+* Added `isPercentage` helper function.
+
+-----
+
 ### v2.0.3
 
 12.07.2018.
@@ -9,6 +19,8 @@
 * Fixed small bug introduced with 2.0.0 - In `componentDidMount`, `this.state` was used instead of `prevState`
 * Content is not being hidden if set height is `auto`
 
+-----
+
 ### v2.0.2
 
 11.07.2018.
@@ -16,6 +28,8 @@
 **Fixed**
 
 * Fixed type script definitions file
+
+-----
 
 ### v2.0.0 and v2.0.1
 

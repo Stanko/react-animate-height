@@ -58,6 +58,13 @@ function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
+function isPercentage(height) {
+  // Percentage height
+  return typeof height === 'string' &&
+    height.search('%') === height.length - 1 &&
+    isNumber(height.substr(0, height.length - 1));
+}
+
 function runCallback(callback) {
   if (callback && typeof callback === 'function') {
     callback();
@@ -74,12 +81,7 @@ const AnimateHeight = class extends React.Component {
     if (isNumber(props.height)) {
       height = props.height < 0 ? 0 : props.height;
       overflow = 'hidden';
-    } else if (
-      // Percentage height
-      typeof props.height === 'string' &&
-      props.height.search('%') === props.height.length - 1 &&
-      isNumber(props.height.substr(0, props.height.length - 1))
-    ) {
+    } else if (isPercentage(props.height)) {
       height = props.height;
       overflow = 'hidden';
     }
@@ -142,12 +144,7 @@ const AnimateHeight = class extends React.Component {
         // If new height is a number
         newHeight = height < 0 ? 0 : height;
         timeoutState.height = newHeight;
-      } else if (
-        // Percentage height
-        typeof height === 'string' &&
-        height.search('%') === height.length - 1 &&
-        isNumber(height.substr(0, height.length - 1))
-      ) {
+      } else if (isPercentage(height)) {
         newHeight = height;
         timeoutState.height = newHeight;
       } else {
