@@ -30,6 +30,7 @@ npm start
 
 Then open [`localhost:8080`](http://localhost:8080) in your browser of choice browser.
 
+Or play with [sandbox](https://codesandbox.io/s/133kkpvx7).
 
 ## Quick start
 
