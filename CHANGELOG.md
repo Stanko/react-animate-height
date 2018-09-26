@@ -1,5 +1,15 @@
 # Changelog
 
+### v2.0.5
+
+26.09.2018.
+
+**Fixed**
+
+* Fixed [#61](https://github.com/Stanko/react-animate-height/issues/61) - omitted `onAnimationStart` and `onAnimationEnd` from being passed to the DOM element directly.
+
+-----
+
 ### v2.0.4
 
 15.08.2018.

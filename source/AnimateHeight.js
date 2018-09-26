@@ -19,11 +19,14 @@ const PROPS_TO_OMIT = [
   'animateOpacity',
   'animationStateClasses',
   'applyInlineTransitions',
+  'children',
   'contentClassName',
+  'delay',
   'duration',
   'easing',
   'height',
-  'delay',
+  'onAnimationEnd',
+  'onAnimationStart',
 ];
 
 function omit(obj, ...keys) {
