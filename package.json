@@ -1,6 +1,6 @@
 {
   "name": "react-animate-height",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Lightweight React component for animating height using CSS transitions.",
   "main": "lib/AnimateHeight.js",
   "types": "lib/index.d.ts",
@@ -21,7 +21,7 @@
     "publish-to-npm": "npm run build && npm publish",
     "publish-docs": "sh publish-docs.sh",
     "publish-all": "npm run publish-to-npm && npm run publish-docs",
-    "postpublish" : "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags",
+    "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags",
     "lint-break-on-errors": "eslint ./source ./webpack.config.js -f table --ext .js --ext .jsx",
     "lint": "eslint ./source ./webpack.config.js -f table --ext .js --ext .jsx || true",
     "preview": "rm -rf ./dist && NODE_ENV=\"production\" webpack-dev-server"
@@ -37,7 +37,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-react-hmre": "^1.1.1",
     "babel-runtime": "^6.6.1",
-    "css-loader": "^0.28.11 ",
+    "css-loader": "^0.28.11",
     "eslint": "^3.10.1",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.12.0",
@@ -57,9 +57,6 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "prop-types": "^15.6.1"
-  },
-  "optionalDependencies": {
-    "@types/react": ">=16"
   },
   "peerDependencies": {
     "react": ">=15.6.2",

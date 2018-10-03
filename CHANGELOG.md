@@ -1,5 +1,15 @@
 # Changelog
 
+### v2.0.6
+
+03.10.2018.
+
+**Changed**
+
+* Removed `@types/react` from `optionalDependencies` [#62](https://github.com/Stanko/react-animate-height/issues/62).
+
+-----
+
 ### v2.0.5
 
 26.09.2018.

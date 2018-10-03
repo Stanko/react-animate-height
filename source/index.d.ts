@@ -17,6 +17,7 @@ export interface AnimateHeightProps {
   animateOpacity?: boolean;
   animationStateClasses?: AnimationStateClasses;
   applyInlineTransitions?: boolean;
+  children: any;
   className?: string;
   contentClassName?: string;
   delay?: number;
