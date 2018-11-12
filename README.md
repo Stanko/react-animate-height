@@ -143,11 +143,15 @@ export default class Example extends Component {
 
 * **onAnimationStart**: function
 
-  Callback which will be called when animation starts
+  Callback which will be called when animation starts.
+
+  This first argument passed to this callback is an object containing `newHeight`, the pixel value of the height at which the animation will end.
 
 * **onAnimationEnd**: function
 
-  Callback which will be called when animation ends
+  Callback which will be called when animation ends.
+
+  This first argument passed to this callback is an object containing `newHeight`, the pixel value of the height at which the animation ended.
 
 * **applyInlineTransitions**: boolean, default: `true`
 

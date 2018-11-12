@@ -68,9 +68,9 @@ function isPercentage(height) {
     isNumber(height.substr(0, height.length - 1));
 }
 
-function runCallback(callback) {
+function runCallback(callback, params) {
   if (callback && typeof callback === 'function') {
-    callback();
+    callback(params);
   }
 }
 
@@ -205,7 +205,7 @@ const AnimateHeight = class extends React.Component {
           this.setState(timeoutState);
 
           // ANIMATION STARTS, run a callback if it exists
-          runCallback(onAnimationStart);
+          runCallback(onAnimationStart, { newHeight: timeoutState.height });
         });
 
         // Set static classes and remove transitions when animation ends
@@ -219,11 +219,11 @@ const AnimateHeight = class extends React.Component {
           // Hide content if height is 0 (to prevent tabbing into it)
           this.hideContent(timeoutState.height);
           // Run a callback if it exists
-          runCallback(onAnimationEnd);
+          runCallback(onAnimationEnd, { newHeight: timeoutState.height });
         }, totalDuration);
       } else {
         // ANIMATION STARTS, run a callback if it exists
-        runCallback(onAnimationStart);
+        runCallback(onAnimationStart, { newHeight });
 
         // Set end height, classes and remove transitions when animation is complete
         this.timeoutID = setTimeout(() => {
@@ -240,7 +240,7 @@ const AnimateHeight = class extends React.Component {
             this.hideContent(newHeight); // TODO solve newHeight = 0
           }
           // Run a callback if it exists
-          runCallback(onAnimationEnd);
+          runCallback(onAnimationEnd, { newHeight });
         }, totalDuration);
       }
     }
