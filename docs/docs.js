@@ -128,8 +128,8 @@ const Example = class extends React.Component {
         <AnimateHeight
           height={ height2 }
           duration={ 500 }
-          onAnimationEnd={ () => { console.log('React Animate Height - animation ended'); } }
-          onAnimationStart={ () => { console.log('React Animate Height - animation started'); } }
+          onAnimationEnd={ (params) => { console.log('React Animate Height - animation ended', params); } }
+          onAnimationStart={ (params) => { console.log('React Animate Height - animation started', params); } }
           className='demo demo-2'
           animateOpacity
         >

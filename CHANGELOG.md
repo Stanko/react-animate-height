@@ -1,5 +1,15 @@
 # Changelog
 
+### v2.0.7
+
+12.11.2018.
+
+**Added**
+
+* Added param to `onAnimationStart` and `onAnimationEnd` callbacks, it is a object containing `newHeight` value in pixels.
+
+-----
+
 ### v2.0.6
 
 03.10.2018.
