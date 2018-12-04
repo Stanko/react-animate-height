@@ -19,7 +19,7 @@ Read more about [React lifecycle changes](https://reactjs.org/blog/2018/03/27/up
 
 ## Demo
 
-Live demo: [stanko.github.io/react-animate-height](https://stanko.github.io/react-animate-height/)
+Live demo: [muffinman.io/react-animate-height](https://muffinman.io/react-animate-height/)
 
 To build the examples locally, run:
 
