@@ -17,12 +17,12 @@ export interface AnimateHeightProps {
   animateOpacity?: boolean;
   animationStateClasses?: AnimationStateClasses;
   applyInlineTransitions?: boolean;
-  children: ReactNode;
+  children: ReactNode | ReactNode[];
   className?: string;
   contentClassName?: string;
   delay?: number;
   duration?: number;
-  easing?: "ease" | "linear" | "ease-in" | "ease-out" | "ease-in-out";
+  easing?: "ease" | "linear" | "ease-in" | "ease-out" | "ease-in-out" | string;
   height?: string | number;
   onAnimationEnd?(props: { newHeight: number }): void;
   onAnimationStart?(props: { newHeight: number }): void;

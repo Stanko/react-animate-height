@@ -1,5 +1,15 @@
 # Changelog
 
+### v2.0.8
+
+16.03.2019.
+
+**Fixed**
+
+* Fixed type definitions [#68](https://github.com/Stanko/react-animate-height/issues/68).
+
+-----
+
 ### v2.0.7
 
 12.11.2018.
