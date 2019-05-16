@@ -82,10 +82,10 @@ const AnimateHeight = class extends React.Component {
     let overflow = 'visible';
 
     if (isNumber(props.height)) {
-      height = props.height < 0 ? 0 : props.height;
+      height = props.height < 0 || props.height === '0' ? 0 : props.height;
       overflow = 'hidden';
     } else if (isPercentage(props.height)) {
-      height = props.height;
+      height = props.height === '0%' ? 0 : props.height;
       overflow = 'hidden';
     }
 
@@ -145,10 +145,10 @@ const AnimateHeight = class extends React.Component {
 
       if (isNumber(height)) {
         // If new height is a number
-        newHeight = height < 0 ? 0 : height;
+        newHeight = height < 0 || height === '0' ? 0 : height;
         timeoutState.height = newHeight;
       } else if (isPercentage(height)) {
-        newHeight = height;
+        newHeight = height === '0%' ? 0 : height;
         timeoutState.height = newHeight;
       } else {
         // If not, animate to content height
@@ -349,6 +349,19 @@ const AnimateHeight = class extends React.Component {
   }
 };
 
+const heightPropType = (props, propName, componentName) => {
+  const value = props[propName];
+
+  if ((typeof value === 'number' && value >= 0) || isPercentage(value) || value === 'auto') {
+    return null;
+  }
+
+  return new TypeError(
+    `value "${ value }" of type "${ typeof value }" is invalid type for ${ propName } in ${ componentName }. ` +
+    'It needs to be a positive number, string "auto" or percentage string (e.g. "15%").'
+  );
+};
+
 AnimateHeight.propTypes = {
   animateOpacity: PropTypes.bool,
   animationStateClasses: PropTypes.object,
@@ -359,10 +372,7 @@ AnimateHeight.propTypes = {
   duration: PropTypes.number,
   delay: PropTypes.number,
   easing: PropTypes.string,
-  height: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  height: heightPropType,
   onAnimationEnd: PropTypes.func,
   onAnimationStart: PropTypes.func,
   style: PropTypes.object,

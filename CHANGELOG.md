@@ -1,5 +1,15 @@
 # Changelog
 
+### v2.0.9
+
+16.05.2019.
+
+**Fixed**
+
+* Improved prop types for `height` prop.
+
+-----
+
 ### v2.0.8
 
 16.03.2019.
