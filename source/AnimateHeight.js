@@ -82,9 +82,11 @@ const AnimateHeight = class extends React.Component {
     let overflow = 'visible';
 
     if (isNumber(props.height)) {
+      // If value is string "0" make sure we convert it to number 0
       height = props.height < 0 || props.height === '0' ? 0 : props.height;
       overflow = 'hidden';
     } else if (isPercentage(props.height)) {
+      // If value is string "0%" make sure we convert it to number 0
       height = props.height === '0%' ? 0 : props.height;
       overflow = 'hidden';
     }
@@ -144,10 +146,11 @@ const AnimateHeight = class extends React.Component {
 
 
       if (isNumber(height)) {
-        // If new height is a number
+        // If value is string "0" make sure we convert it to number 0
         newHeight = height < 0 || height === '0' ? 0 : height;
         timeoutState.height = newHeight;
       } else if (isPercentage(height)) {
+        // If value is string "0%" make sure we convert it to number 0
         newHeight = height === '0%' ? 0 : height;
         timeoutState.height = newHeight;
       } else {
