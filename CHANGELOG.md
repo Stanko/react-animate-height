@@ -2,6 +2,16 @@
 
 ### v2.0.9
 
+17.06.2019.
+
+**Fixed**
+
+* Package now works as a ESM module [#73](https://github.com/Stanko/react-animate-height/issues/73).
+
+-----
+
+### v2.0.9
+
 16.05.2019.
 
 **Fixed**
