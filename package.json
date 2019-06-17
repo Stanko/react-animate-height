@@ -3,6 +3,7 @@
   "version": "2.0.9",
   "description": "Lightweight React component for animating height using CSS transitions.",
   "main": "lib/AnimateHeight.js",
+  "module": "source/index.js",
   "types": "lib/index.d.ts",
   "author": "Stanko",
   "homepage": "https://github.com/Stanko/react-animate-height",
