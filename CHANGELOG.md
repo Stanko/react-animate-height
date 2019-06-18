@@ -1,6 +1,16 @@
 # Changelog
 
-### v2.0.10
+### v2.0.14
+
+18.06.2019.
+
+**Fixed**
+
+* Reverted back changes, which led to a broken build.
+
+-----
+
+### v2.0.10-v2.0.13
 
 17.06.2019.
 
