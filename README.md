@@ -70,7 +70,7 @@ export default class Example extends Component {
 
         <AnimateHeight
           duration={ 500 }
-          height={ height } // see props documentation bellow
+          height={ height } // see props documentation below
         >
           <h1>Your content goes here</h1>
           <p>Put as many React or HTML components here.</p>
