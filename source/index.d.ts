@@ -26,9 +26,12 @@ export interface AnimateHeightProps {
   height?: string | number;
   onAnimationEnd?(props: { newHeight: number }): void;
   onAnimationStart?(props: { newHeight: number }): void;
+  opacityDelay?: number;
+  opacityDuration?: number;
+  opacityEasing?: "ease" | "linear" | "ease-in" | "ease-out" | "ease-in-out" | string;
   style?: CSSProperties;
 }
 
-declare class AnimateHeight extends Component<AnimateHeightProps> {}
+declare class AnimateHeight extends Component<AnimateHeightProps> { }
 
 export default AnimateHeight;

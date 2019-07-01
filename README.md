@@ -89,17 +89,29 @@ export default class Example extends Component {
   When changed, element height will be animated to that height.<br/>
   To slide up use <code>0</code>, for slide down use <code>'auto'</code>
 
-* **duration**: integer, default: `250`
-
-  Duration of the animation in milliseconds
-
 * **delay**: integer, default: `0`
 
   Animation delay in milliseconds
 
+* **duration**: integer, default: `250`
+
+  Duration of the animation in milliseconds
+
 * **easing**: string, default: `'ease'`
 
   CSS easing function to be applied to the animation
+
+* **opacityDelay**: integer, default: `0`
+
+  Animation delay for the opacity property in milliseconds, only active if `animateOpacity` is `true`. If this is not set, the value is taken from `delay`.
+
+* **opacityDuration**: integer, default: `250`
+
+  Duration of the animation for the opacity property in milliseconds, only active if `animateOpacity` is `true`. If this is not set, the value is taken from `duration`.
+
+* **opacityEasing**: string, default: `'ease'`
+
+  CSS easing function to be applied to the animation for the opacity property, only active if `animateOpacity` is `true`. If this is not set, the value is taken from `easing`.
 
 * **className**: string
 
