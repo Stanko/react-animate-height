@@ -387,8 +387,8 @@ AnimateHeight.propTypes = {
   onAnimationEnd: PropTypes.func,
   onAnimationStart: PropTypes.func,
   opacityDelay: PropTypes.number,
-  opacityDuration: PropTypes.string,
-  opacityEasing: PropTypes.number,
+  opacityDuration: PropTypes.number,
+  opacityEasing: PropTypes.string,
   style: PropTypes.object,
 };
 
