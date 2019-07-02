@@ -32,6 +32,6 @@ export interface AnimateHeightProps {
   style?: CSSProperties;
 }
 
-declare class AnimateHeight extends Component<AnimateHeightProps> { }
+declare class AnimateHeight extends Component<AnimateHeightProps> {}
 
 export default AnimateHeight;
