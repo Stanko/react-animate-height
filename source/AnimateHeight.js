@@ -313,11 +313,11 @@ const AnimateHeight = class extends React.Component {
     };
 
     if (shouldUseTransitions && applyInlineTransitions) {
-      componentStyle.transition = `height ${duration}ms ${easing} ${delay}ms`;
+      componentStyle.transition = `height ${ duration }ms ${ easing } ${ delay }ms`;
 
       // Include transition passed through styles
       if (style.transition) {
-        componentStyle.transition = `${style.transition}, ${componentStyle.transition}`;
+        componentStyle.transition = `${ style.transition }, ${ componentStyle.transition }`;
       }
 
       // Add webkit vendor prefix still used by opera, blackberry...
@@ -327,7 +327,7 @@ const AnimateHeight = class extends React.Component {
     const contentStyle = {};
 
     if (animateOpacity) {
-      contentStyle.transition = `opacity ${opacityDuration ? opacityDuration : duration}ms ${opacityEasing ? opacityEasing : easing} ${opacityDelay ? opacityDelay : delay}ms`;
+      contentStyle.transition = `opacity ${ opacityDuration ? opacityDuration : duration }ms ${ opacityEasing ? opacityEasing : easing } ${ opacityDelay ? opacityDelay : delay }ms`;
       // Add webkit vendor prefix still used by opera, blackberry...
       contentStyle.WebkitTransition = contentStyle.transition;
 
@@ -343,17 +343,17 @@ const AnimateHeight = class extends React.Component {
 
     return (
       <div
-        {...omit(this.props, ...PROPS_TO_OMIT)}
-        aria-hidden={height === 0}
-        className={componentClasses}
-        style={componentStyle}
+        { ...omit(this.props, ...PROPS_TO_OMIT) }
+        aria-hidden={ height === 0 }
+        className={ componentClasses }
+        style={ componentStyle }
       >
         <div
-          className={contentClassName}
-          style={contentStyle}
-          ref={el => this.contentElement = el}
+          className={ contentClassName }
+          style={ contentStyle }
+          ref={ el => this.contentElement = el }
         >
-          {children}
+          { children }
         </div>
       </div>
     );
@@ -368,7 +368,7 @@ const heightPropType = (props, propName, componentName) => {
   }
 
   return new TypeError(
-    `value "${value}" of type "${typeof value}" is invalid type for ${propName} in ${componentName}. ` +
+    `value "${ value }" of type "${ typeof value }" is invalid type for ${ propName } in ${ componentName }. ` +
     'It needs to be a positive number, string "auto" or percentage string (e.g. "15%").'
   );
 };
