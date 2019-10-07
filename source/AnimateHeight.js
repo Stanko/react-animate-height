@@ -104,6 +104,8 @@ const AnimateHeight = class extends React.Component {
   }
 
   componentDidMount() {
+    this._mounted = true;
+
     const { height } = this.state;
 
     // Hide content if height is 0 (to prevent tabbing into it)
@@ -205,6 +207,10 @@ const AnimateHeight = class extends React.Component {
         timeoutState.shouldUseTransitions = true;
 
         startAnimationHelper(() => {
+          if (!this._mounted) {
+            return;
+          }
+
           this.setState(timeoutState);
 
           // ANIMATION STARTS, run a callback if it exists
@@ -250,6 +256,7 @@ const AnimateHeight = class extends React.Component {
   }
 
   componentWillUnmount() {
+    this._mounted = false;
     clearTimeout(this.timeoutID);
     clearTimeout(this.animationClassesTimeoutID);
     this.timeoutID = null;
