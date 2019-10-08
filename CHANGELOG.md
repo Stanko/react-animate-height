@@ -1,5 +1,16 @@
 # Changelog
 
+
+### v2.0.16
+
+08.10.2019.
+
+**Fixed**
+
+* Request animation frame is now cleared on unmount
+
+-----
+
 ### v2.0.14-v2.0.15
 
 18.06.2019.

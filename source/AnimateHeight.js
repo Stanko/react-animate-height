@@ -50,11 +50,19 @@ function omit(obj, ...keys) {
 
 // Start animation helper using nested requestAnimationFrames
 function startAnimationHelper(callback) {
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
+  const requestAnimationFrameIDs = [];
+
+  requestAnimationFrameIDs[0] = requestAnimationFrame(() => {
+    requestAnimationFrameIDs[1] = requestAnimationFrame(() => {
       callback();
     });
   });
+
+  return requestAnimationFrameIDs;
+}
+
+function cancelAnimationFrames(requestAnimationFrameIDs) {
+  requestAnimationFrameIDs.forEach(id => cancelAnimationFrame(id));
 }
 
 function isNumber(n) {
@@ -77,6 +85,8 @@ function runCallback(callback, params) {
 const AnimateHeight = class extends React.Component {
   constructor(props) {
     super(props);
+
+    this.animationFrameIDs = [];
 
     let height = 'auto';
     let overflow = 'visible';
@@ -204,7 +214,8 @@ const AnimateHeight = class extends React.Component {
         // after setting fixed height above
         timeoutState.shouldUseTransitions = true;
 
-        startAnimationHelper(() => {
+        cancelAnimationFrames(this.animationFrameIDs);
+        this.animationFrameIDs = startAnimationHelper(() => {
           this.setState(timeoutState);
 
           // ANIMATION STARTS, run a callback if it exists
@@ -250,8 +261,11 @@ const AnimateHeight = class extends React.Component {
   }
 
   componentWillUnmount() {
+    cancelAnimationFrames(this.animationFrameIDs);
+
     clearTimeout(this.timeoutID);
     clearTimeout(this.animationClassesTimeoutID);
+
     this.timeoutID = null;
     this.animationClassesTimeoutID = null;
     this.animationStateClasses = null;
