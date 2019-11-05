@@ -300,9 +300,8 @@ const AnimateHeight = class extends React.Component {
       className,
       contentClassName,
       duration,
-      delay,
       easing,
-      id,
+      delay,
       style,
     } = this.props;
     const {
@@ -352,7 +351,6 @@ const AnimateHeight = class extends React.Component {
       <div
         { ...omit(this.props, ...PROPS_TO_OMIT) }
         aria-hidden={ height === 0 }
-        id={ id }
         className={ componentClasses }
         style={ componentStyle }
       >
@@ -392,7 +390,6 @@ AnimateHeight.propTypes = {
   delay: PropTypes.number,
   easing: PropTypes.string,
   height: heightPropType,
-  id: PropTypes.string,
   onAnimationEnd: PropTypes.func,
   onAnimationStart: PropTypes.func,
   style: PropTypes.object,
