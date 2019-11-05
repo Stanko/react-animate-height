@@ -107,6 +107,10 @@ export default class Example extends Component {
 
   **Please note that you shouldn't apply properties that are messing with the layout (like `display`, `height`...), as these might break height calculations**
 
+* **id**: string
+
+  Element id to be applied
+
 * **style**: object
 
   CSS style object, it will be merged with inline styles of the component
