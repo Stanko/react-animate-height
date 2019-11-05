@@ -24,6 +24,7 @@ export interface AnimateHeightProps {
   duration?: number;
   easing?: "ease" | "linear" | "ease-in" | "ease-out" | "ease-in-out" | string;
   height?: string | number;
+  id?: string;
   onAnimationEnd?(props: { newHeight: number }): void;
   onAnimationStart?(props: { newHeight: number }): void;
   style?: CSSProperties;
