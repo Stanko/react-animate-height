@@ -1,5 +1,14 @@
 # Changelog
 
+### v2.0.17
+
+09.11.2019.
+
+**Fixed**
+
+* Fixed TS types to include `HTMLAttributes<HTMLDivElement>` [#86](https://github.com/Stanko/react-animate-height/issues/86)
+
+-----
 
 ### v2.0.16
 
