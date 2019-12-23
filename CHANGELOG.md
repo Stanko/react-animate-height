@@ -1,5 +1,16 @@
 # Changelog
 
+
+### v2.0.17
+
+23.12.2019.
+
+**Fixed**
+
+* Fixed TS types - [#88](https://github.com/Stanko/react-animate-height/issues/88)
+
+-----
+
 ### v2.0.17
 
 09.11.2019.

@@ -13,7 +13,7 @@ export type AnimationStateClasses = {
   staticHeightSpecific?: string;
 }
 
-export type AnimateHeightProps = {
+export type AnimateHeightProps = HTMLAttributes<HTMLDivElement> & {
   animateOpacity?: boolean;
   animationStateClasses?: AnimationStateClasses;
   applyInlineTransitions?: boolean;
@@ -27,7 +27,7 @@ export type AnimateHeightProps = {
   onAnimationEnd?(props: { newHeight: number }): void;
   onAnimationStart?(props: { newHeight: number }): void;
   style?: CSSProperties;
-} & HTMLAttributes<HTMLDivElement>
+}
 
 declare class AnimateHeight extends Component<AnimateHeightProps> {}
 
