@@ -13,7 +13,11 @@ export type AnimationStateClasses = {
   staticHeightSpecific?: string;
 }
 
-export type AnimateHeightProps = HTMLAttributes<HTMLDivElement> & {
+type OmitTypeProps<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+
+type DivWithNoAnimationCallbacks = OmitTypeProps<HTMLAttributes<HTMLDivElement>, 'onAnimationStart', 'onAnimationStart'>
+
+export type AnimateHeightProps = DivWithNoAnimationCallbacks & {
   animateOpacity?: boolean;
   animationStateClasses?: AnimationStateClasses;
   applyInlineTransitions?: boolean;
