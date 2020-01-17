@@ -15,7 +15,7 @@ export type AnimationStateClasses = {
 
 type OmitTypeProps<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
-type DivWithNoAnimationCallbacks = OmitTypeProps<HTMLAttributes<HTMLDivElement>, 'onAnimationStart', 'onAnimationStart'>
+type DivWithNoAnimationCallbacks = OmitTypeProps<OmitTypeProps<HTMLAttributes<HTMLDivElement>, 'onAnimationStart'>, 'onAnimationEnd'>
 
 export type AnimateHeightProps = DivWithNoAnimationCallbacks & {
   animateOpacity?: boolean;
