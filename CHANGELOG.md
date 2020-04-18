@@ -1,5 +1,14 @@
 # Changelog
 
+### v2.0.21
+
+18.04.2020.
+
+**Updated**
+
+* Updated the readme with the specific flex box usecase - [#89](https://github.com/Stanko/react-animate-height/issues/89)
+
+-----
 
 ### v2.0.18, v2.0.19 and v2.0.20
 

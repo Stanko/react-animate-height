@@ -165,6 +165,25 @@ export default class Example extends Component {
 Additional props will be passed to the wrapper div, to make adding attrs like `aria-*` easier.
 
 
+## Gotchas
+
+### Bounded flexboxes
+
+If `AnimateHeight` is a flex child and it's parent has a fixed height, animation won't work.
+To fix this, you just need to add the following CSS rule to the `AnimateHeight` instance.
+
+```css
+flex-shrink: 0;
+```
+
+You can do it by passing a `className` or directly in the `style` prop 
+
+```jsx
+<AnimateHeight style={{flexShrink: 0}}>
+```
+
+Check the [issue #89](https://github.com/Stanko/react-animate-height/issues/89) for the example and more details.
+
 ## License
 
 [MIT](https://github.com/Stanko/react-animate-height/blob/master/LICENSE)
