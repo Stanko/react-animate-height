@@ -1,5 +1,15 @@
 # Changelog
 
+### v2.0.22
+
+15.07.2020.
+
+**Added**
+
+* Added "engines" to `package.json` - [#91](https://github.com/Stanko/react-animate-height/issues/91)
+
+-----
+
 ### v2.0.21
 
 18.04.2020.

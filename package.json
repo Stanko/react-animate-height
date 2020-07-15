@@ -1,6 +1,6 @@
 {
   "name": "react-animate-height",
-  "version": "2.0.21",
+  "version": "2.0.22",
   "description": "Lightweight React component for animating height using CSS transitions.",
   "main": "lib/AnimateHeight.js",
   "types": "lib/index.d.ts",
@@ -61,6 +61,9 @@
   "peerDependencies": {
     "react": ">=15.6.2",
     "react-dom": ">=15.6.2"
+  },
+  "engines": {
+    "node": ">= 6.0.0"
   },
   "keywords": [
     "react",
