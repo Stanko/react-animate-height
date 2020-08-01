@@ -18,6 +18,7 @@ type OmitTypeProps<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 type DivWithNoAnimationCallbacks = OmitTypeProps<OmitTypeProps<HTMLAttributes<HTMLDivElement>, 'onAnimationStart'>, 'onAnimationEnd'>
 
 export type AnimateHeightProps = DivWithNoAnimationCallbacks & {
+  'aria-hidden'?: boolean;
   animateOpacity?: boolean;
   animationStateClasses?: AnimationStateClasses;
   applyInlineTransitions?: boolean;
@@ -28,6 +29,7 @@ export type AnimateHeightProps = DivWithNoAnimationCallbacks & {
   duration?: number;
   easing?: "ease" | "linear" | "ease-in" | "ease-out" | "ease-in-out" | string;
   height?: string | number;
+  id?: string;
   onAnimationEnd?(props: { newHeight: number }): void;
   onAnimationStart?(props: { newHeight: number }): void;
   style?: CSSProperties;

@@ -1,5 +1,16 @@
 # Changelog
 
+### v2.0.23
+
+01.08.2020.
+
+**Added**
+
+* Added "id" and "aria-hidden" props.
+* Added section about accessibility in the readme.
+
+-----
+
 ### v2.0.22
 
 15.07.2020.

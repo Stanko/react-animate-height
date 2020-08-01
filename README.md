@@ -30,7 +30,7 @@ npm start
 
 Then open [`localhost:8080`](http://localhost:8080) in your browser of choice browser.
 
-Or play with [sandbox](https://codesandbox.io/s/133kkpvx7).
+Or play with this [sandbox](https://codesandbox.io/s/react-animate-height-basic-example-ql384).
 
 ## Quick start
 
@@ -42,7 +42,7 @@ $ npm install --save react-animate-height
 
 Import and use it in your React app.
 
-```javascript
+```jsx
 import React, { Component } from 'react';
 import AnimateHeight from 'react-animate-height';
 
@@ -64,11 +64,16 @@ export default class Example extends Component {
 
     return (
       <div>
-        <button onClick={ this.toggle }>
+        <button 
+          aria-expanded={ height !== 0 }
+          aria-controls='example-panel'
+          onClick={ this.toggle }
+        >
           { height === 0 ? 'Open' : 'Close' }
         </button>
 
         <AnimateHeight
+          id='example-panel'
           duration={ 500 }
           height={ height } // see props documentation below
         >
@@ -100,6 +105,10 @@ export default class Example extends Component {
 * **easing**: string, default: `'ease'`
 
   CSS easing function to be applied to the animation
+
+* **id**: string
+
+  HTML `id` attribute.
 
 * **className**: string
 
@@ -162,8 +171,32 @@ export default class Example extends Component {
 
   If set to `true` content will fade-in (and fade-out) while height is animated.
 
+* **aria-hidden**: boolean
+
+  By default, library will set `aria-hidden` to `true` when height is zero. If you wish to override it, you can pass the prop yourself.
+
 Additional props will be passed to the wrapper div, to make adding attrs like `aria-*` easier.
 
+## Accessibility
+
+Library will hide the content using `display: hidden` when height props is 0. It will also apply `aria-hidden="true"` in the same case, but you can override it by passing `aria-hidden` prop yourself.
+
+When using a button to toggle height, make sure you add `aria-expanded` and `aria-controls` to make everything accessible. Here's an example:
+
+```jsx
+<button 
+  aria-expanded={ height !== 0 }
+  aria-controls='example-panel' // it has to match the id passed to AnimateHeight
+  onClick={ toggleHeight } // your click handler that toggles height
+  // ... all other props
+>
+  Toggle
+</button>
+
+<AnimateHeight id='example-panel'>
+  Content
+</AnimateHeight>
+```
 
 ## Gotchas
 
