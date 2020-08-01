@@ -49,6 +49,7 @@ const Example = class extends React.Component {
           </button>
         </div>
         <AnimateHeight
+          id="hello"
           height={ height }
           className='demo demo-1'
         >
@@ -126,6 +127,7 @@ const Example = class extends React.Component {
           </button>
         </div>
         <AnimateHeight
+          id="hello-2"
           height={ height2 }
           duration={ 500 }
           onAnimationEnd={ (params) => { console.log('React Animate Height - animation ended', params); } }

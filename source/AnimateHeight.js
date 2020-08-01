@@ -299,9 +299,10 @@ const AnimateHeight = class extends React.Component {
       children,
       className,
       contentClassName,
+      delay,
       duration,
       easing,
-      delay,
+      id,
       style,
     } = this.props;
     const {
@@ -347,11 +348,16 @@ const AnimateHeight = class extends React.Component {
       [className]: className,
     });
 
+    // Check if user passed aria-hidden prop
+    const hasAriaHiddenProp = typeof this.props['aria-hidden'] !== 'undefined';
+    const ariaHidden = hasAriaHiddenProp ? this.props['aria-hidden'] : height === 0;
+
     return (
       <div
         { ...omit(this.props, ...PROPS_TO_OMIT) }
-        aria-hidden={ height === 0 }
+        aria-hidden={ ariaHidden }
         className={ componentClasses }
+        id={ id }
         style={ componentStyle }
       >
         <div
@@ -380,16 +386,18 @@ const heightPropType = (props, propName, componentName) => {
 };
 
 AnimateHeight.propTypes = {
+  'aria-hidden': PropTypes.bool,
   animateOpacity: PropTypes.bool,
   animationStateClasses: PropTypes.object,
   applyInlineTransitions: PropTypes.bool,
   children: PropTypes.any.isRequired,
   className: PropTypes.string,
   contentClassName: PropTypes.string,
-  duration: PropTypes.number,
   delay: PropTypes.number,
+  duration: PropTypes.number,
   easing: PropTypes.string,
   height: heightPropType,
+  id: PropTypes.string,
   onAnimationEnd: PropTypes.func,
   onAnimationStart: PropTypes.func,
   style: PropTypes.object,
