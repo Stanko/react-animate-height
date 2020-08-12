@@ -135,6 +135,7 @@ const AnimateHeight = class extends React.Component {
       height,
       onAnimationEnd,
       onAnimationStart,
+      autoIsMaximumHeight,
     } = this.props;
 
     // Check if 'height' prop has changed
@@ -162,10 +163,20 @@ const AnimateHeight = class extends React.Component {
       if (isNumber(height)) {
         // If value is string "0" make sure we convert it to number 0
         newHeight = height < 0 || height === '0' ? 0 : height;
+        // If the maximum height is `auto`, make sure the newHeight is not larger
+        if (autoIsMaximumHeight) {
+          newHeight = Math.min(Number(newHeight), contentHeight);
+        }
+
         timeoutState.height = newHeight;
       } else if (isPercentage(height)) {
         // If value is string "0%" make sure we convert it to number 0
         newHeight = height === '0%' ? 0 : height;
+        // If the maximum height is `auto`, make sure the percentage value is not over 100% (which is auto)
+        if (autoIsMaximumHeight && getPercentageValue(newHeight) > 100) {
+          newHeight = contentHeight;
+        }
+
         timeoutState.height = newHeight;
       } else {
         // If not, animate to content height
@@ -405,6 +416,7 @@ AnimateHeight.propTypes = {
   onAnimationEnd: PropTypes.func,
   onAnimationStart: PropTypes.func,
   style: PropTypes.object,
+  autoIsMaximumHeight: PropTypes.bool,
 };
 
 AnimateHeight.defaultProps = {
@@ -415,6 +427,7 @@ AnimateHeight.defaultProps = {
   delay: 0,
   easing: 'ease',
   style: {},
+  autoIsMaximumHeight: false,
 };
 
 export default AnimateHeight;
