@@ -69,11 +69,15 @@ function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
+function getPercentageValue(percentage) {
+  return percentage.substr(0, percentage.length - 1);
+}
+
 function isPercentage(height) {
   // Percentage height
   return typeof height === 'string' &&
     height.search('%') === height.length - 1 &&
-    isNumber(height.substr(0, height.length - 1));
+    isNumber(getPercentageValue(height));
 }
 
 function runCallback(callback, params) {
