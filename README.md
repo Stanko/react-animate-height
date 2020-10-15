@@ -21,6 +21,8 @@ Read more about [React lifecycle changes](https://reactjs.org/blog/2018/03/27/up
 
 Live demo: [muffinman.io/react-animate-height](https://muffinman.io/react-animate-height/)
 
+Because multiple people asked how to animate list items, I created this [simple example](https://codesandbox.io/s/react-animated-list-example-made-using-react-animate-height-je9q1) for that as well.
+
 To build the examples locally, run:
 
 ```
