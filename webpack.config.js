@@ -88,10 +88,10 @@ if (isProduction) {
   // Production rules
   rules.push(
     {
-      test: /\.scss$/,
+      test: /\.css$/,
       loader: ExtractTextPlugin.extract({
         fallback: 'style-loader',
-        use: 'css-loader!sass-loader',
+        use: 'css-loader',
       }),
     }
   );
@@ -113,12 +113,11 @@ if (isProduction) {
   // Development rules
   rules.push(
     {
-      test: /\.scss$/,
+      test: /\.css$/,
       exclude: /node_modules/,
       use: [
         'style-loader',
         'css-loader?sourceMap',
-        'sass-loader?sourceMap',
       ],
     }
 );

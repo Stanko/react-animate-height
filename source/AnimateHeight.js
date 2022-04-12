@@ -267,8 +267,6 @@ const AnimateHeight = class extends React.Component {
     clearTimeout(this.animationClassesTimeoutID);
 
     this.timeoutID = null;
-    this.animationClassesTimeoutID = null;
-    this.animationStateClasses = null;
   }
 
   showContent(height) {

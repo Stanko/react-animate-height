@@ -1,6 +1,6 @@
 {
   "name": "react-animate-height",
-  "version": "2.0.23",
+  "version": "2.1.0",
   "description": "Lightweight React component for animating height using CSS transitions.",
   "main": "lib/AnimateHeight.js",
   "types": "lib/index.d.ts",
@@ -45,11 +45,9 @@
     "eslint-plugin-react": "^6.7.1",
     "extract-text-webpack-plugin": "^2.1.0",
     "html-webpack-plugin": "^2.24.1",
-    "node-sass": "^7.0.0",
     "postcss-loader": "^1.1.1",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "sass-loader": "^6.0.5",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "style-loader": "^0.18.2",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.2.1"

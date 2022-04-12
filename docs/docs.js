@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 
 import AnimateHeight from '../source/index';
-import './docs.scss';
+import './docs.css';
 
 const Example = class extends React.Component {
   constructor() {
@@ -283,5 +283,7 @@ const Example = class extends React.Component {
   }
 };
 
+const container = document.getElementById('demo');
+const root = createRoot(container);
 
-ReactDOM.render(<Example />, document.getElementById('demo'));
+root.render(<StrictMode><Example /></StrictMode>);

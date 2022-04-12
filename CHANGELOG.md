@@ -1,5 +1,15 @@
 # Changelog
 
+### v2.1.0
+
+12.04.2022.
+
+**Fixed**
+
+* Fixed component not working with React 18 and StrictMode - [#123](https://github.com/Stanko/react-animate-height/issues/123)
+
+-----
+
 ### v2.0.23
 
 01.08.2020.
