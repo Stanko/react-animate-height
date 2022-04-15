@@ -4,7 +4,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/react-animate-height.svg?style=flat-square)](https://www.npmjs.com/package/react-animate-height)
 
 Lightweight React component for animating height using CSS transitions.
-Slide up/down the element, and animate it to any specific height.
+Slide an element up and down or animate it to any specific height.
 Content's opacity can be optionally animated as well (check `animateOpacity` prop bellow).
 
 CSS classes are applied in specific animation states, check `animationStateClasses` prop.
@@ -13,7 +13,7 @@ CSS classes are applied in specific animation states, check `animationStateClass
 
 ### Note about versions
 
-For React >=16.3.0 (17 included) make sure you are using v2.x.
+For React >=16.3.0 make sure you are using v2.x.
 
 Read more about [React lifecycle changes](https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html) introduced with React 16.3.
 
@@ -199,6 +199,10 @@ When using a button to toggle height, make sure you add `aria-expanded` and `ari
   Content
 </AnimateHeight>
 ```
+
+### Reduced motion
+
+Component checks for `prefers-reduced-motion` in the constructor and disables animations if it set to true. Please note that component doesn't listen for potential changes of `prefers-reduced-motion` option.
 
 ## Gotchas
 

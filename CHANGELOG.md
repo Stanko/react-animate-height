@@ -1,5 +1,15 @@
 # Changelog
 
+### v2.1.1
+
+12.04.2022.
+
+**Added**
+
+* Added check for `prefers-reduced-motion` and disabled animations if it is set to `true` - [#124](https://github.com/Stanko/react-animate-height/issues/124)
+
+-----
+
 ### v2.1.0
 
 12.04.2022.

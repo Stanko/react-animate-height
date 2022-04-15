@@ -105,6 +105,12 @@ const AnimateHeight = class extends React.Component {
 
     const animationStateClasses = this.getStaticStateClasses(height);
 
+    const isBrowser = typeof window !== 'undefined';
+
+    if (isBrowser) {
+      this.prefersReducedMotion = matchMedia('(prefers-reduced-motion)').matches;
+    }
+
     this.state = {
       animationStateClasses,
       height,
@@ -126,12 +132,12 @@ const AnimateHeight = class extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {
-      delay,
-      duration,
       height,
       onAnimationEnd,
       onAnimationStart,
     } = this.props;
+
+    const { duration, delay } = this.getTimings();
 
     // Check if 'height' prop has changed
     if (this.contentElement && height !== prevProps.height) {
@@ -269,6 +275,22 @@ const AnimateHeight = class extends React.Component {
     this.timeoutID = null;
   }
 
+  getTimings() {
+    if (this.prefersReducedMotion) {
+      return {
+        delay: 0,
+        duration: 0,
+      };
+    }
+
+    const { delay, duration } = this.props;
+
+    return {
+      delay,
+      duration,
+    };
+  }
+
   showContent(height) {
     if (height === 0) {
       this.contentElement.style.display = '';
@@ -297,8 +319,6 @@ const AnimateHeight = class extends React.Component {
       children,
       className,
       contentClassName,
-      delay,
-      duration,
       easing,
       id,
       style,
@@ -310,6 +330,7 @@ const AnimateHeight = class extends React.Component {
       shouldUseTransitions,
     } = this.state;
 
+    const { duration, delay } = this.getTimings();
 
     const componentStyle = {
       ...style,
