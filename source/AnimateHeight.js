@@ -107,8 +107,8 @@ const AnimateHeight = class extends React.Component {
 
     const isBrowser = typeof window !== 'undefined';
 
-    if (isBrowser) {
-      this.prefersReducedMotion = matchMedia('(prefers-reduced-motion)').matches;
+    if (isBrowser && window.matchMedia) {
+      this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion)').matches;
     }
 
     this.state = {
