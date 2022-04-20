@@ -21,7 +21,7 @@
     "transpile": "swc -C module.type=es6 -d lib source/",
     "build": "run-s typecheck transpile",
     "build-docs": "rm -rf ./dist-docs && EXAMPLE=\"true\" NODE_ENV=\"production\" webpack",
-    "publish-to-npm": "run-s clean build && npm publish",
+    "publish-to-npm": "run-s clean build && yarn npm publish",
     "publish-docs": "sh publish-docs.sh",
     "publish-all": "npm run publish-to-npm && npm run publish-docs",
     "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags",
