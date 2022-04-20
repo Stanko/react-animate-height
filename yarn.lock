@@ -434,6 +434,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/mini-css-extract-plugin@npm:^2":
+  version: 2.5.0
+  resolution: "@types/mini-css-extract-plugin@npm:2.5.0"
+  dependencies:
+    mini-css-extract-plugin: "*"
+  checksum: 8912e191195187e6ebf6b190cf9c636296504922472264bdec2d53e97efb261600d815d502041241326babeb56f2a8ab8ffd21f5445eb3bc065c179eb1b907b6
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:*, @types/node@npm:^17.0.25":
   version: 17.0.25
   resolution: "@types/node@npm:17.0.25"
@@ -3741,6 +3750,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mini-css-extract-plugin@npm:*, mini-css-extract-plugin@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "mini-css-extract-plugin@npm:2.6.0"
+  dependencies:
+    schema-utils: ^4.0.0
+  peerDependencies:
+    webpack: ^5.0.0
+  checksum: ea73bd66558de7a37db094fe68fa130e7a725ab15f880ff8467a75d9c4c2f1576d20720088ea22af9922a94b8600bbfef0c6acaf10d12a32a9bd20a90ba3c35f
+  languageName: node
+  linkType: hard
+
 "minimalistic-assert@npm:^1.0.0":
   version: 1.0.1
   resolution: "minimalistic-assert@npm:1.0.1"
@@ -4645,6 +4665,7 @@ __metadata:
   dependencies:
     "@swc/core": ^1.2.168
     "@types/events": ^3
+    "@types/mini-css-extract-plugin": ^2
     "@types/node": ^17.0.25
     "@types/prop-types": ^15.7.5
     "@types/react": ^16.14.25
@@ -4661,6 +4682,7 @@ __metadata:
     events: ^3.3.0
     extract-text-webpack-plugin: ^3.0.2
     html-webpack-plugin: ^5.5.0
+    mini-css-extract-plugin: ^2.6.0
     npm-run-all: ^4.1.5
     postcss-loader: ^6.2.1
     prettier: ^2.6.2

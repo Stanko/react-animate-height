@@ -1,3 +1,6 @@
 .yarn/
 lib/
 dist-docs/
+yarn.lock
+.pnp.*
+*.sh

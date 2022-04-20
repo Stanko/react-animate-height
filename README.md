@@ -45,8 +45,8 @@ $ npm install --save react-animate-height
 Import and use it in your React app.
 
 ```jsx
-import React, { Component } from 'react';
-import AnimateHeight from 'react-animate-height';
+import React, { Component } from "react";
+import AnimateHeight from "react-animate-height";
 
 export default class Example extends Component {
   state = {
@@ -57,7 +57,7 @@ export default class Example extends Component {
     const { height } = this.state;
 
     this.setState({
-      height: height === 0 ? 'auto' : 0,
+      height: height === 0 ? "auto" : 0,
     });
   };
 
@@ -66,18 +66,18 @@ export default class Example extends Component {
 
     return (
       <div>
-        <button 
-          aria-expanded={ height !== 0 }
-          aria-controls='example-panel'
-          onClick={ this.toggle }
+        <button
+          aria-expanded={height !== 0}
+          aria-controls="example-panel"
+          onClick={this.toggle}
         >
-          { height === 0 ? 'Open' : 'Close' }
+          {height === 0 ? "Open" : "Close"}
         </button>
 
         <AnimateHeight
-          id='example-panel'
-          duration={ 500 }
-          height={ height } // see props documentation below
+          id="example-panel"
+          duration={500}
+          height={height} // see props documentation below
         >
           <h1>Your content goes here</h1>
           <p>Put as many React or HTML components here.</p>
@@ -86,51 +86,50 @@ export default class Example extends Component {
     );
   }
 }
-
 ```
 
 ### Props
 
-* **height**: numeric or percentage value (ie. `'50%'`) or `'auto'`, required
+- **height**: numeric or percentage value (ie. `'50%'`) or `'auto'`, required
 
   When changed, element height will be animated to that height.<br/>
   To slide up use <code>0</code>, for slide down use <code>'auto'</code>
 
-* **duration**: integer, default: `250`
+- **duration**: integer, default: `250`
 
   Duration of the animation in milliseconds
 
-* **delay**: integer, default: `0`
+- **delay**: integer, default: `0`
 
   Animation delay in milliseconds
 
-* **easing**: string, default: `'ease'`
+- **easing**: string, default: `'ease'`
 
   CSS easing function to be applied to the animation
 
-* **id**: string
+- **id**: string
 
   HTML `id` attribute.
 
-* **className**: string
+- **className**: string
 
   CSS class to be applied to the element
 
   **Please note that you shouldn't apply properties that are messing with the layout (like `display`, `height`...), as these might break height calculations**
 
-* **style**: object
+- **style**: object
 
   CSS style object, it will be merged with inline styles of the component
 
   **Please note that you shouldn't apply properties that are messing with the layout (like `display`, `height`...), as these might break height calculations**
 
-* **contentClassName**: string
+- **contentClassName**: string
 
   CSS class to be applied to content wrapper element
 
   **Please note that you shouldn't apply properties that are messing with the layout (like `display`, `height`...), as these might break height calculations**
 
-* **animationStateClasses**: object
+- **animationStateClasses**: object
 
   Object containing CSS class names for animation states, default:
 
@@ -152,28 +151,28 @@ export default class Example extends Component {
   Please note that this one will be merged with the default object and cached when component is created,
   so changing it afterwards will have no effect.
 
-* **onAnimationStart**: function
+- **onAnimationStart**: function
 
   Callback which will be called when animation starts.
 
   This first argument passed to this callback is an object containing `newHeight`, the pixel value of the height at which the animation will end.
 
-* **onAnimationEnd**: function
+- **onAnimationEnd**: function
 
   Callback which will be called when animation ends.
 
   This first argument passed to this callback is an object containing `newHeight`, the pixel value of the height at which the animation ended.
 
-* **applyInlineTransitions**: boolean, default: `true`
+- **applyInlineTransitions**: boolean, default: `true`
 
   If this flag is set to `false` only CSS classes will be applied to the element and inline
   transition styles will not be present.
 
-* **animateOpacity**: boolean, default: `false`
+- **animateOpacity**: boolean, default: `false`
 
   If set to `true` content will fade-in (and fade-out) while height is animated.
 
-* **aria-hidden**: boolean
+- **aria-hidden**: boolean
 
   By default, library will set `aria-hidden` to `true` when height is zero. If you wish to override it, you can pass the prop yourself.
 
@@ -186,7 +185,7 @@ Library will hide the content using `display: hidden` when height props is 0. It
 When using a button to toggle height, make sure you add `aria-expanded` and `aria-controls` to make everything accessible. Here's an example:
 
 ```jsx
-<button 
+<button
   aria-expanded={ height !== 0 }
   aria-controls='example-panel' // it has to match the id passed to AnimateHeight
   onClick={ toggleHeight } // your click handler that toggles height
@@ -215,7 +214,7 @@ To fix this, you just need to add the following CSS rule to the `AnimateHeight` 
 flex-shrink: 0;
 ```
 
-You can do it by passing a `className` or directly in the `style` prop 
+You can do it by passing a `className` or directly in the `style` prop
 
 ```jsx
 <AnimateHeight style={{flexShrink: 0}}>
