@@ -38,43 +38,18 @@ const rules = [
   {
     test: /\.(js|jsx|ts|tsx)$/,
     exclude: /node_modules/,
-    use: [
-      'babel-loader',
-    ],
+    loader: 'swc-loader'
   },
-  // {
-  //   test: /\.(png|gif|jpg|svg)$/,
-  //   include: imgPath,
-  //   use: 'url-loader?limit=20480&name=assets/[name]-[hash].[ext]',
-  // },
 ];
 
 if (isProduction) {
   // Production entry points
-  entry['docs.min'] = path.join(docsPath, 'docs.js');
+  entry['docs.min'] = path.join(docsPath, 'docs.tsx');
 
   // Production plugins
-  plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-      include: /\.min\.js$/,
-      compress: {
-        warnings: false,
-        screw_ie8: true,
-        conditionals: true,
-        unused: true,
-        comparisons: true,
-        sequences: true,
-        dead_code: true,
-        evaluate: true,
-        if_return: true,
-        join_vars: true,
-      },
-      output: {
-        comments: false,
-      },
-    }),
-    new ExtractTextPlugin('demo.css')
-  );
+  // plugins.push(
+  //   new ExtractTextPlugin('demo.css')
+  // );
 
   if (isExample) {
     plugins.push(
@@ -86,24 +61,23 @@ if (isProduction) {
     );
   }
 
-  // Production rules
-  rules.push(
-    {
-      test: /\.css$/,
-      loader: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: 'css-loader',
-      }),
-    }
-  );
+  // // Production rules
+  // rules.push(
+  //   {
+  //     test: /\.css$/,
+  //     loader: ExtractTextPlugin.extract({
+  //       fallback: 'style-loader',
+  //       loader: 'css-loader',
+  //     }),
+  //   }
+  // );
 } else {
   // Development entry points
-  entry.docs = path.join(docsPath, 'docs.js');
+  entry.docs = path.join(docsPath, 'docs.tsx');
 
   // Development plugins
   plugins.push(
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(docsPath, 'index.html'),
       path: outputDistPath,
@@ -118,20 +92,24 @@ if (isProduction) {
       exclude: /node_modules/,
       use: [
         'style-loader',
-        'css-loader?sourceMap',
+        { loader: 'css-loader', options: { sourceMap: true } },
       ],
     }
-);
+  );
 }
 
 module.exports = {
   devtool: isProduction ? false : 'source-map',
   context: isProduction ? outputDistPath : sourcePath,
   entry,
+  mode: isProduction ? 'production' : 'development',
   output: {
     path: outputDistPath,
     // publicPath: '/',
     filename: '[name].js',
+  },
+  optimization: {
+    moduleIds: 'named'
   },
   module: {
     rules,
@@ -145,26 +123,28 @@ module.exports = {
   },
   plugins,
   devServer: {
-    contentBase: isProduction ? distPath : sourcePath,
+    static: {
+      directory: isProduction ? distPath : sourcePath,
+    },
     historyApiFallback: true,
     compress: isProduction,
-    inline: !isProduction,
+    // inline: !isProduction,
     hot: !isProduction,
     host: '0.0.0.0',
-    disableHostCheck: true,
-    stats: {
-      assets: true,
-      children: false,
-      chunks: false,
-      hash: false,
-      modules: false,
-      publicPath: false,
-      timings: true,
-      version: false,
-      warnings: true,
-      colors: {
-        green: '\u001b[32m',
-      },
-    },
+    allowedHosts: 'all',
+    // stats: {
+    //   assets: true,
+    //   children: false,
+    //   chunks: false,
+    //   hash: false,
+    //   modules: false,
+    //   publicPath: false,
+    //   timings: true,
+    //   version: false,
+    //   warnings: true,
+    //   colors: {
+    //     green: '\u001b[32m',
+    //   },
+    // },
   },
 };

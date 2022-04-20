@@ -28,32 +28,34 @@
     "preview": "rm -rf ./dist && NODE_ENV=\"production\" webpack-dev-server"
   },
   "devDependencies": {
-    "@types/classnames": "^2.3.1",
+    "@swc/core": "^1.2.168",
     "@types/prop-types": "^15.7.5",
-    "@types/react": "^16",
+    "@types/react": "^16.14.25",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
-    "css-loader": "^0.28.11",
+    "css-loader": "^6.7.1",
     "eslint": "^8.13.0",
     "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.4",
-    "eslint-config-prettier": "^8.5.0",
-    "extract-text-webpack-plugin": "^2.1.0",
-    "html-webpack-plugin": "^2.24.1",
-    "postcss-loader": "^1.1.1",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "html-webpack-plugin": "^5.5.0",
+    "postcss-loader": "^6.2.1",
     "prettier": "^2.6.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "style-loader": "^0.18.2",
+    "style-loader": "^3.3.1",
+    "swc-loader": "^0.2.0",
     "typescript": "^4.6.3",
-    "webpack": "^2.6.1",
-    "webpack-dev-server": "^2.2.1"
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1"
   },
   "dependencies": {
-    "classnames": "^2.2.5",
-    "prop-types": "^15.6.1"
+    "classnames": "^2.3.1",
+    "prop-types": "^15.8.1"
   },
   "peerDependencies": {
     "@types/prop-types": ">15",
@@ -61,14 +63,14 @@
     "react": ">=15.6.2"
   },
   "peerDependenciesMeta": {
-    "react": {
-      "optional": false
+    "@types/prop-types": {
+      "optional": true
     },
     "@types/react": {
       "optional": true
     },
-    "@types/prop-types": {
-      "optional": true
+    "react": {
+      "optional": false
     }
   },
   "engines": {
@@ -82,5 +84,6 @@
     "slide down",
     "animate height"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "packageManager": "yarn@3.2.0"
 }

@@ -30,9 +30,9 @@ class AnimateHeight extends React.Component<
 > {
   private animationFrameIDs: number[] = [];
 
-  private timeoutID: number | undefined;
+  private timeoutID: NodeJS.Timeout | undefined;
 
-  private animationClassesTimeoutID: number | undefined;
+  private animationClassesTimeoutID: NodeJS.Timeout | undefined;
 
   private prefersReducedMotion = prefersReducedMotion();
 
