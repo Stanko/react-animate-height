@@ -1,3 +1,4 @@
+/* eslint-disable no-console, @typescript-eslint/no-var-requires */
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 const AnimateHeight = require('./lib/index.js').default;

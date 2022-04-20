@@ -1,12 +1,21 @@
+/* eslint-disable no-console */
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import AnimateHeight from '../lib/index.js';
 import './docs.css';
 
-const Example = class extends React.Component {
-  constructor() {
-    super();
+
+interface ExampleState {
+  height: number | string;
+  height2: number | string;
+  height3: number | string;
+  delay: number;
+}
+
+const Example = class extends React.Component<Record<string,never>, ExampleState> {
+  constructor(props) {
+    super(props);
 
     this.state = {
       height: 0,
@@ -32,19 +41,19 @@ const Example = class extends React.Component {
         </p>
         <p className=''>Set height to:</p>
         <div className='buttons'>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height: 0 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height: 0 }) }>
             0
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height: 100 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height: 100 }) }>
             100
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height: 200 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height: 200 }) }>
             200
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height: 300 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height: 300 }) }>
             300
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height: 'auto' }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height: 'auto' }) }>
             auto
           </button>
         </div>
@@ -109,19 +118,19 @@ const Example = class extends React.Component {
         </p>
         <p className=''>Set height to:</p>
         <div className='buttons'>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height2: 0 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height2: 0 }) }>
             0
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height2: 100 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height2: 100 }) }>
             100
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height2: 200 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height2: 200 }) }>
             200
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height2: 300 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height2: 300 }) }>
             300
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height2: 'auto' }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height2: 'auto' }) }>
             auto
           </button>
         </div>
@@ -188,41 +197,41 @@ const Example = class extends React.Component {
         </p>
         <p>Set delay to:</p>
         <div className='buttons'>
-          <button className='btn btn-sm' onClick={ () => this.setState({ delay: 0 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ delay: 0 }) }>
             0 (default)
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ delay: 300 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ delay: 300 }) }>
             300
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ delay: 600 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ delay: 600 }) }>
             600
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ delay: 1000 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ delay: 1000 }) }>
             1000
           </button>
         </div>
         <p className=''>Set height to:</p>
         <div className='buttons'>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height3: 0 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height3: 0 }) }>
             0
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height3: 100 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height3: 100 }) }>
             100
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height3: 200 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height3: 200 }) }>
             200
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height3: 300 }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height3: 300 }) }>
             300
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height3: 'auto' }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height3: 'auto' }) }>
             auto
           </button>
           <br />
-          <button className='btn btn-sm' onClick={ () => this.setState({ height3: '50%' }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height3: '50%' }) }>
             50% (of the parent height)
           </button>
-          <button className='btn btn-sm' onClick={ () => this.setState({ height3: '100%' }) }>
+          <button type='button' className='btn btn-sm' onClick={ () => this.setState({ height3: '100%' }) }>
             100% (of the parent height)
           </button>
         </div>

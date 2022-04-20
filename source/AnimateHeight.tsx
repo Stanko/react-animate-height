@@ -13,9 +13,9 @@ import {
   isAriaHidden,
   getContentStyle,
   getTimings,
-} from "./utils";
-import { ANIMATION_STATE_CLASSES, PROPS_TO_OMIT } from "./constants";
-import type { AnimateHeightProps } from "./types";
+} from "./utils.js";
+import { ANIMATION_STATE_CLASSES, PROPS_TO_OMIT } from "./constants.js";
+import type { AnimateHeightProps } from "./types.js";
 
 interface AnimateHeightState {
   animationStateClasses?: Record<string, string> | string;

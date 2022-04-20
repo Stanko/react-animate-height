@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import type { AnimateHeightProps } from "./types";
+import type { AnimateHeightProps } from "./types.js";
 
 export function omit(obj: object, ...keys: string[]) {
   if (!keys.length) {
