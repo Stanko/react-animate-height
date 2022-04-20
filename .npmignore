@@ -1,3 +1,4 @@
+.yarn/
 .DS_STORE
 node_modules
 dist
@@ -7,7 +8,11 @@ publish-docs.sh
 webpack.config.js
 .babelrc
 .editorconfig
+.eslintignore
+.prettierignore
+.nvmrc
 .eslintrc
+.swcrc
 .module-cache
 *.log*
-_nogit
+_nogi
