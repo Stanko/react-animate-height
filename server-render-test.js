@@ -15,10 +15,8 @@ const example = React.createElement("div", null, [
 
 const renderedString = ReactDOMServer.renderToString(example);
 
-/* eslint-disable max-len */
 const expectedString =
   '<div><div style="height:0;overflow:hidden" aria-hidden="true" class="rah-static rah-static--height-zero"><div>Hello World</div></div><div style="height:auto;overflow:visible" aria-hidden="false" class="rah-static rah-static--height-auto"><div>Hello World</div></div><div style="height:100px;overflow:hidden" aria-hidden="false" class="rah-static rah-static--height-specific"><div>Hello World</div></div></div>';
-/* eslint-enable max-len */
 
 console.log(renderedString === expectedString);
 console.log(renderedString);
