@@ -1,4 +1,5 @@
 .yarn/
+.vscode/
 .DS_STORE
 node_modules
 dist
@@ -6,6 +7,8 @@ dist-docs
 docs
 publish-docs.sh
 webpack.config.js
+server-render-test.js
+tsconfig.json
 .babelrc
 .editorconfig
 .eslintignore
