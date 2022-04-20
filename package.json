@@ -23,7 +23,8 @@
     "publish-all": "npm run publish-to-npm && npm run publish-docs",
     "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags",
     "lint-break-on-errors": "eslint ./source ./webpack.config.js --ext .js --ext .jsx",
-    "lint": "eslint ./source ./webpack.config.js  --ext .js,.jsx,.ts,.tsx || true",
+    "lint": "eslint ./source  --ext .js,.jsx,.ts,.tsx || true",
+    "format": "prettier source/* --write",
     "preview": "rm -rf ./dist && NODE_ENV=\"production\" webpack-dev-server"
   },
   "devDependencies": {
