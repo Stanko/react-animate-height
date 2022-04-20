@@ -1,3 +1,4 @@
-import AnimateHeight from './AnimateHeight';
-export * from './types'
+import AnimateHeight from "./AnimateHeight";
+
+export * from "./types";
 export default AnimateHeight;

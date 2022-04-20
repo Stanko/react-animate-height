@@ -33,7 +33,7 @@ export interface AnimateHeightProps extends DivWithNoAnimationCallbacks {
   easing?: "ease" | "linear" | "ease-in" | "ease-out" | "ease-in-out" | string;
   height?: string | number;
   id?: string;
-  onAnimationEnd?(props: { newHeight: number }): void;
-  onAnimationStart?(props: { newHeight: number }): void;
-  style?: React.CSSProperties;
+  onAnimationEnd?: (props: { newHeight: number }) => void;
+  onAnimationStart?: (props: { newHeight: number }) => void;
+  style?: CSSProperties;
 }

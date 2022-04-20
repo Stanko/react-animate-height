@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { AnimateHeightProps } from "./types";
 
 export function omit(obj: object, ...keys: string[]) {
@@ -37,7 +38,7 @@ export function cancelAnimationFrames(requestAnimationFrameIDs) {
 }
 
 export function isNumber(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
+  return !Number.isNaN(parseFloat(n)) && Number.isFinite(n);
 }
 
 export function isPercentage(height) {
@@ -98,8 +99,8 @@ export function getContentStyle(
   duration: number,
   delay: number,
   easing: AnimateHeightProps["easing"]
-): React.CSSProperties {
-  const contentStyle: React.CSSProperties = {};
+): CSSProperties {
+  const contentStyle: CSSProperties = {};
 
   if (animateOpacity) {
     contentStyle.transition = `opacity ${duration}ms ${easing} ${delay}ms`;
@@ -117,7 +118,7 @@ export function getContentStyle(
 export function getTimings(
   delay: number,
   duration: number,
-  prefersReducedMotion: boolean
+  prefersReduced: boolean
 ) {
-  return prefersReducedMotion ? { delay: 0, duration: 0 } : { delay, duration };
+  return prefersReduced ? { delay: 0, duration: 0 } : { delay, duration };
 }

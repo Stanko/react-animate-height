@@ -1,7 +1,7 @@
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import AnimateHeight from '../source/index.ts';
+import AnimateHeight from '../lib/index.js';
 import './docs.css';
 
 const Example = class extends React.Component {

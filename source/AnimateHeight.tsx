@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes, { Validator } from "prop-types";
 import cx from "classnames";
 import {
   omit,
@@ -18,7 +18,7 @@ import { ANIMATION_STATE_CLASSES, PROPS_TO_OMIT } from "./constants";
 import type { AnimateHeightProps } from "./types";
 
 interface AnimateHeightState {
-  animationStateClasses?: Record<string, string>;
+  animationStateClasses?: Record<string, string> | string;
   height?: string | number;
   overflow?: string;
   shouldUseTransitions?: boolean;
@@ -29,15 +29,20 @@ class AnimateHeight extends React.Component<
   AnimateHeightState
 > {
   private animationFrameIDs: number[] = [];
+
   private timeoutID: number | undefined;
+
   private animationClassesTimeoutID: number | undefined;
+
   private prefersReducedMotion = prefersReducedMotion();
+
   private animationStateClasses: Record<string, string>;
+
   private contentElement: HTMLDivElement | undefined;
 
   constructor(props) {
     super(props);
-    let [height, overflow] = parseHeight(props.height);
+    const [height, overflow] = parseHeight(props.height);
     this.animationStateClasses = {
       ...ANIMATION_STATE_CLASSES,
       ...props.animationStateClasses,
@@ -64,11 +69,17 @@ class AnimateHeight extends React.Component<
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { height, onAnimationEnd, onAnimationStart } = this.props;
+    const {
+      height,
+      onAnimationEnd,
+      onAnimationStart,
+      delay: delayProp,
+      duration: durationProp,
+    } = this.props;
 
     const { duration, delay } = getTimings(
-      this.props.delay,
-      this.props.duration,
+      delayProp,
+      durationProp,
       this.prefersReducedMotion
     );
 
@@ -215,6 +226,15 @@ class AnimateHeight extends React.Component<
     this.timeoutID = null;
   }
 
+  getStaticStateClasses(height) {
+    return cx({
+      [this.animationStateClasses.static]: true,
+      [this.animationStateClasses.staticHeightZero]: height === 0,
+      [this.animationStateClasses.staticHeightSpecific]: height > 0,
+      [this.animationStateClasses.staticHeightAuto]: height === "auto",
+    });
+  }
+
   showContent(height) {
     if (height === 0) {
       this.contentElement.style.display = "";
@@ -227,15 +247,6 @@ class AnimateHeight extends React.Component<
     }
   }
 
-  getStaticStateClasses(height) {
-    return cx({
-      [this.animationStateClasses.static]: true,
-      [this.animationStateClasses.staticHeightZero]: height === 0,
-      [this.animationStateClasses.staticHeightSpecific]: height > 0,
-      [this.animationStateClasses.staticHeightAuto]: height === "auto",
-    });
-  }
-
   render() {
     const {
       animateOpacity,
@@ -246,13 +257,16 @@ class AnimateHeight extends React.Component<
       easing,
       id,
       style,
+      delay: delayProp,
+      duration: durationProp,
+      "aria-hidden": ariaHiddenProp,
     } = this.props;
     const { height, overflow, animationStateClasses, shouldUseTransitions } =
       this.state;
 
     const { duration, delay } = getTimings(
-      this.props.delay,
-      this.props.duration,
+      delayProp,
+      durationProp,
       this.prefersReducedMotion
     );
 
@@ -283,11 +297,11 @@ class AnimateHeight extends React.Component<
     );
 
     const componentClasses = cx({
-      [animationStateClasses as any]: true,
+      [animationStateClasses as string]: true,
       [className]: className,
     });
 
-    const ariaHidden = isAriaHidden(this.props["aria-hidden"], height);
+    const ariaHidden = isAriaHidden(ariaHiddenProp, height);
     return (
       <div
         {...omit(this.props, ...PROPS_TO_OMIT)}
@@ -308,7 +322,11 @@ class AnimateHeight extends React.Component<
   }
 }
 
-const heightPropType = (props, propName, componentName) => {
+const heightPropType: Validator<string | number> = (
+  props,
+  propName: string,
+  componentName: string
+) => {
   const value = props[propName];
 
   if (
@@ -325,6 +343,7 @@ const heightPropType = (props, propName, componentName) => {
   );
 };
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 (AnimateHeight as any).propTypes = {
   "aria-hidden": PropTypes.bool,
   animateOpacity: PropTypes.bool,
@@ -352,5 +371,6 @@ const heightPropType = (props, propName, componentName) => {
   easing: "ease",
   style: {},
 };
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 export default AnimateHeight;
