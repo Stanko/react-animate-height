@@ -25,7 +25,8 @@
     "lint-break-on-errors": "eslint ./source ./webpack.config.js --ext .js --ext .jsx",
     "lint": "eslint ./source  --ext .js,.jsx,.ts,.tsx || true",
     "format": "prettier source/* --write",
-    "preview": "rm -rf ./dist && NODE_ENV=\"production\" webpack-dev-server"
+    "preview": "rm -rf ./dist && NODE_ENV=\"production\" webpack-dev-server",
+    "update-yarn-sdks": "yarn dlx @yarnpkg/sdks vscode"
   },
   "devDependencies": {
     "@swc/core": "^1.2.168",
