@@ -35,7 +35,7 @@ const entry = {};
 // Common rules
 const rules = [
   {
-    test: /\.(js|jsx)$/,
+    test: /\.(js|jsx|ts|tsx)$/,
     exclude: /node_modules/,
     use: [
       'babel-loader',
@@ -136,7 +136,7 @@ module.exports = {
     rules,
   },
   resolve: {
-    extensions: ['.webpack-loader.js', '.web-loader.js', '.loader.js', '.js', '.jsx'],
+    extensions: ['.webpack-loader.js', '.web-loader.js', '.loader.js', '.js', '.jsx', '.ts', '.tsx'],
     modules: [
       path.resolve(__dirname, 'node_modules'),
       sourcePath,
