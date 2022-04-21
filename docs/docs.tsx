@@ -381,7 +381,7 @@ class Example extends React.Component<
       </div>
     );
   }
-};
+}
 
 const container = document.getElementById("demo");
 const root = createRoot(container);
