@@ -12,10 +12,7 @@ interface ExampleState {
   delay: number;
 }
 
-class Example extends React.Component<
-  Record<string, never>,
-  ExampleState
-> {
+class Example extends React.Component<Record<string, never>, ExampleState> {
   constructor(props) {
     super(props);
 
