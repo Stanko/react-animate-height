@@ -1,5 +1,19 @@
 # Changelog
 
+### v3.0.0
+
+01.06.2022.
+
+**Changed**
+
+* Rewritten to hooks
+* Switched to TypeScript
+* Callback names changed
+  * `onAnimationStart` -> `onHeightAnimationStart`
+  * `onAnimationEnd` -> `onHeightAnimationEnd`
+
+-----
+
 ### v2.1.1, v2.1.2
 
 12.04.2022.

@@ -6,7 +6,7 @@ a,
 a:active,
 a:visited,
 a:focus {
-  color: #E9463F;
+  color: #e9463f;
   border-bottom: 1px solid transparent;
 }
 
@@ -15,9 +15,11 @@ a:hover {
   border-bottom-color: #111;
 }
 
-h2, h3, h4 {
+h2,
+h3,
+h4 {
   margin-top: 50px;
-  color: #E9463F;
+  color: #e9463f;
 }
 
 .header {
@@ -38,15 +40,17 @@ h2, h3, h4 {
   margin-right: 5px;
   transition: all 0.1s;
   background: #111;
+  cursor: pointer;
+  outline: none;
 }
 
 .buttons button:hover {
-  background: darken(#E9463F, 20);
+  background: darken(#e9463f, 20);
 }
 
-.buttons button:focus {
-  background: #E9463F;
-  outline: none;
+.buttons button:focus-visible {
+  outline: 1px solid #555;
+  outline-offset: 2px;
 }
 
 .demo {

@@ -1,9 +1,16 @@
 {
   "name": "react-animate-height",
-  "version": "2.1.2",
+  "version": "3.0.0-beta.1",
   "description": "Lightweight React component for animating height using CSS transitions.",
-  "main": "lib/AnimateHeight.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/mjs/index.js",
+      "require": "./dist/esm/index.js"
+    }
+  },
   "author": "Stanko",
   "homepage": "https://github.com/Stanko/react-animate-height",
   "repository": {
@@ -14,47 +21,15 @@
     "url": "https://github.com/Stanko/react-animate-height/issues"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server",
-    "build": "rm -rf ./lib && NODE_ENV=\"production\" babel ./source --out-dir ./lib && cp source/index.d.ts ./lib",
-    "build-docs": "rm -rf ./dist-docs && EXAMPLE=\"true\" NODE_ENV=\"production\" webpack",
-    "publish-to-npm": "npm run build && npm publish",
-    "publish-docs": "sh publish-docs.sh",
-    "publish-all": "npm run publish-to-npm && npm run publish-docs",
-    "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags",
-    "lint-break-on-errors": "eslint ./source ./webpack.config.js -f table --ext .js --ext .jsx",
-    "lint": "eslint ./source ./webpack.config.js -f table --ext .js --ext .jsx || true",
-    "preview": "rm -rf ./dist && NODE_ENV=\"production\" webpack-dev-server"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^7.1.0",
-    "babel-loader": "^6.2.4",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-plugin-transform-runtime": "^6.6.0",
-    "babel-preset-es2015": "^6.22.0",
-    "babel-preset-react": "^6.5.0",
-    "babel-preset-react-hmre": "^1.1.1",
-    "babel-runtime": "^6.6.1",
-    "css-loader": "^0.28.11",
-    "eslint": "^3.10.1",
-    "eslint-config-airbnb": "^13.0.0",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.7.1",
-    "extract-text-webpack-plugin": "^2.1.0",
-    "html-webpack-plugin": "^2.24.1",
-    "postcss-loader": "^1.1.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "style-loader": "^0.18.2",
-    "webpack": "^2.6.1",
-    "webpack-dev-server": "^2.2.1"
+    "clean": "rm -rf dist",
+    "build:esm": "tsc -p tsconfig-esm.json && echo '{ \"type\": \"module\" }' > dist/esm/package.json",
+    "build:cjs": "tsc -p tsconfig-cjs.json && echo '{ \"type\": \"commonjs\" }' > dist/cjs/package.json",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:docs",
+    "start": "esbuild docs/docs.tsx docs/docs.css --bundle --tsconfig=tsconfig-demo.json --servedir=docs --outdir=docs/react-animate-height",
+    "build:docs": "esbuild docs/docs.tsx --bundle --tsconfig=tsconfig-demo.json --outdir=docs --minify --sourcemap"
   },
   "dependencies": {
-    "classnames": "^2.2.5",
-    "prop-types": "^15.6.1"
+    "classnames": "^2.3.1"
   },
   "peerDependencies": {
     "react": ">=15.6.2",
@@ -71,5 +46,13 @@
     "slide down",
     "animate height"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.5",
+    "esbuild": "^0.14.39",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "typescript": "^4.7.2"
+  }
 }

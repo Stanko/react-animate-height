@@ -1,8 +1,6 @@
 .DS_STORE
 node_modules
-dist
-.module-cache
 *.log*
 _nogit
 lib
-dist-docs
+dist
