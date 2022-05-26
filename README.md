@@ -13,7 +13,7 @@ CSS classes are applied in specific animation states, check `animationStateClass
 
 ### Version 3
 
-This is a version 3.x branch, for version 2.x, check (v2 branch)[https://github.com/Stanko/react-animate-height/tree/v2]
+This is a version 3.x branch, for version 2.x, check [v2 branch](https://github.com/Stanko/react-animate-height/tree/v2)
 
 #### Breaking changes:
 
@@ -34,9 +34,9 @@ npm install
 npm start
 ```
 
-Then open [`localhost:8080`](http://127.0.0.1:8000/) in your browser of choice browser.
+Then open [`http://127.0.0.1:8000/`](http://127.0.0.1:8000/) in your browser of choice browser.
 
-Or play with this [sandbox](https://codesandbox.io/s/react-animate-height-basic-example-ql384).
+Or play with this [sandbox](https://codesandbox.io/s/react-animate-height-v3-basic-example-1iggpe).
 
 ## Quick start
 
@@ -177,14 +177,14 @@ When using a button to toggle height, make sure you add `aria-expanded` and `ari
 ```jsx
 <button
   aria-expanded={ height !== 0 }
-  aria-controls='example-panel' // it has to match the id passed to AnimateHeight
+  aria-controls="example-panel" // it has to match the id passed to AnimateHeight
   onClick={ toggleHeight } // your click handler that toggles height
   // ... all other props
 >
   Toggle
 </button>
 
-<AnimateHeight id='example-panel'>
+<AnimateHeight id="example-panel">
   Content
 </AnimateHeight>
 ```
