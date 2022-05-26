@@ -27,17 +27,17 @@
     "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:docs",
     "start": "esbuild docs/docs.tsx docs/docs.css --bundle --tsconfig=tsconfig-demo.json --servedir=docs --outdir=docs/react-animate-height",
     "build:docs": "esbuild docs/docs.tsx --bundle --tsconfig=tsconfig-demo.json --outdir=docs --minify --sourcemap",
-    "prepare": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "classnames": "^2.3.1"
   },
   "peerDependencies": {
-    "react": ">=15.6.2",
-    "react-dom": ">=15.6.2"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "engines": {
-    "node": ">= 6.0.0"
+    "node": ">= 12.0.0"
   },
   "keywords": [
     "react",
@@ -55,5 +55,9 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "typescript": "^4.7.2"
-  }
+  },
+  "files": [
+    "dist/",
+    "CHANGELOG.md"
+  ]
 }

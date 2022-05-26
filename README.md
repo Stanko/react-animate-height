@@ -13,7 +13,9 @@ CSS classes are applied in specific animation states, check `animationStateClass
 
 ### Version 3
 
-This is a version 3.x branch, for version 2.x, check [v2 branch](https://github.com/Stanko/react-animate-height/tree/v2)
+This is version 3.x branch, rewritten to hooks, which means you'll need React version 16.8 or newer.
+
+For version 2.x, check [v2 branch](https://github.com/Stanko/react-animate-height/tree/v2)
 
 #### Breaking changes:
 
