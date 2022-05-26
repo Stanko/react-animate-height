@@ -14,7 +14,6 @@ const example = React.createElement('div', null, [
 
 const renderedString = ReactDOMServer.renderToString(example);
 
-// eslint-disable-next-line max-len
 const expectedString =
   '<div><div aria-hidden="true" class="rah-static rah-static--height-zero " style="height:0;overflow:hidden"><div>Hello World</div></div><div aria-hidden="false" class="rah-static rah-static--height-auto " style="height:auto;overflow:visible"><div>Hello World</div></div><div aria-hidden="false" class="rah-static rah-static--height-specific " style="height:100px;overflow:hidden"><div>Hello World</div></div></div>';
 
