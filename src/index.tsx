@@ -1,19 +1,12 @@
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
-import {
-  isPercentage,
-  hideContent,
-  showContent,
-  startAnimationHelper,
-  ANIMATION_STATE_CLASSES,
-  getStaticStateClasses,
-} from './helpers';
+// ------------------ Types
 
-export type Timeout = ReturnType<typeof setTimeout>;
 export type Height = 'auto' | number | `${number}%`;
-export type Overflow = 'auto' | 'visible' | 'hidden' | undefined;
-export type AnimationStateClasses = {
+type Timeout = ReturnType<typeof setTimeout>;
+type Overflow = 'auto' | 'visible' | 'hidden' | undefined;
+type AnimationStateClasses = {
   animating: string;
   animatingUp: string;
   animatingDown: string;
@@ -25,6 +18,74 @@ export type AnimationStateClasses = {
   staticHeightAuto: string;
   staticHeightSpecific: string;
 };
+
+// ------------------ Helpers
+
+function isNumber(n: string) {
+  const number = parseFloat(n);
+  return !isNaN(number) && isFinite(number);
+}
+
+function isPercentage(height: Height) {
+  // Percentage height
+  return (
+    typeof height === 'string' &&
+    height[height.length - 1] === '%' &&
+    isNumber(height.substring(0, height.length - 1))
+  );
+}
+
+function hideContent(element: HTMLDivElement | null, height: Height) {
+  // Check for element?.style is added cause this would fail in tests (react-test-renderer)
+  // Read more here: https://github.com/Stanko/react-animate-height/issues/17
+  if (height === 0 && element?.style) {
+    element.style.display = 'none';
+  }
+}
+
+function showContent(element: HTMLDivElement | null, height: Height) {
+  // Check for element?.style is added cause this would fail in tests (react-test-renderer)
+  // Read more here: https://github.com/Stanko/react-animate-height/issues/17
+  if (height === 0 && element?.style) {
+    element.style.display = '';
+  }
+}
+
+// Start animation helper using nested requestAnimationFrames
+function startAnimationHelper(callback: () => any) {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      callback();
+    });
+  });
+}
+
+const ANIMATION_STATE_CLASSES: AnimationStateClasses = {
+  animating: 'rah-animating',
+  animatingUp: 'rah-animating--up',
+  animatingDown: 'rah-animating--down',
+  animatingToHeightZero: 'rah-animating--to-height-zero',
+  animatingToHeightAuto: 'rah-animating--to-height-auto',
+  animatingToHeightSpecific: 'rah-animating--to-height-specific',
+  static: 'rah-static',
+  staticHeightZero: 'rah-static--height-zero',
+  staticHeightAuto: 'rah-static--height-auto',
+  staticHeightSpecific: 'rah-static--height-specific',
+};
+
+function getStaticStateClasses(
+  animationStateClasses: AnimationStateClasses,
+  height: Height
+) {
+  return classNames({
+    [animationStateClasses.static]: true,
+    [animationStateClasses.staticHeightZero]: height === 0,
+    [animationStateClasses.staticHeightSpecific]: height > 0,
+    [animationStateClasses.staticHeightAuto]: height === 'auto',
+  });
+}
+
+// ------------------ Component
 
 interface AnimateHeightProps extends React.HTMLAttributes<HTMLDivElement> {
   animateOpacity?: boolean;

@@ -113,13 +113,13 @@ const Example = () => {
         duration={500}
         onHeightAnimationEnd={(newHeight) => {
           console.log(
-            'React Animate Height - animation ended, new height: ',
+            'AnimateHeight - animation ended, new height: ',
             newHeight
           );
         }}
         onHeightAnimationStart={(newHeight) => {
           console.log(
-            'React Animate Height - animation started, new height: ',
+            'AnimateHeight - animation started, new height: ',
             newHeight
           );
         }}
@@ -230,13 +230,13 @@ const Example = () => {
           className="demo demo-3"
           onHeightAnimationEnd={(newHeight) => {
             console.log(
-              'React Animate Height - animation ended, new height: ',
+              'AnimateHeight - animation ended, new height: ',
               newHeight
             );
           }}
           onHeightAnimationStart={(newHeight) => {
             console.log(
-              'React Animate Height - animation started, new height: ',
+              'AnimateHeight - animation started, new height: ',
               newHeight
             );
           }}
