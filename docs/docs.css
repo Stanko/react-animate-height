@@ -41,15 +41,18 @@ h4 {
   transition: all 0.1s;
   background: #111;
   cursor: pointer;
-  outline: none;
 }
 
 .buttons button:hover {
   background: darken(#e9463f, 20);
 }
 
+.buttons button:focus {
+  outline: none;
+}
+
 .buttons button:focus-visible {
-  outline: 1px solid #555;
+  outline: 1px solid #333;
   outline-offset: 2px;
 }
 
@@ -68,4 +71,17 @@ h4 {
 
 .demo-3-wrapper {
   height: 500px;
+}
+
+.btn-selected {
+  position: relative;
+}
+
+.btn-selected::before {
+  content: '▼';
+  color: black;
+  position: absolute;
+  bottom: 90%;
+  left: 50%;
+  transform: translateX(-50%);
 }
