@@ -72,6 +72,7 @@ const Example = () => {
           const isActive = height1 === option;
           return (
             <button
+              key={option}
               className={`btn btn-sm ${isActive ? 'btn-selected' : ''}`}
               onClick={() => setHeight1(option)}
             >
@@ -83,7 +84,6 @@ const Example = () => {
       <AnimateHeight height={height1} className="demo demo-1">
         <DemoContent index={1} />
       </AnimateHeight>
-
       <h3>Demo, starting height = auto</h3>
       <p>
         For this example, duration is set to 500ms. If you open up the console,
@@ -100,6 +100,7 @@ const Example = () => {
           const isActive = height2 === option;
           return (
             <button
+              key={option}
               className={`btn btn-sm ${isActive ? 'btn-selected' : ''}`}
               onClick={() => setHeight2(option)}
             >
@@ -144,6 +145,7 @@ const Example = () => {
         {delays.map((option) => {
           return (
             <button
+              key={option}
               className={`btn btn-sm ${delay === option ? 'btn-selected' : ''}`}
               onClick={() => setDelay(option)}
             >
@@ -158,6 +160,7 @@ const Example = () => {
           const isActive = height3 === option;
           return (
             <button
+              key={option}
               className={`btn btn-sm ${isActive ? 'btn-selected' : ''}`}
               onClick={() => setHeight3(option)}
             >

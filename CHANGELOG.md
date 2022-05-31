@@ -1,18 +1,19 @@
 # Changelog
 
-### v3.0.0
+### v3.0.0, v3.0.1
 
-01.06.2022.
+31.05.2022.
 
 **Changed**
 
-* Rewritten to hooks
-* Switched to TypeScript
-* Callback names changed
-  * `onAnimationStart` -> `onHeightAnimationStart`
-  * `onAnimationEnd` -> `onHeightAnimationEnd`
+- Rewritten to hooks
+- Switched to TypeScript
+- Callback names changed
+  - `onAnimationStart` -> `onHeightAnimationStart`
+  - `onAnimationEnd` -> `onHeightAnimationEnd`
+- Switched back to a short timeout instead of requestAnimationFrame for starting the animation
 
------
+---
 
 ### v2.1.1, v2.1.2
 
@@ -20,9 +21,9 @@
 
 **Added**
 
-* Added check for `prefers-reduced-motion` and disabled animations if it is set to `true` - [#124](https://github.com/Stanko/react-animate-height/issues/124)
+- Added check for `prefers-reduced-motion` and disabled animations if it is set to `true` - [#124](https://github.com/Stanko/react-animate-height/issues/124)
 
------
+---
 
 ### v2.1.0
 
@@ -30,9 +31,9 @@
 
 **Fixed**
 
-* Fixed component not working with React 18 and StrictMode - [#123](https://github.com/Stanko/react-animate-height/issues/123)
+- Fixed component not working with React 18 and StrictMode - [#123](https://github.com/Stanko/react-animate-height/issues/123)
 
------
+---
 
 ### v2.0.23
 
@@ -40,10 +41,10 @@
 
 **Added**
 
-* Added "id" and "aria-hidden" props.
-* Added section about accessibility in the readme.
+- Added "id" and "aria-hidden" props.
+- Added section about accessibility in the readme.
 
------
+---
 
 ### v2.0.22
 
@@ -51,9 +52,9 @@
 
 **Added**
 
-* Added "engines" to `package.json` - [#91](https://github.com/Stanko/react-animate-height/issues/91)
+- Added "engines" to `package.json` - [#91](https://github.com/Stanko/react-animate-height/issues/91)
 
------
+---
 
 ### v2.0.21
 
@@ -61,9 +62,9 @@
 
 **Updated**
 
-* Updated the readme with the specific flex box usecase - [#89](https://github.com/Stanko/react-animate-height/issues/89)
+- Updated the readme with the specific flex box usecase - [#89](https://github.com/Stanko/react-animate-height/issues/89)
 
------
+---
 
 ### v2.0.18, v2.0.19 and v2.0.20
 
@@ -71,9 +72,9 @@
 
 **Fixed**
 
-* Fixed TS types - [#88](https://github.com/Stanko/react-animate-height/issues/88)
+- Fixed TS types - [#88](https://github.com/Stanko/react-animate-height/issues/88)
 
------
+---
 
 ### v2.0.17
 
@@ -81,9 +82,9 @@
 
 **Fixed**
 
-* Fixed TS types to include `HTMLAttributes<HTMLDivElement>` [#86](https://github.com/Stanko/react-animate-height/issues/86)
+- Fixed TS types to include `HTMLAttributes<HTMLDivElement>` [#86](https://github.com/Stanko/react-animate-height/issues/86)
 
------
+---
 
 ### v2.0.16
 
@@ -91,9 +92,9 @@
 
 **Fixed**
 
-* Request animation frame is now cleared on unmount
+- Request animation frame is now cleared on unmount
 
------
+---
 
 ### v2.0.14-v2.0.15
 
@@ -101,9 +102,9 @@
 
 **Fixed**
 
-* Reverted back changes, which led to a broken build.
+- Reverted back changes, which led to a broken build.
 
------
+---
 
 ### v2.0.10-v2.0.13
 
@@ -111,9 +112,9 @@
 
 **Fixed**
 
-* Package now works as a ESM module [#73](https://github.com/Stanko/react-animate-height/issues/73).
+- Package now works as a ESM module [#73](https://github.com/Stanko/react-animate-height/issues/73).
 
------
+---
 
 ### v2.0.9
 
@@ -121,9 +122,9 @@
 
 **Fixed**
 
-* Improved prop types for `height` prop.
+- Improved prop types for `height` prop.
 
------
+---
 
 ### v2.0.8
 
@@ -131,9 +132,9 @@
 
 **Fixed**
 
-* Fixed type definitions [#68](https://github.com/Stanko/react-animate-height/issues/68).
+- Fixed type definitions [#68](https://github.com/Stanko/react-animate-height/issues/68).
 
------
+---
 
 ### v2.0.7
 
@@ -141,9 +142,9 @@
 
 **Added**
 
-* Added param to `onAnimationStart` and `onAnimationEnd` callbacks, it is a object containing `newHeight` value in pixels.
+- Added param to `onAnimationStart` and `onAnimationEnd` callbacks, it is a object containing `newHeight` value in pixels.
 
------
+---
 
 ### v2.0.6
 
@@ -151,9 +152,9 @@
 
 **Changed**
 
-* Removed `@types/react` from `optionalDependencies` [#62](https://github.com/Stanko/react-animate-height/issues/62).
+- Removed `@types/react` from `optionalDependencies` [#62](https://github.com/Stanko/react-animate-height/issues/62).
 
------
+---
 
 ### v2.0.5
 
@@ -161,9 +162,9 @@
 
 **Fixed**
 
-* Fixed [#61](https://github.com/Stanko/react-animate-height/issues/61) - omitted `onAnimationStart` and `onAnimationEnd` from being passed to the DOM element directly.
+- Fixed [#61](https://github.com/Stanko/react-animate-height/issues/61) - omitted `onAnimationStart` and `onAnimationEnd` from being passed to the DOM element directly.
 
------
+---
 
 ### v2.0.4
 
@@ -171,9 +172,9 @@
 
 **Refactored**
 
-* Added `isPercentage` helper function.
+- Added `isPercentage` helper function.
 
------
+---
 
 ### v2.0.3
 
@@ -181,10 +182,10 @@
 
 **Fixed**
 
-* Fixed small bug introduced with 2.0.0 - In `componentDidMount`, `this.state` was used instead of `prevState`
-* Content is not being hidden if set height is `auto`
+- Fixed small bug introduced with 2.0.0 - In `componentDidMount`, `this.state` was used instead of `prevState`
+- Content is not being hidden if set height is `auto`
 
------
+---
 
 ### v2.0.2
 
@@ -192,9 +193,9 @@
 
 **Fixed**
 
-* Fixed type script definitions file
+- Fixed type script definitions file
 
------
+---
 
 ### v2.0.0 and v2.0.1
 
@@ -202,9 +203,9 @@
 
 **Changed**
 
-* Replaced `componentWillReceiveProps` by `componentDidUpdate` to address changes introduces with React v16.3
+- Replaced `componentWillReceiveProps` by `componentDidUpdate` to address changes introduces with React v16.3
 
------
+---
 
 ### v1.0.4
 
@@ -212,9 +213,9 @@
 
 **Changed**
 
-* Enabled react v16.3+ in peer dependencies until react-animate-height v2 is out
+- Enabled react v16.3+ in peer dependencies until react-animate-height v2 is out
 
------
+---
 
 ### v1.0.3
 
@@ -222,10 +223,10 @@
 
 **Changed**
 
-* Moved helpers outside of component to make component lighter
-* Updated few dependencies
+- Moved helpers outside of component to make component lighter
+- Updated few dependencies
 
------
+---
 
 ### v1.0.2
 
@@ -233,10 +234,10 @@
 
 **Added**
 
-* Added `delay` prop, kudos to @quagliero [#51](https://github.com/Stanko/react-animate-height/pull/51)
-* Changelog
+- Added `delay` prop, kudos to @quagliero [#51](https://github.com/Stanko/react-animate-height/pull/51)
+- Changelog
 
------
+---
 
 ### v1.0.1
 
@@ -244,9 +245,9 @@
 
 **Fixed**
 
-* `animateOpacity` prop was passed directly to the `div` element, omitted it
+- `animateOpacity` prop was passed directly to the `div` element, omitted it
 
------
+---
 
 ### v1.0.0
 
@@ -254,12 +255,12 @@
 
 **Added**
 
-* `animateOpacity` prop which fades content in or out depending on animation direction
+- `animateOpacity` prop which fades content in or out depending on animation direction
 
 **Changed**
 
-* Removed unused vendor prefixes for `translate`
+- Removed unused vendor prefixes for `translate`
 
------
+---
 
 For changes prior version 1.0.0 please check the [commit list](https://github.com/Stanko/react-animate-height/commits/master).

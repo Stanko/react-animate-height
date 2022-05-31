@@ -51,13 +51,11 @@ function showContent(element: HTMLDivElement | null, height: Height) {
   }
 }
 
-// Start animation helper using nested requestAnimationFrames
+// Start animation helper to allow rendering of the initial animation state first
 function startAnimationHelper(callback: () => any) {
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      callback();
-    });
-  });
+  setTimeout(() => {
+    callback();
+  }, 50);
 }
 
 const ANIMATION_STATE_CLASSES: AnimationStateClasses = {
@@ -234,6 +232,7 @@ const AnimateHeight: React.FC<AnimateHeightProps> = ({
       // Set starting height and animating classes
       // When animating from 'auto' we first need to set fixed height
       // that change should be animated
+      console.log('newHeight: ', newHeight);
       setCurrentHeight(newHeight);
       setOverflow('hidden');
       setUseTransitions(!isCurrentHeightAuto);
