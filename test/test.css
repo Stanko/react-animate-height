@@ -1,0 +1,19 @@
+body {
+  background: #fdfdfd;
+}
+
+.content {
+  position: relative;
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 840px;
+}
+
+.demo {
+  outline: 1px solid #ddd;
+}
+
+.demo-content {
+  padding: 20px 20px 0;
+  background: #fff;
+}
