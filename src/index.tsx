@@ -51,13 +51,6 @@ function showContent(element: HTMLDivElement | null, height: Height) {
   }
 }
 
-// Start animation helper to allow rendering of the initial animation state first
-function startAnimationHelper(callback: () => any) {
-  setTimeout(() => {
-    callback();
-  }, 50);
-}
-
 const ANIMATION_STATE_CLASSES: AnimationStateClasses = {
   animating: 'rah-animating',
   animatingUp: 'rah-animating--up',
@@ -232,7 +225,6 @@ const AnimateHeight: React.FC<AnimateHeightProps> = ({
       // Set starting height and animating classes
       // When animating from 'auto' we first need to set fixed height
       // that change should be animated
-      console.log('newHeight: ', newHeight);
       setCurrentHeight(newHeight);
       setOverflow('hidden');
       setUseTransitions(!isCurrentHeightAuto);
@@ -247,14 +239,15 @@ const AnimateHeight: React.FC<AnimateHeightProps> = ({
         // after setting fixed height above
         timeoutUseTransitions = true;
 
-        startAnimationHelper(() => {
+        // Short timeout to allow rendering of the initial animation state first
+        timeoutID.current = setTimeout(() => {
           setCurrentHeight(timeoutHeight);
           setOverflow(timeoutOverflow);
           setUseTransitions(timeoutUseTransitions);
 
           // ANIMATION STARTS, run a callback if it exists
           onHeightAnimationStart?.(timeoutHeight);
-        });
+        }, 50);
 
         // Set static classes and remove transitions when animation ends
         animationClassesTimeoutID.current = setTimeout(() => {
@@ -292,6 +285,11 @@ const AnimateHeight: React.FC<AnimateHeightProps> = ({
     }
 
     prevHeight.current = height;
+
+    return () => {
+      clearTimeout(timeoutID.current as Timeout);
+      clearTimeout(animationClassesTimeoutID.current as Timeout);
+    };
 
     // This should be explicitly run only on height change
     // eslint-disable-next-line react-hooks/exhaustive-deps
