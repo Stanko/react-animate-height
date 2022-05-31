@@ -78,6 +78,9 @@ function getStaticStateClasses(
 
 // ------------------ Component
 
+// display and height are set by the component itself, therefore ignored
+type OmitCSSProperties = 'display' | 'height';
+
 interface AnimateHeightProps extends React.HTMLAttributes<HTMLDivElement> {
   animateOpacity?: boolean;
   animationStateClasses?: AnimationStateClasses;
@@ -89,7 +92,7 @@ interface AnimateHeightProps extends React.HTMLAttributes<HTMLDivElement> {
   height: Height;
   onHeightAnimationEnd?: (newHeight: Height) => any;
   onHeightAnimationStart?: (newHeight: Height) => any;
-  style?: CSSProperties;
+  style?: Omit<CSSProperties, OmitCSSProperties>;
 }
 
 const AnimateHeight: React.FC<AnimateHeightProps> = ({

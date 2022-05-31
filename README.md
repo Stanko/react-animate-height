@@ -113,7 +113,7 @@ const Example = () => {
 
   CSS style object, it will be merged with inline styles of the component
 
-  **Please note that you shouldn't apply properties that are messing with the layout (like `display`, `height`...), as these might break height calculations**
+  **Please note that you shouldn't apply properties that are messing with the layout (`display`, `height` are omitted from the type already), as these might break height calculations**
 
 - **contentClassName**: string
 
