@@ -1,5 +1,15 @@
 # Changelog
 
+### v3.0.4
+
+19.06.2022.
+
+**Fixed**
+
+- Fixed [#129](https://github.com/Stanko/react-animate-height/issues/129) by swapping ESM module target from `esnext` to `ES2015` (aka `es6`).
+
+---
+
 ### v3.0.0-v3.0.3
 
 31.05.2022.

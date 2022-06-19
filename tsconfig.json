@@ -1,8 +1,8 @@
 {
   "extends": "./tsconfig-base.json",
   "compilerOptions": {
-    "module": "esnext",
+    "module": "ES2020",
     "outDir": "dist/esm",
-    "target": "esnext"
+    "target": "ES2015"
   }
 }
