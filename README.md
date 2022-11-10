@@ -87,7 +87,7 @@ const Example = () => {
   When changed, element height will be animated to that height.<br/>
   To slide up use <code>0</code>, for slide down use <code>'auto'</code>
 
-- **duration**: integer, default: `250`
+- **duration**: integer, default: `500`
 
   Duration of the animation in milliseconds
 
