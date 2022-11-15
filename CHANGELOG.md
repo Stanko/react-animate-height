@@ -1,5 +1,15 @@
 # Changelog
 
+### v3.0.5
+
+15.11.2022.
+
+**Changed**
+
+- TypeScript definitions are now exported.
+
+---
+
 ### v3.0.4
 
 19.06.2022.
