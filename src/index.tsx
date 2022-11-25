@@ -1,5 +1,4 @@
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
-import classNames from 'classnames';
 
 // ------------------ Types
 
@@ -68,12 +67,14 @@ function getStaticStateClasses(
   animationStateClasses: AnimationStateClasses,
   height: Height
 ) {
-  return classNames({
-    [animationStateClasses.static]: true,
-    [animationStateClasses.staticHeightZero]: height === 0,
-    [animationStateClasses.staticHeightSpecific]: height > 0,
-    [animationStateClasses.staticHeightAuto]: height === 'auto',
-  });
+  return [
+    animationStateClasses.static,
+    height === 0 && animationStateClasses.staticHeightZero,
+    height > 0 && animationStateClasses.staticHeightSpecific,
+    height === 'auto' && animationStateClasses.staticHeightAuto,
+  ]
+    .filter((v) => v)
+    .join(' ');
 }
 
 // ------------------ Component
@@ -208,16 +209,18 @@ const AnimateHeight: React.FC<AnimateHeightProps> = ({
       }
 
       // Animation classes
-      const newAnimationStateClassNames = classNames({
-        [stateClasses.current.animating]: true,
-        [stateClasses.current.animatingUp]:
-          prevHeight.current === 'auto' || height < prevHeight.current,
-        [stateClasses.current.animatingDown]:
-          height === 'auto' || height > prevHeight.current,
-        [stateClasses.current.animatingToHeightZero]: timeoutHeight === 0,
-        [stateClasses.current.animatingToHeightAuto]: timeoutHeight === 'auto',
-        [stateClasses.current.animatingToHeightSpecific]: timeoutHeight > 0,
-      });
+      const newAnimationStateClassNames = [
+        stateClasses.current.animating,
+        (prevHeight.current === 'auto' || height < prevHeight.current) &&
+          stateClasses.current.animatingUp,
+        (height === 'auto' || height > prevHeight.current) &&
+          stateClasses.current.animatingDown,
+        timeoutHeight === 0 && stateClasses.current.animatingToHeightZero,
+        timeoutHeight === 'auto' && stateClasses.current.animatingToHeightAuto,
+        timeoutHeight > 0 && stateClasses.current.animatingToHeightSpecific,
+      ]
+        .filter((v) => v)
+        .join(' ');
 
       // Animation classes to be put after animation is complete
       const timeoutAnimationStateClasses = getStaticStateClasses(
