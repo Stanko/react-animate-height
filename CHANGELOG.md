@@ -1,5 +1,15 @@
 # Changelog
 
+### v3.1.0
+
+15.11.2022.
+
+**Changed**
+
+- Dropped `classnames` dependency, thanks Davey [#135](https://github.com/Stanko/react-animate-height/issues/135)
+
+---
+
 ### v3.0.5
 
 15.11.2022.

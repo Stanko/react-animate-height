@@ -1,6 +1,6 @@
 {
   "name": "react-animate-height",
-  "version": "3.0.5",
+  "version": "3.1.0",
   "description": "Lightweight React component for animating height using CSS transitions.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -33,9 +33,7 @@
     "cypress:run": "cypress run",
     "cypress:open": "cypress open"
   },
-  "dependencies": {
-    "classnames": "^2.3.1"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"

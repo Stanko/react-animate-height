@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/react-animate-height.svg?style=flat-square)](https://www.npmjs.com/package/react-animate-height)
 [![npm downloads](https://img.shields.io/npm/dm/react-animate-height.svg?style=flat-square)](https://www.npmjs.com/package/react-animate-height)
 
-Lightweight React component for animating height using CSS transitions.
+No dependencies React component for animating height using CSS transitions.
 Slide an element up and down or animate it to any specific height.
 Content's opacity can be optionally animated as well (check `animateOpacity` prop bellow).
 
@@ -38,7 +38,7 @@ npm start
 
 Then open [`http://127.0.0.1:8000/`](http://127.0.0.1:8000/) in your browser of choice browser.
 
-Or play with this [sandbox](https://codesandbox.io/s/react-animate-height-v3-basic-example-1iggpe).
+Or play with this [sandbox](https://codesandbox.io/s/react-animate-height-v3-basic-example-ix6c5v).
 
 ## Quick start
 

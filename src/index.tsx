@@ -82,7 +82,8 @@ function getStaticStateClasses(
 // display and height are set by the component itself, therefore ignored
 type OmitCSSProperties = 'display' | 'height';
 
-export interface AnimateHeightProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface AnimateHeightProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   animateOpacity?: boolean;
   animationStateClasses?: AnimationStateClasses;
   applyInlineTransitions?: boolean;
