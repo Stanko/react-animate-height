@@ -1,5 +1,15 @@
 # Changelog
 
+### v3.1.1
+
+21.02.2022.
+
+**Fixed**
+
+- Replaced `__rest` shim to avoid rollup warnings [#136](https://github.com/Stanko/react-animate-height/issues/136)
+
+---
+
 ### v3.1.0
 
 15.11.2022.

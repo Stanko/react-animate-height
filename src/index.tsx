@@ -79,6 +79,22 @@ function getStaticStateClasses(
 
 // ------------------ Component
 
+const propsToOmitFromDiv: (keyof AnimateHeightProps)[] = [
+  'animateOpacity',
+  'animationStateClasses',
+  'applyInlineTransitions',
+  'children',
+  'className',
+  'contentClassName',
+  'delay',
+  'duration',
+  'easing',
+  'height',
+  'onHeightAnimationEnd',
+  'onHeightAnimationStart',
+  'style',
+];
+
 // display and height are set by the component itself, therefore ignored
 type OmitCSSProperties = 'display' | 'height';
 
@@ -97,22 +113,28 @@ export interface AnimateHeightProps
   style?: Omit<CSSProperties, OmitCSSProperties>;
 }
 
-const AnimateHeight: React.FC<AnimateHeightProps> = ({
-  animateOpacity = false,
-  animationStateClasses = {},
-  applyInlineTransitions = true,
-  children,
-  className = '',
-  contentClassName,
-  delay: userDelay = 0,
-  duration: userDuration = 500,
-  easing = 'ease',
-  height,
-  onHeightAnimationEnd,
-  onHeightAnimationStart,
-  style,
-  ...props
-}) => {
+const AnimateHeight: React.FC<AnimateHeightProps> = (componentProps) => {
+  const {
+    animateOpacity = false,
+    animationStateClasses = {},
+    applyInlineTransitions = true,
+    children,
+    className = '',
+    contentClassName,
+    delay: userDelay = 0,
+    duration: userDuration = 500,
+    easing = 'ease',
+    height,
+    onHeightAnimationEnd,
+    onHeightAnimationStart,
+    style,
+  } = componentProps;
+
+  const divProps = { ...componentProps };
+  propsToOmitFromDiv.forEach((propKey) => {
+    delete divProps[propKey];
+  });
+
   // ------------------ Initialization
   const prevHeight = useRef<Height>(height);
   const contentElement = useRef<HTMLDivElement>(null);
@@ -335,12 +357,12 @@ const AnimateHeight: React.FC<AnimateHeightProps> = ({
   }
 
   // Check if user passed aria-hidden prop
-  const hasAriaHiddenProp = typeof props['aria-hidden'] !== 'undefined';
-  const ariaHidden = hasAriaHiddenProp ? props['aria-hidden'] : height === 0;
+  const hasAriaHiddenProp = typeof divProps['aria-hidden'] !== 'undefined';
+  const ariaHidden = hasAriaHiddenProp ? divProps['aria-hidden'] : height === 0;
 
   return (
     <div
-      {...props}
+      {...divProps}
       aria-hidden={ariaHidden}
       className={`${animationStateClassNames} ${className}`}
       style={componentStyle}
