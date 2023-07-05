@@ -1,5 +1,15 @@
 # Changelog
 
+### v3.1.2
+
+05.07.2022.
+
+**Fixed**
+
+- Added version to two `package.json` files to resolve issue with Webpack Module Federation [#140](https://github.com/Stanko/react-animate-height/issues/140)
+
+---
+
 ### v3.1.1
 
 21.02.2022.
