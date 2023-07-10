@@ -1,15 +1,13 @@
 {
   "name": "react-animate-height",
-  "version": "3.1.2",
+  "version": "3.1.3-beta.1",
   "description": "Lightweight React component for animating height using CSS transitions.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
   "exports": {
-    ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
-    }
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.js"
   },
   "author": "Stanko",
   "homepage": "https://github.com/Stanko/react-animate-height",
@@ -24,7 +22,7 @@
     "clean": "rm -rf dist",
     "build:esm": "tsc -p tsconfig.json",
     "build:cjs": "tsc -p tsconfig-cjs.json",
-    "build": "npm run clean && npm run build:esm && npm run build:cjs && node ./scripts/post-build.js && npm run build:docs",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:docs",
     "start": "esbuild docs/docs.tsx docs/docs.css --bundle --tsconfig=tsconfig-demo.json --servedir=docs --outdir=docs/react-animate-height",
     "build:docs": "esbuild docs/docs.tsx --bundle --tsconfig=tsconfig-demo.json --outdir=docs --minify --sourcemap",
     "prepublishOnly": "npm test && npm run build",
