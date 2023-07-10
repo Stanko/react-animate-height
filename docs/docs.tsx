@@ -1,7 +1,8 @@
-import React, { StrictMode, useState } from 'react';
+import React, { StrictMode, useState, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import AnimateHeight, { Height } from '../src/index';
+import AutoHeight from './auto-height';
 
 const DemoContent = ({ index }) => {
   return (
@@ -56,13 +57,19 @@ const Example = () => {
   const [height2, setHeight2] = useState<Height>('auto');
   const [height3, setHeight3] = useState<Height>('auto');
   const [delay, setDelay] = useState<number>(0);
+  const wrapper = useRef<HTMLDivElement | null>(null);
+  const content = useRef<HTMLDivElement | null>(null);
+  const [randomImage, setRandomImage] = useState(
+    'https://picsum.photos/600/600'
+  );
 
   const options: Height[] = [0, 100, 200, 300, 'auto'];
   const delays: number[] = [0, 300, 600, 1000];
 
   return (
     <div>
-      <h3>Demo, starting height = 0</h3>
+      {/* ---------- DEMO 1 ---------- */}
+      <h3 id="demo-1">Starting height = 0</h3>
       <p>
         Current Height: <b>{height1 !== null ? height1 : 'null'}</b>
       </p>
@@ -81,10 +88,17 @@ const Example = () => {
           );
         })}
       </div>
-      <AnimateHeight height={height1} className="demo demo-1">
+      <AnimateHeight
+        height={height1}
+        className="demo demo-1"
+        ref={wrapper}
+        contentRef={content}
+      >
         <DemoContent index={1} />
       </AnimateHeight>
-      <h3>Demo, starting height = auto</h3>
+
+      {/* ---------- DEMO 2 ---------- */}
+      <h3 id="demo-2">Starting height = auto</h3>
       <p>
         For this example, duration is set to 500ms. If you open up the console,
         you&apos;ll see <code>onHeightAnimationEnd</code> and
@@ -130,7 +144,42 @@ const Example = () => {
         <DemoContent index={2} />
       </AnimateHeight>
 
-      <h3>Demo, with transition delay</h3>
+      {/* ---------- DEMO 3 ---------- */}
+      <h3 id="demo-3">Auto height</h3>
+      <p>
+        If you want <code>AnimateHeight</code> to automatically adapt on content
+        change, you can use{' '}
+        <a href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver">
+          ResizeObserver
+        </a>
+        . You can find the code for this example{' '}
+        <a href="https://github.com/Stanko/react-animate-height/blob/v3/docs/auto-height.tsx">
+          here
+        </a>
+        .
+      </p>
+      <div className="buttons">
+        <button
+          className="btn btn-sm"
+          onClick={() => {
+            setRandomImage(
+              `https://picsum.photos/600/${Math.round(
+                200 + Math.random() * 400
+              )}`
+            );
+          }}
+        >
+          Change content
+        </button>
+      </div>
+      <AutoHeight className="demo">
+        <div className="demo-3-content">
+          <img className="demo-3-image" src={randomImage} alt="" />
+        </div>
+      </AutoHeight>
+
+      {/* ---------- DEMO 4 ---------- */}
+      <h3 id="demo-4">With transition delay</h3>
       <p>
         Here you can see <code>delay</code> prop in action. Parent&apos;s div
         height is set to 500px.
@@ -182,12 +231,12 @@ const Example = () => {
           100% of the parent's height
         </button>
       </div>
-      <div className="demo-3-wrapper">
+      <div className="demo-4-wrapper">
         <AnimateHeight
           height={height3}
           delay={delay}
           duration={500}
-          className="demo demo-3"
+          className="demo demo-4"
           onHeightAnimationEnd={(newHeight) => {
             console.log(
               'AnimateHeight - animation ended, new height: ',

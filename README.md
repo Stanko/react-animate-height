@@ -109,6 +109,26 @@ const Example = () => {
 
   **Please note that you shouldn't apply properties that are messing with the layout (like `display`, `height`...), as these might break height calculations**
 
+- **ref**: `React.MutableRefObject<HTMLDivElement | null>`
+
+  Reference to the main div element.
+
+  ```tsx
+    const wrapperDiv = useRef<HTMLDivElement | null>(null);
+
+    <AnimateHeight ref={wrapperDiv}>
+  ```
+
+- **contentRef**: `React.MutableRefObject<HTMLDivElement | null>`
+
+  Reference to the content div element.
+
+  ```tsx
+    const contentDiv = useRef<HTMLDivElement | null>(null);
+
+    <AnimateHeight contentRef={contentDiv}>
+  ```
+
 - **style**: object
 
   CSS style object, it will be merged with inline styles of the component
@@ -194,6 +214,15 @@ When using a button to toggle height, make sure you add `aria-expanded` and `ari
 ### Reduced motion
 
 Component checks for `prefers-reduced-motion` on start and disables animations if it is set to true. Please note that component doesn't listen for potential changes of `prefers-reduced-motion` option.
+
+## Animate height on content change
+
+You can achieve this by using [ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver).
+
+Here is an example:
+
+- [demo](https://muffinman.io/react-animate-height/#demo-3)
+- [code](./docs/auto-height.tsx)
 
 ## Gotchas
 

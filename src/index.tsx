@@ -70,7 +70,9 @@ function getStaticStateClasses(
   return [
     animationStateClasses.static,
     height === 0 && animationStateClasses.staticHeightZero,
-    height > 0 && animationStateClasses.staticHeightSpecific,
+    typeof height === 'number' && height > 0
+      ? animationStateClasses.staticHeightSpecific
+      : null,
     height === 'auto' && animationStateClasses.staticHeightAuto,
   ]
     .filter((v) => v)
@@ -86,6 +88,7 @@ const propsToOmitFromDiv: (keyof AnimateHeightProps)[] = [
   'children',
   'className',
   'contentClassName',
+  'contentRef',
   'delay',
   'duration',
   'easing',
@@ -104,6 +107,7 @@ export interface AnimateHeightProps
   animationStateClasses?: AnimationStateClasses;
   applyInlineTransitions?: boolean;
   contentClassName?: string;
+  contentRef?: React.MutableRefObject<HTMLDivElement | null>;
   delay?: number;
   duration?: number;
   easing?: string;
@@ -113,269 +117,286 @@ export interface AnimateHeightProps
   style?: Omit<CSSProperties, OmitCSSProperties>;
 }
 
-const AnimateHeight: React.FC<AnimateHeightProps> = (componentProps) => {
-  const {
-    animateOpacity = false,
-    animationStateClasses = {},
-    applyInlineTransitions = true,
-    children,
-    className = '',
-    contentClassName,
-    delay: userDelay = 0,
-    duration: userDuration = 500,
-    easing = 'ease',
-    height,
-    onHeightAnimationEnd,
-    onHeightAnimationStart,
-    style,
-  } = componentProps;
+const AnimateHeight = React.forwardRef<HTMLDivElement, AnimateHeightProps>(
+  (componentProps, ref) => {
+    // const AnimateHeight = forwardRef((componentProps: AnimateHeightProps, ref) => {
+    // const AnimateHeight: React.FC<AnimateHeightProps> = (componentProps) => {
+    const {
+      animateOpacity = false,
+      animationStateClasses = {},
+      applyInlineTransitions = true,
+      children,
+      className = '',
+      contentClassName,
+      delay: userDelay = 0,
+      duration: userDuration = 500,
+      easing = 'ease',
+      height,
+      onHeightAnimationEnd,
+      onHeightAnimationStart,
+      style,
+      contentRef,
+    } = componentProps;
 
-  const divProps = { ...componentProps };
-  propsToOmitFromDiv.forEach((propKey) => {
-    delete divProps[propKey];
-  });
+    const divProps = { ...componentProps };
+    propsToOmitFromDiv.forEach((propKey) => {
+      delete divProps[propKey];
+    });
 
-  // ------------------ Initialization
-  const prevHeight = useRef<Height>(height);
-  const contentElement = useRef<HTMLDivElement>(null);
+    // ------------------ Initialization
+    const prevHeight = useRef<Height>(height);
+    const contentElement = useRef<HTMLDivElement | null>(null);
 
-  const animationClassesTimeoutID = useRef<Timeout>();
-  const timeoutID = useRef<Timeout>();
+    const animationClassesTimeoutID = useRef<Timeout>();
+    const timeoutID = useRef<Timeout>();
 
-  const stateClasses = useRef<AnimationStateClasses>({
-    ...ANIMATION_STATE_CLASSES,
-    ...animationStateClasses,
-  });
+    const stateClasses = useRef<AnimationStateClasses>({
+      ...ANIMATION_STATE_CLASSES,
+      ...animationStateClasses,
+    });
 
-  const isBrowser = typeof window !== 'undefined';
+    const isBrowser = typeof window !== 'undefined';
 
-  const prefersReducedMotion = useRef<boolean>(
-    isBrowser && window.matchMedia
-      ? window.matchMedia('(prefers-reduced-motion)').matches
-      : false
-  );
+    const prefersReducedMotion = useRef<boolean>(
+      isBrowser && window.matchMedia
+        ? window.matchMedia('(prefers-reduced-motion)').matches
+        : false
+    );
 
-  const delay = prefersReducedMotion.current ? 0 : userDelay;
-  const duration = prefersReducedMotion.current ? 0 : userDuration;
+    const delay = prefersReducedMotion.current ? 0 : userDelay;
+    const duration = prefersReducedMotion.current ? 0 : userDuration;
 
-  let initHeight: Height = height;
-  let initOverflow: Overflow = 'visible';
+    let initHeight: Height = height;
+    let initOverflow: Overflow = 'visible';
 
-  if (typeof initHeight === 'number') {
-    // Reset negative height to 0
-    initHeight = height < 0 ? 0 : height;
-    initOverflow = 'hidden';
-  } else if (isPercentage(initHeight)) {
-    // If value is string "0%" make sure we convert it to number 0
-    initHeight = height === '0%' ? 0 : height;
-    initOverflow = 'hidden';
-  }
-
-  const [currentHeight, setCurrentHeight] = useState<Height>(initHeight);
-  const [overflow, setOverflow] = useState<Overflow>(initOverflow);
-  const [useTransitions, setUseTransitions] = useState<boolean>(false);
-  const [animationStateClassNames, setAnimationStateClassNames] =
-    useState<string>(getStaticStateClasses(stateClasses.current, height));
-
-  // ------------------ Did mount
-  useEffect(() => {
-    // Hide content if height is 0 (to prevent tabbing into it)
-    hideContent(contentElement.current, currentHeight);
-
-    // This should be explicitly run only on mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // ------------------ Height update
-  useEffect(() => {
-    if (height !== prevHeight.current && contentElement.current) {
-      showContent(contentElement.current, prevHeight.current);
-
-      // Cache content height
-      contentElement.current.style.overflow = 'hidden';
-      const contentHeight = contentElement.current.offsetHeight;
-      contentElement.current.style.overflow = '';
-
-      // set total animation time
-      const totalDuration = duration + delay;
-
-      let newHeight: Height;
-      let timeoutHeight: Height;
-      let timeoutOverflow: Overflow = 'hidden';
-      let timeoutUseTransitions: boolean;
-
-      const isCurrentHeightAuto = prevHeight.current === 'auto';
-
-      if (typeof height === 'number') {
-        // Reset negative height to 0
-        newHeight = height < 0 ? 0 : height;
-        timeoutHeight = newHeight;
-      } else if (isPercentage(height)) {
-        // If value is string "0%" make sure we convert it to number 0
-        newHeight = height === '0%' ? 0 : height;
-        timeoutHeight = newHeight;
-      } else {
-        // If not, animate to content height
-        // and then reset to auto
-        newHeight = contentHeight; // TODO solve contentHeight = 0
-        timeoutHeight = 'auto';
-        timeoutOverflow = undefined;
-      }
-
-      if (isCurrentHeightAuto) {
-        // This is the height to be animated to
-        timeoutHeight = newHeight;
-
-        // If previous height was 'auto'
-        // set starting height explicitly to be able to use transition
-        newHeight = contentHeight;
-      }
-
-      // Animation classes
-      const newAnimationStateClassNames = [
-        stateClasses.current.animating,
-        (prevHeight.current === 'auto' || height < prevHeight.current) &&
-          stateClasses.current.animatingUp,
-        (height === 'auto' || height > prevHeight.current) &&
-          stateClasses.current.animatingDown,
-        timeoutHeight === 0 && stateClasses.current.animatingToHeightZero,
-        timeoutHeight === 'auto' && stateClasses.current.animatingToHeightAuto,
-        timeoutHeight > 0 && stateClasses.current.animatingToHeightSpecific,
-      ]
-        .filter((v) => v)
-        .join(' ');
-
-      // Animation classes to be put after animation is complete
-      const timeoutAnimationStateClasses = getStaticStateClasses(
-        stateClasses.current,
-        timeoutHeight
-      );
-
-      // Set starting height and animating classes
-      // When animating from 'auto' we first need to set fixed height
-      // that change should be animated
-      setCurrentHeight(newHeight);
-      setOverflow('hidden');
-      setUseTransitions(!isCurrentHeightAuto);
-      setAnimationStateClassNames(newAnimationStateClassNames);
-
-      // Clear timeouts
-      clearTimeout(timeoutID.current as Timeout);
-      clearTimeout(animationClassesTimeoutID.current as Timeout);
-
-      if (isCurrentHeightAuto) {
-        // When animating from 'auto' we use a short timeout to start animation
-        // after setting fixed height above
-        timeoutUseTransitions = true;
-
-        // Short timeout to allow rendering of the initial animation state first
-        timeoutID.current = setTimeout(() => {
-          setCurrentHeight(timeoutHeight);
-          setOverflow(timeoutOverflow);
-          setUseTransitions(timeoutUseTransitions);
-
-          // ANIMATION STARTS, run a callback if it exists
-          onHeightAnimationStart?.(timeoutHeight);
-        }, 50);
-
-        // Set static classes and remove transitions when animation ends
-        animationClassesTimeoutID.current = setTimeout(() => {
-          setUseTransitions(false);
-          setAnimationStateClassNames(timeoutAnimationStateClasses);
-
-          // ANIMATION ENDS
-          // Hide content if height is 0 (to prevent tabbing into it)
-          hideContent(contentElement.current, timeoutHeight);
-          // Run a callback if it exists
-          onHeightAnimationEnd?.(timeoutHeight);
-        }, totalDuration);
-      } else {
-        // ANIMATION STARTS, run a callback if it exists
-        onHeightAnimationStart?.(newHeight);
-
-        // Set end height, classes and remove transitions when animation is complete
-        timeoutID.current = setTimeout(() => {
-          setCurrentHeight(timeoutHeight);
-          setOverflow(timeoutOverflow);
-          setUseTransitions(false);
-          setAnimationStateClassNames(timeoutAnimationStateClasses);
-
-          // ANIMATION ENDS
-          // If height is auto, don't hide the content
-          // (case when element is empty, therefore height is 0)
-          if (height !== 'auto') {
-            // Hide content if height is 0 (to prevent tabbing into it)
-            hideContent(contentElement.current, newHeight); // TODO solve newHeight = 0
-          }
-          // Run a callback if it exists
-          onHeightAnimationEnd?.(newHeight);
-        }, totalDuration);
-      }
+    if (typeof height === 'number') {
+      // Reset negative height to 0
+      initHeight = height < 0 ? 0 : height;
+      initOverflow = 'hidden';
+    } else if (isPercentage(initHeight)) {
+      // If value is string "0%" make sure we convert it to number 0
+      initHeight = height === '0%' ? 0 : height;
+      initOverflow = 'hidden';
     }
 
-    prevHeight.current = height;
+    const [currentHeight, setCurrentHeight] = useState<Height>(initHeight);
+    const [overflow, setOverflow] = useState<Overflow>(initOverflow);
+    const [useTransitions, setUseTransitions] = useState<boolean>(false);
+    const [animationStateClassNames, setAnimationStateClassNames] =
+      useState<string>(getStaticStateClasses(stateClasses.current, height));
 
-    return () => {
-      clearTimeout(timeoutID.current as Timeout);
-      clearTimeout(animationClassesTimeoutID.current as Timeout);
+    // ------------------ Did mount
+    useEffect(() => {
+      // Hide content if height is 0 (to prevent tabbing into it)
+      hideContent(contentElement.current, currentHeight);
+
+      // This should be explicitly run only on mount
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // ------------------ Height update
+    useEffect(() => {
+      if (height !== prevHeight.current && contentElement.current) {
+        showContent(contentElement.current, prevHeight.current);
+
+        // Cache content height
+        contentElement.current.style.overflow = 'hidden';
+        const contentHeight = contentElement.current.offsetHeight;
+        contentElement.current.style.overflow = '';
+
+        // set total animation time
+        const totalDuration = duration + delay;
+
+        let newHeight: Height;
+        let timeoutHeight: Height;
+        let timeoutOverflow: Overflow = 'hidden';
+        let timeoutUseTransitions: boolean;
+
+        const isCurrentHeightAuto = prevHeight.current === 'auto';
+
+        if (typeof height === 'number') {
+          // Reset negative height to 0
+          newHeight = height < 0 ? 0 : height;
+          timeoutHeight = newHeight;
+        } else if (isPercentage(height)) {
+          // If value is string "0%" make sure we convert it to number 0
+          newHeight = height === '0%' ? 0 : height;
+          timeoutHeight = newHeight;
+        } else {
+          // If not, animate to content height
+          // and then reset to auto
+          newHeight = contentHeight; // TODO solve contentHeight = 0
+          timeoutHeight = 'auto';
+          timeoutOverflow = undefined;
+        }
+
+        if (isCurrentHeightAuto) {
+          // This is the height to be animated to
+          timeoutHeight = newHeight;
+
+          // If previous height was 'auto'
+          // set starting height explicitly to be able to use transition
+          newHeight = contentHeight;
+        }
+
+        // Animation classes
+        const newAnimationStateClassNames = [
+          stateClasses.current.animating,
+          (prevHeight.current === 'auto' || height < prevHeight.current) &&
+            stateClasses.current.animatingUp,
+          (height === 'auto' || height > prevHeight.current) &&
+            stateClasses.current.animatingDown,
+          timeoutHeight === 0 && stateClasses.current.animatingToHeightZero,
+          timeoutHeight === 'auto' &&
+            stateClasses.current.animatingToHeightAuto,
+          typeof timeoutHeight === 'number' && timeoutHeight > 0
+            ? stateClasses.current.animatingToHeightSpecific
+            : null,
+        ]
+          .filter((v) => v)
+          .join(' ');
+
+        // Animation classes to be put after animation is complete
+        const timeoutAnimationStateClasses = getStaticStateClasses(
+          stateClasses.current,
+          timeoutHeight
+        );
+
+        // Set starting height and animating classes
+        // When animating from 'auto' we first need to set fixed height
+        // that change should be animated
+        setCurrentHeight(newHeight);
+        setOverflow('hidden');
+        setUseTransitions(!isCurrentHeightAuto);
+        setAnimationStateClassNames(newAnimationStateClassNames);
+
+        // Clear timeouts
+        clearTimeout(timeoutID.current as Timeout);
+        clearTimeout(animationClassesTimeoutID.current as Timeout);
+
+        if (isCurrentHeightAuto) {
+          // When animating from 'auto' we use a short timeout to start animation
+          // after setting fixed height above
+          timeoutUseTransitions = true;
+
+          // Short timeout to allow rendering of the initial animation state first
+          timeoutID.current = setTimeout(() => {
+            setCurrentHeight(timeoutHeight);
+            setOverflow(timeoutOverflow);
+            setUseTransitions(timeoutUseTransitions);
+
+            // ANIMATION STARTS, run a callback if it exists
+            onHeightAnimationStart?.(timeoutHeight);
+          }, 50);
+
+          // Set static classes and remove transitions when animation ends
+          animationClassesTimeoutID.current = setTimeout(() => {
+            setUseTransitions(false);
+            setAnimationStateClassNames(timeoutAnimationStateClasses);
+
+            // ANIMATION ENDS
+            // Hide content if height is 0 (to prevent tabbing into it)
+            hideContent(contentElement.current, timeoutHeight);
+            // Run a callback if it exists
+            onHeightAnimationEnd?.(timeoutHeight);
+          }, totalDuration);
+        } else {
+          // ANIMATION STARTS, run a callback if it exists
+          onHeightAnimationStart?.(newHeight);
+
+          // Set end height, classes and remove transitions when animation is complete
+          timeoutID.current = setTimeout(() => {
+            setCurrentHeight(timeoutHeight);
+            setOverflow(timeoutOverflow);
+            setUseTransitions(false);
+            setAnimationStateClassNames(timeoutAnimationStateClasses);
+
+            // ANIMATION ENDS
+            // If height is auto, don't hide the content
+            // (case when element is empty, therefore height is 0)
+            if (height !== 'auto') {
+              // Hide content if height is 0 (to prevent tabbing into it)
+              hideContent(contentElement.current, newHeight); // TODO solve newHeight = 0
+            }
+            // Run a callback if it exists
+            onHeightAnimationEnd?.(newHeight);
+          }, totalDuration);
+        }
+      }
+
+      prevHeight.current = height;
+
+      return () => {
+        clearTimeout(timeoutID.current as Timeout);
+        clearTimeout(animationClassesTimeoutID.current as Timeout);
+      };
+
+      // This should be explicitly run only on height change
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [height]);
+
+    // ------------------ Render
+
+    const componentStyle: CSSProperties = {
+      ...style,
+      height: currentHeight,
+      overflow: overflow || style?.overflow,
     };
 
-    // This should be explicitly run only on height change
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [height]);
+    if (useTransitions && applyInlineTransitions) {
+      componentStyle.transition = `height ${duration}ms ${easing} ${delay}ms`;
 
-  // ------------------ Render
+      // Include transition passed through styles
+      if (style?.transition) {
+        componentStyle.transition = `${style.transition}, ${componentStyle.transition}`;
+      }
 
-  const componentStyle: CSSProperties = {
-    ...style,
-    height: currentHeight,
-    overflow: overflow || style?.overflow,
-  };
-
-  if (useTransitions && applyInlineTransitions) {
-    componentStyle.transition = `height ${duration}ms ${easing} ${delay}ms`;
-
-    // Include transition passed through styles
-    if (style?.transition) {
-      componentStyle.transition = `${style.transition}, ${componentStyle.transition}`;
+      // Add webkit vendor prefix still used by opera, blackberry...
+      componentStyle.WebkitTransition = componentStyle.transition;
     }
 
-    // Add webkit vendor prefix still used by opera, blackberry...
-    componentStyle.WebkitTransition = componentStyle.transition;
-  }
+    const contentStyle: CSSProperties = {};
 
-  const contentStyle: CSSProperties = {};
+    if (animateOpacity) {
+      contentStyle.transition = `opacity ${duration}ms ${easing} ${delay}ms`;
+      // Add webkit vendor prefix still used by opera, blackberry...
+      contentStyle.WebkitTransition = contentStyle.transition;
 
-  if (animateOpacity) {
-    contentStyle.transition = `opacity ${duration}ms ${easing} ${delay}ms`;
-    // Add webkit vendor prefix still used by opera, blackberry...
-    contentStyle.WebkitTransition = contentStyle.transition;
-
-    if (currentHeight === 0) {
-      contentStyle.opacity = 0;
+      if (currentHeight === 0) {
+        contentStyle.opacity = 0;
+      }
     }
-  }
 
-  // Check if user passed aria-hidden prop
-  const hasAriaHiddenProp = typeof divProps['aria-hidden'] !== 'undefined';
-  const ariaHidden = hasAriaHiddenProp ? divProps['aria-hidden'] : height === 0;
+    // Check if user passed aria-hidden prop
+    const hasAriaHiddenProp = typeof divProps['aria-hidden'] !== 'undefined';
+    const ariaHidden = hasAriaHiddenProp
+      ? divProps['aria-hidden']
+      : height === 0;
 
-  return (
-    <div
-      {...divProps}
-      aria-hidden={ariaHidden}
-      className={`${animationStateClassNames} ${className}`}
-      style={componentStyle}
-    >
+    return (
       <div
-        className={contentClassName}
-        style={contentStyle}
-        ref={contentElement}
+        {...divProps}
+        aria-hidden={ariaHidden}
+        className={`${animationStateClassNames} ${className}`}
+        style={componentStyle}
+        ref={ref}
       >
-        {children}
+        <div
+          className={contentClassName}
+          style={contentStyle}
+          ref={(el: HTMLDivElement) => {
+            contentElement.current = el;
+
+            if (contentRef) {
+              contentRef.current = el;
+            }
+          }}
+        >
+          {children}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 export default AnimateHeight;

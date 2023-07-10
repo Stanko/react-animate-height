@@ -15,11 +15,16 @@ a:hover {
   border-bottom-color: #111;
 }
 
-h2,
+h2 {
+  margin-top: 1.5em;
+  color: #e9463f;
+}
+
 h3,
 h4 {
-  margin-top: 50px;
-  color: #e9463f;
+  margin: 4em 0 1em;
+  font-weight: 500;
+  color: #333;
 }
 
 .header {
@@ -56,20 +61,28 @@ h4 {
   outline-offset: 2px;
 }
 
-.demo {
-  border: 2px solid #ddd;
-}
-
 .demo-content {
   padding: 20px 20px 0;
   background: #fff;
 }
 
-.demo-3 {
+.demo {
+  outline: 2px solid #ddd;
+}
+
+.demo-3-content {
+  padding: 20px;
+}
+
+.demo-3-image {
+  display: block;
+}
+
+.demo-4 {
   margin-bottom: 100px;
 }
 
-.demo-3-wrapper {
+.demo-4-wrapper {
   height: 500px;
 }
 
