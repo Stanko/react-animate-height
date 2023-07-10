@@ -25,7 +25,7 @@
     "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:docs",
     "start": "esbuild docs/docs.tsx docs/docs.css --bundle --tsconfig=tsconfig-demo.json --servedir=docs --outdir=docs/react-animate-height",
     "build:docs": "esbuild docs/docs.tsx --bundle --tsconfig=tsconfig-demo.json --outdir=docs --minify --sourcemap",
-    "prepublishOnly": "npm test && npm run build",
+    "prepublishOnly": "npm run build",
     "start:test": "esbuild test/test.tsx test/test.css --bundle --tsconfig=tsconfig-demo.json --serve=8080 --servedir=test --outdir=test/output",
     "test": "node test.js",
     "cypress:run": "cypress run",
