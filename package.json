@@ -1,13 +1,15 @@
 {
   "name": "react-animate-height",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Lightweight React component for animating height using CSS transitions.",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
+  "main": "./dist/cjs/index.cjs",
+  "types": "./dist/esm/index.d.ts",
+  "type": "module",
   "exports": {
-    "import": "./dist/esm/index.js",
-    "require": "./dist/cjs/index.js"
+    ".": {
+      "import": "./dist/esm/index.cjs",
+      "require": "./dist/cjs/index.js"
+    }
   },
   "author": "Stanko",
   "homepage": "https://github.com/Stanko/react-animate-height",
@@ -25,7 +27,7 @@
     "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run build:docs",
     "start": "esbuild docs/docs.tsx docs/docs.css --bundle --tsconfig=tsconfig-demo.json --servedir=docs --outdir=docs/react-animate-height",
     "build:docs": "esbuild docs/docs.tsx --bundle --tsconfig=tsconfig-demo.json --outdir=docs --minify --sourcemap",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "npm run test && npm run build",
     "start:test": "esbuild test/test.tsx test/test.css --bundle --tsconfig=tsconfig-demo.json --serve=8080 --servedir=test --outdir=test/output",
     "test": "node test.js",
     "cypress:run": "cypress run",
