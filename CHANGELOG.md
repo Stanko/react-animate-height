@@ -1,12 +1,12 @@
 # Changelog
 
-### v3.2.1
+### v3.2.1, v3.2.2
 
 11.07.2022.
 
 **Fixed**
 
-- Added `"type": "module"` to the package.json [#143](https://github.com/Stanko/react-animate-height/issues/143)
+- Added `"type": "module"` to the package.json [#143](https://github.com/Stanko/react-animate-height/issues/143) and hopefully fixed all import/require shenanigans.
 
 ---
 
