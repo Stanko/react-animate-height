@@ -1,8 +1,8 @@
-import React, { useRef, useState, useEffect } from 'react';
-import AnimateHeight, { Height } from '../src/index';
+import React, { useRef, useState, useEffect } from "react";
+import { AnimateHeight, DimensionSize } from "../src/index";
 
 const AutoHeight = ({ children, ...props }) => {
-  const [height, setHeight] = useState<Height>('auto');
+  const [height, setHeight] = useState<DimensionSize>("auto");
   const contentDiv = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

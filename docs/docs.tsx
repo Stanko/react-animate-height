@@ -1,8 +1,8 @@
-import React, { StrictMode, useState, useRef } from 'react';
-import { createRoot } from 'react-dom/client';
+import React, { StrictMode, useState, useRef } from "react";
+import { createRoot } from "react-dom/client";
 
-import AnimateHeight, { Height } from '../src/index';
-import AutoHeight from './auto-height';
+import { AnimateHeight, AnimateWidth, DimensionSize } from "../src/index";
+import AutoHeight from "./auto-height";
 
 const DemoContent = ({ index }) => {
   return (
@@ -53,17 +53,17 @@ const DemoContent = ({ index }) => {
 };
 
 const Example = () => {
-  const [height1, setHeight1] = useState<Height>(0);
-  const [height2, setHeight2] = useState<Height>('auto');
-  const [height3, setHeight3] = useState<Height>('auto');
+  const [height1, setHeight1] = useState<DimensionSize>(0);
+  const [height2, setHeight2] = useState<DimensionSize>("auto");
+  const [height3, setHeight3] = useState<DimensionSize>("auto");
   const [delay, setDelay] = useState<number>(0);
   const wrapper = useRef<HTMLDivElement | null>(null);
   const content = useRef<HTMLDivElement | null>(null);
   const [randomImage, setRandomImage] = useState(
-    'https://picsum.photos/600/600'
+    "https://picsum.photos/600/600"
   );
 
-  const options: Height[] = [0, 100, 200, 300, 'auto'];
+  const options: DimensionSize[] = [0, 100, 200, 300, "auto"];
   const delays: number[] = [0, 300, 600, 1000];
 
   return (
@@ -71,7 +71,7 @@ const Example = () => {
       {/* ---------- DEMO 1 ---------- */}
       <h3 id="demo-1">Starting height = 0</h3>
       <p>
-        Current Height: <b>{height1 !== null ? height1 : 'null'}</b>
+        Current Height: <b>{height1 !== null ? height1 : "null"}</b>
       </p>
       <p className="">Set height to:</p>
       <div className="buttons">
@@ -80,7 +80,7 @@ const Example = () => {
           return (
             <button
               key={option}
-              className={`btn btn-sm ${isActive ? 'btn-selected' : ''}`}
+              className={`btn btn-sm ${isActive ? "btn-selected" : ""}`}
               onClick={() => setHeight1(option)}
             >
               {option}
@@ -88,25 +88,25 @@ const Example = () => {
           );
         })}
       </div>
-      <AnimateHeight
-        height={height1}
+      <AnimateWidth
+        width={height1}
         className="demo demo-1"
         ref={wrapper}
         contentRef={content}
       >
         <DemoContent index={1} />
-      </AnimateHeight>
+      </AnimateWidth>
 
       {/* ---------- DEMO 2 ---------- */}
       <h3 id="demo-2">Starting height = auto</h3>
       <p>
         For this example, duration is set to 500ms. If you open up the console,
         you&apos;ll see <code>onHeightAnimationEnd</code> and
-        <code>onHeightAnimationStart</code> callbacks. Also,{' '}
+        <code>onHeightAnimationStart</code> callbacks. Also,{" "}
         <code>animateOpacity</code> is set to true.
       </p>
       <p>
-        Current Height: <b>{height1 !== null ? height2 : 'null'}</b>
+        Current Height: <b>{height1 !== null ? height2 : "null"}</b>
       </p>
       <p className="">Set height to:</p>
       <div className="buttons">
@@ -115,7 +115,7 @@ const Example = () => {
           return (
             <button
               key={option}
-              className={`btn btn-sm ${isActive ? 'btn-selected' : ''}`}
+              className={`btn btn-sm ${isActive ? "btn-selected" : ""}`}
               onClick={() => setHeight2(option)}
             >
               {option}
@@ -126,15 +126,15 @@ const Example = () => {
       <AnimateHeight
         height={height2}
         duration={500}
-        onHeightAnimationEnd={(newHeight) => {
+        onDimAnimationEnd={(newHeight) => {
           console.log(
-            'AnimateHeight - animation ended, new height: ',
+            "AnimateHeight - animation ended, new height: ",
             newHeight
           );
         }}
-        onHeightAnimationStart={(newHeight) => {
+        onDimAnimationStart={(newHeight) => {
           console.log(
-            'AnimateHeight - animation started, new height: ',
+            "AnimateHeight - animation started, new height: ",
             newHeight
           );
         }}
@@ -148,11 +148,11 @@ const Example = () => {
       <h3 id="demo-3">Auto height</h3>
       <p>
         If you want <code>AnimateHeight</code> to automatically adapt on content
-        change, you can use{' '}
+        change, you can use{" "}
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver">
           ResizeObserver
         </a>
-        . You can find the code for this example{' '}
+        . You can find the code for this example{" "}
         <a href="https://github.com/Stanko/react-animate-height/blob/v3/docs/auto-height.tsx">
           here
         </a>
@@ -195,7 +195,7 @@ const Example = () => {
           return (
             <button
               key={option}
-              className={`btn btn-sm ${delay === option ? 'btn-selected' : ''}`}
+              className={`btn btn-sm ${delay === option ? "btn-selected" : ""}`}
               onClick={() => setDelay(option)}
             >
               {option}
@@ -210,7 +210,7 @@ const Example = () => {
           return (
             <button
               key={option}
-              className={`btn btn-sm ${isActive ? 'btn-selected' : ''}`}
+              className={`btn btn-sm ${isActive ? "btn-selected" : ""}`}
               onClick={() => setHeight3(option)}
             >
               {option}
@@ -219,14 +219,14 @@ const Example = () => {
         })}
         <br />
         <button
-          className={`btn btn-sm ${height3 === '50%' ? 'btn-selected' : ''}`}
-          onClick={() => setHeight3('50%')}
+          className={`btn btn-sm ${height3 === "50%" ? "btn-selected" : ""}`}
+          onClick={() => setHeight3("50%")}
         >
           50% of the parent's height
         </button>
         <button
-          className={`btn btn-sm ${height3 === '100%' ? 'btn-selected' : ''}`}
-          onClick={() => setHeight3('100%')}
+          className={`btn btn-sm ${height3 === "100%" ? "btn-selected" : ""}`}
+          onClick={() => setHeight3("100%")}
         >
           100% of the parent's height
         </button>
@@ -237,15 +237,15 @@ const Example = () => {
           delay={delay}
           duration={500}
           className="demo demo-4"
-          onHeightAnimationEnd={(newHeight) => {
+          onDimAnimationEnd={(newHeight) => {
             console.log(
-              'AnimateHeight - animation ended, new height: ',
+              "AnimateHeight - animation ended, new height: ",
               newHeight
             );
           }}
-          onHeightAnimationStart={(newHeight) => {
+          onDimAnimationStart={(newHeight) => {
             console.log(
-              'AnimateHeight - animation started, new height: ',
+              "AnimateHeight - animation started, new height: ",
               newHeight
             );
           }}
@@ -257,7 +257,7 @@ const Example = () => {
   );
 };
 
-const container = document.getElementById('demo') as Element;
+const container = document.getElementById("demo") as Element;
 const root = createRoot(container);
 
 root.render(
