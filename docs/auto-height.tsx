@@ -11,6 +11,8 @@ const AutoHeight = ({ children, ...props }) => {
     });
 
     resizeObserver.observe(contentDiv.current);
+
+    return () => resizeObserver.disconnect()
   }, []);
 
   return (
