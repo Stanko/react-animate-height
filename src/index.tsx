@@ -34,10 +34,19 @@ function isPercentage(height: Height) {
   );
 }
 
-function hideContent(element: HTMLDivElement | null, height: Height) {
+function hideContent(
+  element: HTMLDivElement | null,
+  height: Height,
+  disableDisplayNone: boolean
+) {
   // Check for element?.style is added cause this would fail in tests (react-test-renderer)
   // Read more here: https://github.com/Stanko/react-animate-height/issues/17
-  if (height === 0 && element?.style) {
+  if (
+    height === 0 &&
+    !disableDisplayNone &&
+    element?.style &&
+    element?.children.length > 0
+  ) {
     element.style.display = 'none';
   }
 }
@@ -96,6 +105,7 @@ const propsToOmitFromDiv: (keyof AnimateHeightProps)[] = [
   'onHeightAnimationEnd',
   'onHeightAnimationStart',
   'style',
+  'disableDisplayNone',
 ];
 
 // display and height are set by the component itself, therefore ignored
@@ -109,6 +119,7 @@ export interface AnimateHeightProps
   contentClassName?: string;
   contentRef?: React.MutableRefObject<HTMLDivElement | null>;
   delay?: number;
+  disableDisplayNone?: boolean;
   duration?: number;
   easing?: string;
   height: Height;
@@ -129,6 +140,7 @@ const AnimateHeight = React.forwardRef<HTMLDivElement, AnimateHeightProps>(
       className = '',
       contentClassName,
       delay: userDelay = 0,
+      disableDisplayNone = false,
       duration: userDuration = 500,
       easing = 'ease',
       height,
@@ -188,7 +200,7 @@ const AnimateHeight = React.forwardRef<HTMLDivElement, AnimateHeightProps>(
     // ------------------ Did mount
     useEffect(() => {
       // Hide content if height is 0 (to prevent tabbing into it)
-      hideContent(contentElement.current, currentHeight);
+      hideContent(contentElement.current, currentHeight, disableDisplayNone);
 
       // This should be explicitly run only on mount
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -296,7 +308,11 @@ const AnimateHeight = React.forwardRef<HTMLDivElement, AnimateHeightProps>(
 
             // ANIMATION ENDS
             // Hide content if height is 0 (to prevent tabbing into it)
-            hideContent(contentElement.current, timeoutHeight);
+            hideContent(
+              contentElement.current,
+              timeoutHeight,
+              disableDisplayNone
+            );
             // Run a callback if it exists
             onHeightAnimationEnd?.(timeoutHeight);
           }, totalDuration);
@@ -316,7 +332,11 @@ const AnimateHeight = React.forwardRef<HTMLDivElement, AnimateHeightProps>(
             // (case when element is empty, therefore height is 0)
             if (height !== 'auto') {
               // Hide content if height is 0 (to prevent tabbing into it)
-              hideContent(contentElement.current, newHeight); // TODO solve newHeight = 0
+              hideContent(
+                contentElement.current,
+                newHeight,
+                disableDisplayNone
+              ); // TODO solve newHeight = 0
             }
             // Run a callback if it exists
             onHeightAnimationEnd?.(newHeight);

@@ -1,5 +1,15 @@
 # Changelog
 
+### v3.2.3
+
+10.11.2023.
+
+**Added**
+
+- Added prop to disable `display: none` when height is set to zero [#16](https://github.com/Stanko/react-animate-height/issues/16).
+
+---
+
 ### v3.2.1, v3.2.2
 
 11.07.2022.

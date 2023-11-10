@@ -188,6 +188,10 @@ const Example = () => {
 
   By default, library will set `aria-hidden` to `true` when height is zero. If you wish to override it, you can pass the prop yourself.
 
+- **disableDisplayNone**: boolean, default: `false`
+
+  By default, library will set `display: none` when height is zero. This prop allows you to disable that behavior and handle it yourself. It is useful when using [auto height](#user-content-animate-height-on-content-change), check [this issue](https://github.com/Stanko/react-animate-height/issues/16) for more info. Please be careful not to break accessibility when using this prop.
+
 Additional props will be passed to the wrapper div, to make adding attrs like `aria-*` easier.
 
 ## Accessibility
@@ -217,12 +221,10 @@ Component checks for `prefers-reduced-motion` on start and disables animations i
 
 ## Animate height on content change
 
-You can achieve this by using [ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver).
+It is not built in, but you can use `AnimateHeight` and [ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver) to automatically animate height on content change. I created a small example for you here:
 
-Here is an example:
-
-- [demo](https://muffinman.io/react-animate-height/#demo-3)
-- [code](./docs/auto-height.tsx)
+- [Source code](./docs/auto-height.tsx)
+- [Demo](https://muffinman.io/react-animate-height/#demo-3)
 
 ## Gotchas
 

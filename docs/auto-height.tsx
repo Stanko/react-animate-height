@@ -6,13 +6,15 @@ const AutoHeight = ({ children, ...props }) => {
   const contentDiv = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const element = contentDiv.current as HTMLDivElement;
+
     const resizeObserver = new ResizeObserver(() => {
-      setHeight(contentDiv.current.clientHeight);
+      setHeight(element.clientHeight);
     });
 
-    resizeObserver.observe(contentDiv.current);
+    resizeObserver.observe(element);
 
-    return () => resizeObserver.disconnect()
+    return () => resizeObserver.disconnect();
   }, []);
 
   return (
@@ -21,6 +23,7 @@ const AutoHeight = ({ children, ...props }) => {
       height={height}
       contentClassName="auto-content"
       contentRef={contentDiv}
+      disableDisplayNone
     >
       {children}
     </AnimateHeight>
