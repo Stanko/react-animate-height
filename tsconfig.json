@@ -3,6 +3,6 @@
   "compilerOptions": {
     "module": "ES2020",
     "outDir": "dist/esm",
-    "target": "ES2015"
-  }
+    "target": "ES2020",
+  },
 }

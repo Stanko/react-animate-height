@@ -1,6 +1,6 @@
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
-const AnimateHeight = require('./dist/cjs/index.js').default;
+const AnimateHeight = require('./dist/cjs/index.cjs').default;
 
 const example = React.createElement('div', null, [
   React.createElement(AnimateHeight, { key: '1', height: 0 }, 'Hello World'),
@@ -22,12 +22,12 @@ const red = '\x1b[31m';
 const green = '\x1b[32m';
 
 if (renderedString === expectedString) {
-  console.log(green + '\nTest passed\n' + reset);
+  console.log(green + '\Server render test passed\n' + reset);
 } else {
   console.log('\nRendered:');
   console.log(red + renderedString + reset);
   console.log('\nExpected:');
   console.log(green + expectedString + reset);
   console.log('\n', red);
-  throw new Error('Test failed');
+  throw new Error('Server render test failed');
 }

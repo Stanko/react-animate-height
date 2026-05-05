@@ -5,12 +5,18 @@
     "declaration": true,
     "jsx": "react",
     "module": "es6",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "outDir": "dist",
     "pretty": true,
     "resolveJsonModule": true,
-    "strict": true
+    "strict": true,
+    "rootDir": "src",
   },
-  "exclude": ["node_modules", "dist"],
-  "include": ["src"]
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "include": [
+    "src"
+  ],
 }

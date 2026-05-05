@@ -1,23 +1,47 @@
-import { spawn } from 'node:child_process';
+import cypress from 'cypress';
+import { context } from 'esbuild';
 
-const server = spawn('npm', ['run', 'start:test']);
 
-server.stdout.on('data', (data) => {
-  console.log(`server stdout: ${data}`);
 
-  const cypress = spawn('npm', ['run', 'cypress:run'], { stdio: 'inherit' });
+async function main() {
+  let exitCode = 1;
+  let serverContext;
 
-  cypress.on('close', (code) => {
-    console.log(`cypress process exited with code ${code}`);
-    server.exitCode = 0;
-    server.kill('SIGINT');
-  });
-});
+  try {
+    serverContext = await context({
+      entryPoints: ['test/test.tsx', 'test/test.css'],
+      bundle: true,
+      tsconfig: 'tsconfig-demo.json',
+      outdir: 'test/output',
+    });
 
-// server.stderr.on('data', (data) => {
-//   console.error(`server stderr: ${data}`);
-// });
+    const server = await serverContext.serve({
+      port: 8080,
+      servedir: 'test',
+    });
 
-server.on('close', (code) => {
-  console.log(`server process exited with code ${code}`);
+    console.log(`Test server listening on port ${server.port}`);
+
+    const result = await cypress.run();
+
+    if ('status' in result && result.status === 'failed') {
+      console.error(result.message);
+      exitCode = result.failures > 0 ? 1 : 0;
+    } else {
+      exitCode = result.totalFailed > 0 ? 1 : 0;
+    }
+  } catch (error) {
+    console.error(error);
+    exitCode = 1;
+  } finally {
+    if (serverContext) {
+      await serverContext.dispose();
+    }
+  }
+
+  return exitCode;
+}
+
+main().then((exitCode) => {
+  process.exit(exitCode);
 });

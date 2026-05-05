@@ -28,8 +28,7 @@
     "start": "esbuild docs/docs.tsx docs/docs.css --bundle --tsconfig=tsconfig-demo.json --servedir=docs --outdir=docs/react-animate-height",
     "build:docs": "esbuild docs/docs.tsx --bundle --tsconfig=tsconfig-demo.json --outdir=docs --minify --sourcemap",
     "prepublishOnly": "npm run test && npm run build",
-    "start:test": "esbuild test/test.tsx test/test.css --bundle --tsconfig=tsconfig-demo.json --serve=8080 --servedir=test --outdir=test/output",
-    "test": "node test.js",
+    "test": "node server-render-test.cjs && node test.js",
     "cypress:run": "cypress run",
     "cypress:open": "cypress open"
   },
@@ -38,7 +37,7 @@
     "react-dom": ">=16.8.0"
   },
   "engines": {
-    "node": ">= 12.0.0"
+    "node": ">= 20.0.0"
   },
   "keywords": [
     "react",
@@ -50,14 +49,14 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^20.4.1",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
-    "cypress": "^12.17.0",
-    "esbuild": "^0.18.11",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "typescript": "^5.1.6"
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "cypress": "^15.14.2",
+    "esbuild": "^0.28.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "typescript": "^6.0.3"
   },
   "files": [
     "dist/",

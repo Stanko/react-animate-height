@@ -4,3 +4,4 @@ node_modules
 _nogit
 lib
 dist
+test/output
