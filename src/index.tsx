@@ -99,7 +99,7 @@ type OmitCSSProperties = "display" | "height";
 
 export interface AnimateHeightProps extends React.HTMLAttributes<HTMLDivElement> {
   animateOpacity?: boolean;
-  animationStateClasses?: AnimationStateClasses;
+  animationStateClasses?: Partial<AnimationStateClasses>;
   applyInlineTransitions?: boolean;
   contentClassName?: string;
   contentRef?: React.MutableRefObject<HTMLDivElement | null>;
@@ -144,8 +144,8 @@ const AnimateHeight = React.forwardRef<HTMLDivElement, AnimateHeightProps>(
     const prevHeight = useRef<Height>(height);
     const contentElement = useRef<HTMLDivElement | null>(null);
 
-    const animationClassesTimeoutID = useRef<Timeout>(null);
-    const timeoutID = useRef<Timeout>(null);
+    const animationClassesTimeoutID = useRef<Timeout>(undefined);
+    const timeoutID = useRef<Timeout>(undefined);
 
     const stateClasses = useRef<AnimationStateClasses>({
       ...ANIMATION_STATE_CLASSES,
@@ -267,8 +267,8 @@ const AnimateHeight = React.forwardRef<HTMLDivElement, AnimateHeightProps>(
         setAnimationStateClassNames(newAnimationStateClassNames);
 
         // Clear timeouts
-        clearTimeout(timeoutID.current as Timeout);
-        clearTimeout(animationClassesTimeoutID.current as Timeout);
+        clearTimeout(timeoutID.current);
+        clearTimeout(animationClassesTimeoutID.current);
 
         if (isCurrentHeightAuto) {
           // When animating from 'auto' we use a short timeout to start animation
@@ -283,19 +283,19 @@ const AnimateHeight = React.forwardRef<HTMLDivElement, AnimateHeightProps>(
 
             // ANIMATION STARTS, run a callback if it exists
             onHeightAnimationStart?.(timeoutHeight);
+
+            // Set static classes and remove transitions when animation ends
+            animationClassesTimeoutID.current = setTimeout(() => {
+              setUseTransitions(false);
+              setAnimationStateClassNames(timeoutAnimationStateClasses);
+
+              // ANIMATION ENDS
+              // Hide content if height is 0 (to prevent tabbing into it)
+              hideContent(contentElement.current, timeoutHeight, disableDisplayNone);
+              // Run a callback if it exists
+              onHeightAnimationEnd?.(timeoutHeight);
+            }, totalDuration);
           }, 50);
-
-          // Set static classes and remove transitions when animation ends
-          animationClassesTimeoutID.current = setTimeout(() => {
-            setUseTransitions(false);
-            setAnimationStateClassNames(timeoutAnimationStateClasses);
-
-            // ANIMATION ENDS
-            // Hide content if height is 0 (to prevent tabbing into it)
-            hideContent(contentElement.current, timeoutHeight, disableDisplayNone);
-            // Run a callback if it exists
-            onHeightAnimationEnd?.(timeoutHeight);
-          }, totalDuration);
         } else {
           // ANIMATION STARTS, run a callback if it exists
           onHeightAnimationStart?.(newHeight);
@@ -320,11 +320,11 @@ const AnimateHeight = React.forwardRef<HTMLDivElement, AnimateHeightProps>(
         }
       }
 
-      prevHeight.current = height;
+      prevHeight.current = initHeight;
 
       return () => {
-        clearTimeout(timeoutID.current as Timeout);
-        clearTimeout(animationClassesTimeoutID.current as Timeout);
+        clearTimeout(timeoutID.current);
+        clearTimeout(animationClassesTimeoutID.current);
       };
 
       // This should be explicitly run only on height change

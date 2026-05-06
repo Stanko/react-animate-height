@@ -143,7 +143,7 @@ const Example = () => {
 
 - **animationStateClasses**: object
 
-  Object containing CSS class names for animation states, default:
+  Partial object containing CSS class names for animation states. It is going be to merged with the default values:
 
   ```
   {

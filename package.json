@@ -1,6 +1,6 @@
 {
   "name": "react-animate-height",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "description": "Lightweight React component for animating height using CSS transitions.",
   "main": "./dist/cjs/index.cjs",
   "types": "./dist/esm/index.d.ts",
@@ -15,7 +15,7 @@
   "homepage": "https://github.com/Stanko/react-animate-height",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Stanko/react-animate-height.git"
+    "url": "git+https://github.com/Stanko/react-animate-height.git"
   },
   "bugs": {
     "url": "https://github.com/Stanko/react-animate-height/issues"

@@ -1,5 +1,18 @@
 # Changelog
 
+
+### v3.2.4
+
+06.05.2026.
+
+**Fixed**
+
+- Trivial issue where cleanup method would trigger 50ms early
+- Internal `prevHeight` now used raw height value (which can be a string), now it saves the normalized value
+- Fixed type definition for `animationStateClasses` to be `Partial<AnimationStateClasses>` (it always worked like that, but the type def wasn't correct)
+
+---
+
 ### v3.2.3
 
 10.11.2023.
